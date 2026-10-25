@@ -44,5 +44,12 @@
 .geography-results-table small { display: block; margin-top: 5px; font-weight: 400; color: #4d6071; }
 .geography-results-table .geography-number { text-align: right; font-variant-numeric: tabular-nums; }
 .geography-number strong { white-space: nowrap; }
+.geography-candidate-key {
+  display: inline-block;
+  width: .65rem;
+  height: .65rem;
+  margin-right: .4rem;
+  border-radius: 50%;
+}
 .geography-results-table .geography-row-error { color: #8a3e19; max-width: 300px; }
 .geography-table-note { margin-bottom: 0; }

@@ -6,6 +6,7 @@ import { percentage, type CandidateResult, type ResultSnapshot } from '../domain
 import { selectionId, selectionSearch, type Selection } from '../domain/selection'
 import { useLiveResult } from '../hooks/useLiveResult'
 import { navigate } from '../hooks/useSelection'
+import { candidateColor } from './candidateColors'
 import '../styles/geography-table.css'
 
 const integer = new Intl.NumberFormat('pt-BR')
@@ -78,7 +79,7 @@ function GeographyRow({
           <td key={candidate.id} className="geography-number">
             {snapshot && local ? (
               <>
-                <strong>{integer.format(local.votes)} votos</strong>
+                <strong style={{ color: candidateColor(local) }}>{integer.format(local.votes)} votos</strong>
                 <small>{share(local.votes, snapshot.validVotes)} dos válidos</small>
               </>
             ) : snapshot ? 'Candidatura não informada' : '—'}
@@ -217,7 +218,10 @@ export function GeographyOverviewTable({
               {candidates.map((candidate) => (
                 <th key={candidate.id} scope="col" className="geography-number">
                   {candidate.number} · {candidate.name}
-                  <small>{candidate.party} · Votos e % dos válidos</small>
+                  <small style={{ color: candidateColor(candidate) }}>
+                    <span className="geography-candidate-key" style={{ backgroundColor: candidateColor(candidate) }} aria-hidden="true" />
+                    {candidate.party} · Votos e % dos válidos
+                  </small>
                 </th>
               ))}
             </tr>

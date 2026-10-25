@@ -80,6 +80,9 @@ describe('ResultsPanel', () => {
     render(<ResultsPanel snapshot={value} />)
     expect(screen.getAllByText('0,00%')).toHaveLength(2)
     expect(screen.getAllByText('100,00%')).toHaveLength(3)
+    const segments = screen.getByRole('img').querySelectorAll('.results-stack-segment')
+    expect(segments[0]).toHaveStyle({ width: '0%' })
+    expect(segments[1]).toHaveStyle({ width: '100%' })
   })
 
   it('has focusable native sorting buttons and announces direction on semantic column headers', () => {
@@ -116,8 +119,10 @@ describe('ResultsPanel', () => {
     const initialItems = within(list).getAllByRole('listitem')
     expect(initialItems[0]).toHaveTextContent('Ana Silva')
     const initialColors = initialItems.map((item) =>
-      item.querySelector<HTMLElement>('.results-bar')!.style.backgroundColor,
+      item.querySelector<HTMLElement>('.results-candidate-number')!.style.backgroundColor,
     )
+    const initialSegments = [...screen.getByRole('img').querySelectorAll<HTMLElement>('.results-stack-segment')]
+      .map((segment) => [segment.dataset.candidateId, segment.style.backgroundColor])
     expect(new Set(initialColors).size).toBe(initialItems.length)
     rerender(<ResultsPanel snapshot={{
       ...value,
@@ -131,9 +136,68 @@ describe('ResultsPanel', () => {
     const updatedItems = within(list).getAllByRole('listitem')
     expect(updatedItems[0]).toHaveTextContent('Ana Silva')
     expect(updatedItems.map((item) =>
-      item.querySelector<HTMLElement>('.results-bar')!.style.backgroundColor,
+      item.querySelector<HTMLElement>('.results-candidate-number')!.style.backgroundColor,
     )).toEqual(initialColors)
+    const updatedSegments = [...screen.getByRole('img').querySelectorAll<HTMLElement>('.results-stack-segment')]
+    expect(updatedSegments.map((segment) => [segment.dataset.candidateId, segment.style.backgroundColor]))
+      .toEqual(initialSegments)
+    expect(updatedSegments[0]).toHaveStyle({ width: '75%' })
+    expect(updatedSegments[1]).toHaveStyle({ width: '25%' })
     expect(candidateRows()[0]).toHaveTextContent('Beatriz Souza')
+  })
+
+  it('uses PT red and PL blue in a proportional stacked bar with a 50% reference', () => {
+    const value = snapshot()
+    value.candidates = value.candidates.map((candidate) => ({
+      ...candidate, party: candidate.number === '13' ? 'PT' : 'PL',
+    }))
+    render(<ResultsPanel snapshot={value} />)
+    const chart = screen.getByRole('img', { name: /Comparação dos votos válidos/ })
+    expect(chart).toHaveAccessibleName(/Ana Silva, PT, 40,00%.*Beatriz Souza, PL, 60,00%.*50%/)
+    const segments = chart.querySelectorAll<HTMLElement>('.results-stack-segment')
+    expect(segments).toHaveLength(2)
+    expect(segments[0]).toHaveStyle({ width: '40%', backgroundColor: '#c41e3a' })
+    expect(segments[1]).toHaveStyle({ width: '60%', backgroundColor: '#155eab' })
+    expect(chart.querySelector('.results-midpoint')).toBeInTheDocument()
+    expect(screen.getByText('50%')).toBeVisible()
+    expect(screen.getByText(/Liderança nos votos apurados/)).toHaveTextContent('Beatriz Souza')
+    expect(screen.queryByText('Eleito(a) · TSE')).not.toBeInTheDocument()
+  })
+
+  it('uses unrounded valid-vote shares and keeps the reference independent of counting progress', () => {
+    const value = snapshot({ validVotes: 3, sections: { counted: 10, total: 100 } })
+    value.candidates = value.candidates.map((candidate) => ({
+      ...candidate, votes: candidate.number === '13' ? 1 : 2,
+    }))
+    render(<ResultsPanel snapshot={value} />)
+    const chart = screen.getByRole('img', { name: /Comparação dos votos válidos/ })
+    const segments = chart.querySelectorAll<HTMLElement>('.results-stack-segment')
+    expect(parseFloat(segments[0]!.style.width)).toBeCloseTo(100 / 3, 10)
+    expect(parseFloat(segments[1]!.style.width)).toBeCloseTo(200 / 3, 10)
+    expect(screen.getByRole('progressbar')).toHaveAttribute('value', '10')
+    expect(screen.getByText('50%')).toBeInTheDocument()
+  })
+
+  it('shows a tie without suggesting a winner', () => {
+    const value = snapshot()
+    value.candidates = value.candidates.map((candidate) => ({ ...candidate, votes: 1000 }))
+    render(<ResultsPanel snapshot={value} />)
+    expect(screen.getByText(/Empate nos votos contabilizados/)).toBeVisible()
+    expect(screen.queryByText(/Liderança nos votos apurados/)).not.toBeInTheDocument()
+    for (const segment of screen.getByRole('img').querySelectorAll('.results-stack-segment')) {
+      expect(segment).toHaveStyle({ width: '50%' })
+    }
+  })
+
+  it('does not manufacture a full-width comparison for absent or non-reconciling valid votes', () => {
+    const { rerender } = render(<ResultsPanel snapshot={snapshot({ validVotes: 0, candidates: [] })} />)
+    let chart = screen.getByRole('img', { name: /Comparação gráfica indisponível/ })
+    expect(chart.querySelectorAll('.results-stack-segment')).toHaveLength(0)
+    expect(screen.queryByText(/Liderança nos votos apurados/)).not.toBeInTheDocument()
+    rerender(<ResultsPanel snapshot={snapshot({ validVotes: 1900 })} />)
+    chart = screen.getByRole('img', { name: /Comparação gráfica indisponível/ })
+    expect(chart.querySelectorAll('.results-stack-segment')).toHaveLength(0)
+    expect(screen.getByText(/Gráfico indisponível/)).toBeVisible()
   })
 
   it('shows aggregate source range, fetch time, coverage and asynchronous snapshot disclaimer', () => {

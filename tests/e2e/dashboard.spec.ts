@@ -160,6 +160,36 @@ test('small-screen layout stays within the viewport and table sorting is keyboar
   await expect(votesHeading).toHaveAttribute('aria-sort', 'descending')
 })
 
+test('candidate comparison uses a fixed midpoint and party colors on desktop and mobile', async ({ page }) => {
+  await mockOfficialFeeds(page)
+  await page.goto('/')
+  const chart = page.getByRole('img', { name: /Comparação dos votos válidos/ })
+  await expect(chart).toBeVisible()
+  const colors = await chart.locator('.results-stack-segment').evaluateAll((segments) =>
+    segments.map((segment) => getComputedStyle(segment).backgroundColor),
+  )
+  expect(colors).toEqual(['rgb(196, 30, 58)', 'rgb(21, 94, 171)'])
+  for (const width of [1280, 360]) {
+    await page.setViewportSize({ width, height: 800 })
+    const geometry = await chart.evaluate((element) => {
+      const track = element.getBoundingClientRect()
+      const marker = element.querySelector('.results-midpoint')?.getBoundingClientRect()
+      const segments = [...element.querySelectorAll('.results-stack-segment')]
+        .map((segment) => segment.getBoundingClientRect().width)
+      return {
+        expectedMidpoint: track.x + track.width / 2,
+        actualMidpoint: marker ? marker.x + marker.width / 2 : null,
+        trackWidth: track.width,
+        segmentsWidth: segments.reduce((sum, segment) => sum + segment, 0),
+      }
+    })
+    expect(geometry.actualMidpoint).not.toBeNull()
+    expect(geometry.actualMidpoint).toBeCloseTo(geometry.expectedMidpoint, 0)
+    expect(geometry.segmentsWidth).toBeCloseTo(geometry.trackWidth, 0)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  }
+})
+
 test('a failed refresh retains the last successful snapshot with an explicit warning', async ({ page }) => {
   await mockOfficialFeeds(page)
   await page.goto('/')

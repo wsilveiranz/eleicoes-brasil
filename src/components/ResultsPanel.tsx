@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
 import type { CandidateResult, ResultSnapshot } from '../domain/results'
 import { percentage } from '../domain/results'
+import { candidateColor } from './candidateColors'
 import '../styles/results.css'
 
 export interface ResultsPanelProps {
@@ -21,7 +22,6 @@ const dateFormat = new Intl.DateTimeFormat('pt-BR', {
   timeStyle: 'medium',
 })
 const collator = new Intl.Collator('pt-BR', { numeric: true, sensitivity: 'base' })
-const candidateColors = ['#355e85', '#865339', '#586c3e', '#79547e', '#316f70', '#85546a']
 
 function shareText(count: number, total: number): string {
   const value = percentage(count, total)
@@ -30,14 +30,6 @@ function shareText(count: number, total: number): string {
 
 function candidateOrder(a: CandidateResult, b: CandidateResult): number {
   return collator.compare(a.number, b.number) || collator.compare(a.id, b.id)
-}
-
-function candidateColor(candidate: CandidateResult): string {
-  const hash = Array.from(candidate.number || candidate.id).reduce(
-    (value, character) => (value * 33 + character.charCodeAt(0)) >>> 0,
-    5381,
-  )
-  return candidateColors[hash % candidateColors.length]!
 }
 
 function Timestamp({ value }: { value: string }) {
@@ -68,6 +60,11 @@ export function ResultsPanel({ snapshot }: ResultsPanelProps) {
   const timeRange =
     Date.parse(snapshot.sourceTimes.oldest) !== Date.parse(snapshot.sourceTimes.latest)
   const completeCoverage = snapshot.coverage.received === snapshot.coverage.expected
+  const candidateVotes = candidates.reduce((total, candidate) => total + candidate.votes, 0)
+  const chartAvailable = snapshot.validVotes > 0 && candidateVotes === snapshot.validVotes
+  const highestVotes = Math.max(0, ...candidates.map((candidate) => candidate.votes))
+  const leaders = candidates.filter((candidate) => candidate.votes === highestVotes)
+  const leader = leaders.length === 1 ? leaders[0] : undefined
 
   function sortBy(key: SortKey) {
     setSort((previous) => ({
@@ -131,12 +128,56 @@ export function ResultsPanel({ snapshot }: ResultsPanelProps) {
             Percentuais sobre {numberFormat.format(snapshot.validVotes)} votos válidos.
             {snapshot.validVotes === 0 && ' Sem votos válidos: percentuais indisponíveis (—).'}
           </p>
+          <figure className="results-stacked-chart">
+            <div className="results-stack-scale" aria-hidden="true">
+              <span>0%</span><strong>50%</strong><span>100%</span>
+            </div>
+            <div
+              className="results-stack-track"
+              role="img"
+              aria-label={chartAvailable
+                ? `Comparação dos votos válidos: ${candidates.map((candidate) =>
+                  `${candidate.name}, ${candidate.party}, ${shareText(candidate.votes, snapshot.validVotes)}`,
+                ).join('; ')}. Referência central: 50%.`
+                : 'Comparação gráfica indisponível: não há votos válidos ou as contagens não coincidem.'}
+              aria-describedby={denominatorId}
+            >
+              <div className="results-stack-segments" aria-hidden="true">
+                {chartAvailable && candidates.map((candidate) => {
+                  const share = percentage(candidate.votes, snapshot.validVotes) ?? 0
+                  return (
+                    <div
+                      key={candidate.id}
+                      className="results-stack-segment"
+                      data-candidate-id={candidate.id}
+                      style={{ width: `${share}%`, backgroundColor: candidateColor(candidate) }}
+                    >
+                      {share >= 35 && <span>{candidate.number} · {shareText(candidate.votes, snapshot.validVotes)}</span>}
+                    </div>
+                  )
+                })}
+              </div>
+              <span className="results-midpoint" aria-hidden="true" />
+            </div>
+            <figcaption className="results-muted">
+              A marca central indica 50% dos votos válidos, não o avanço da apuração.
+              {!chartAvailable && snapshot.validVotes > 0 && ' Gráfico indisponível: as contagens por candidatura diferem do total de votos válidos.'}
+            </figcaption>
+          </figure>
+          {chartAvailable && (
+            <p className="results-lead">
+              {leader
+                ? <>Liderança nos votos apurados: <strong>{leader.name}</strong>.</>
+                : 'Empate nos votos contabilizados.'}{' '}
+              A liderança não é uma declaração de eleição.
+            </p>
+          )}
           <ul className="results-candidates" aria-describedby={denominatorId}>
             {candidates.map((candidate) => (
-              <li key={candidate.id} className="results-candidate">
+              <li key={candidate.id} className="results-candidate" style={{ borderColor: candidateColor(candidate) }}>
                 <div className="results-candidate-heading">
                   <div className="results-candidate-identity">
-                    <span className="results-candidate-number">{candidate.number}</span>
+                    <span className="results-candidate-number" style={{ backgroundColor: candidateColor(candidate) }}>{candidate.number}</span>
                     <div>
                       <strong className="results-candidate-name">{candidate.name}</strong>
                       <span className="results-muted">{candidate.party}</span>
@@ -144,18 +185,9 @@ export function ResultsPanel({ snapshot }: ResultsPanelProps) {
                     {candidate.elected && <span className="results-elected">Eleito(a) · TSE</span>}
                   </div>
                   <div className="results-candidate-values">
-                    <strong>{shareText(candidate.votes, snapshot.validVotes)}</strong>
+                    <strong style={{ color: candidateColor(candidate) }}>{shareText(candidate.votes, snapshot.validVotes)}</strong>
                     <span>{numberFormat.format(candidate.votes)} votos</span>
                   </div>
-                </div>
-                <div className="results-bar-track" aria-hidden="true">
-                  <div
-                    className="results-bar"
-                    style={{
-                      width: `${percentage(candidate.votes, snapshot.validVotes) ?? 0}%`,
-                      backgroundColor: candidateColor(candidate),
-                    }}
-                  />
                 </div>
               </li>
             ))}
@@ -191,7 +223,7 @@ export function ResultsPanel({ snapshot }: ResultsPanelProps) {
             <tbody>
               {rows.map((candidate) => (
                 <tr key={candidate.id}>
-                  <td>{candidate.number}</td>
+                  <td><span className="results-candidate-number" style={{ backgroundColor: candidateColor(candidate) }}>{candidate.number}</span></td>
                   <th scope="row">
                     {candidate.name}
                     {candidate.elected && <span className="results-elected">Eleito(a) · TSE</span>}
