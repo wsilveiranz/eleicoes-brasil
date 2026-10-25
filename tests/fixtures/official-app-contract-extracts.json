@@ -1,0 +1,63 @@
+{
+  "sources": [
+    {
+      "url": "https://resultados.tse.jus.br/oficial/app/main.f31aece23cbbdd2d.js",
+      "sha256": "1ea3f8018eb83d25ff3222692104f3a31dd2c3f7103ce06d6efd134e06649268",
+      "retrievedAt": "2026-10-25T22:26:18.559708+00:00",
+      "extracts": [
+        {
+          "contract": "embeddedPublicJwk",
+          "offset": 111123,
+          "excerpt": ",h=O(9596),X=O(9807),Q=O(6490),J=O(8225),te=O(1902),Ie=O(5245),Se=O(8607);const Ae='[tabindex]:not([tabindex^=\"-\"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^=\"-\"]):not([hidden]):not([disabled]), textarea:not([tabindex^=\"-\"]):not([hidden]):not([disabled]), button:not([tabindex^=\"-\"]):not([hidden]):not([disabled]), select:not([tabindex^=\"-\"]):not([hidden]):not([disabled]), ion-checkbox:not([tabindex^=\"-\"]):not([hidden]):not([disabled]), ion-radio:not([tabindex^=\"-\"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^=\"-\"]):not([hidden]):not([disabled]), .ion-focusable[disabled=\"false\"]:not([tabindex^=\"-\"]):not([hidden])',Z=(It,wt)=>{co"
+        },
+        {
+          "contract": "officialBuild",
+          "offset": 119875,
+          "excerpt": "Ke=!1,Me=\"prod\",xe=!1},3444:(tn,We,O)=>{\"use strict\";O.d(We,{P:()=>g});const g=\"26.10.17 (7216371)\"},1882:(tn,We,O)=>{\"use strict\";O.d(We,{q:()=>X});var g=O(5083);function X(Q,J=function h(){if(!g.Ii.isNativePlatform())return\"web\";const Q=g.Ii.getPlatform();return\"ios\"===Q?\"ios\":\"android\"===Q?\"android\":\"web\"}()){if(null==Q||!Q.projectId)return null;const te={authDomain:Q.authDomain,projectId:Q.projectId,storageBucket:Q.storageBucket,messagingSenderId:Q.messagingSenderId,measurementId:Q.measurementId};if(\"ios\"===J){const Ae=Q.apiKeyIos||Q.apiKeyAndroid||Q.apiKey,Z=Q.appIdIos||Q.appId;return Ae&&Z?{...te,apiKey:Ae,appId:Z}:null}if(\"android\"===J){const Ae=Q.apiKeyAndroid||Q."
+        },
+        {
+          "contract": "buildOnlyKeyAcquisition",
+          "offset": 122886,
+          "excerpt": "n(0,g.A)(function*(){})()}restaurarPadraoBuild(){return(0,g.A)(function*(){})()}obterChavePublicaJws(){return(0,g.A)(function*(){return h.c.assinaturaJwsChavePublica||\"\"})()}}return(J=te).\\u0275fac=function(Se){return new(Se||J)},J.\\u0275prov=X.jDH({token:J,factory:J.\\u0275fac,providedIn:\"root\"}),te})()},1889:(tn,We,O)=>{\"use strict\";O.d(We,{VF:()=>Le,b9:()=>se,C5:()=>Ye,Vu:()=>Je});var g=O(467),h=O(5083),X=O(8254),Q=O(4412),J=O(7392),te=O(4438),Ie=O(8688),Se=O(2569),Ae=O(345),Z=O(177);const be=[\"player\"];function Be(ne,at){if(1&ne){const ve=te.RV6();te.j41(0,\"button\",8),te.bIt(\"click\",function(){te.eBV(ve);const ut=te.XpG();return te.Njj(ut.abrirLink())}),te.nrm(1,\"img\","
+        }
+      ]
+    },
+    {
+      "url": "https://resultados.tse.jus.br/oficial/app/9132.8749a27d2987737e.js",
+      "sha256": "8d471b8d2de75b6917cac9c605ac18cba9892286bab4d986f60b0e9313b554de",
+      "retrievedAt": "2026-10-25T22:26:18.662754+00:00",
+      "extracts": [
+        {
+          "contract": "countingAndFinalization",
+          "offset": 19126,
+          "excerpt": "Totalizacao=(0,c.jA)(i.dt||i.dg,i.ht||i.hg),this.divulgarVotacao=(0,c.ju)(i.dv),this.totalizacaoFinal=(0,c.ju)(i.tf),this.secoesTotalizadas=new W(i.s.st,i.s.pst),this.secoesNaoTotalizadas=new W(i.s.snt,i.s.psnt),this.secoesInstaladas=new W(i.s.si,i.s.psi),this.secoesNaoInstaladas=new W(i.s.sni,i.s.psni),this.secoesApuradas=new W(i.s.sa,i.s.psa),this.secoesNaoApuradas=new W(i.s.sna,i.s.psna),this.eleitoradoApurado=new W(i.e.esa,i.e.pesa),this.eleitoradoNaoApurado=new W(i.e.esna,i.e.pesna),this.comparecimento=new W(i.e.c,i.e.pc),this.abstencao=new W(i.e.a,i.e.pa),this.votosAVotaveisConcorrentes=new W(i.v.vvc,i.v.pvvc),this.votosBrancos=new W(i.v.vb,i.v.pvb),this.votosNulosT"
+        },
+        {
+          "contract": "voteSemantics",
+          "offset": 19614,
+          "excerpt": "sna),this.comparecimento=new W(i.e.c,i.e.pc),this.abstencao=new W(i.e.a,i.e.pa),this.votosAVotaveisConcorrentes=new W(i.v.vvc,i.v.pvvc),this.votosBrancos=new W(i.v.vb,i.v.pvb),this.votosNulosTotal=new W(i.v.tvn,i.v.ptvn),this.votosNulos=new W(i.v.vn,i.v.pvn),_e&&(this.votosNulosTecnicos=new W(i.v.vnt,i.v.pvnt)),this.votosAnuladosEApuradosEmSeparado=new W(i.v.vp,i.v.pvp),this.votosValidos=i.v.vv?new W(i.v.vv,i.v.pvv):new W(i.v.vvc,i.v.pvvc),_e&&(this.votosDeLegenda=W.opt(i.v.vl,i.v.pvl),this.votosAnulados=new W(i.v.van,i.v.pvan),this.votosAnuladosSubJudice=new W(i.v.vansj,i.v.pvansj),this.votosNominais=new W(i.v.vnom,i.v.pvnom))}convertAgremiacao(i,O,V,se){var Ae,_e,Pe;let Ue=[];return null==i||null===(Ae=i.agr)||void 0===Ae||Ae.filter(qe=>{Ge(qe,\"I\")}),null==i||null===(_e=i.agr)||void 0===_e||_e.filter(qe=>{Ge(qe,\"F\")}),null==i||null===(Pe=i.agr)||void 0===Pe||Pe.filter(qe=>{Ge(qe,\"C\")}),Ue;function Ge(qe,at){se&&qe.com==se&&qe.tp.toUpperCase()==at&&Ue.push(new X(qe,O,V)),!se&&qe.tp.toUpperCase()==at&&Ue.push(new X(qe,O,V))}}get codigo(){return this.cargoOuPergunta.codigo}get tipoAbrangencia(){switch(this.json.tpabr){case\"BR\":case\"br\":return 0;case\"UF\":case\"uf\":return 1;case\"MU\":case\"mu\":return 2;case\"ZONA\":case\"zona\":return 3}}get codigoAbrangencia(){return this.json.cdabr}get isCargo(){return this.cargoOuPergunta.isCargo}get isPergunta(){return this.cargoOuPergunta.isPergunta}get isCargoMajoritario(){return this.cargoOuPergunta.isCargoMajoritario}get isC"
+        },
+        {
+          "contract": "candidateElected",
+          "offset": 23632,
+          "excerpt": "tes(i.vs)[1])||void 0===Ae?void 0:Ae.nomeUrna:\"\"):this.nomeVice=V?V.nomeUrna:\"\",this.eleito=(0,c.ju)(i.e),this.votosApurados=new W(i.vap,i.pvap);let _e=function oe(B,i){return i.agremiacao.find(O=>O.composicaoAgremiacao.split(\" / \").some(V=>V.trim()===B.cc))}(i,O);this.partidoColigacao=(null==_e?void 0:_e.composicaoAgremiacao)||\"\",this.partido=function w(B,i){if(\"25\"!=`${i.codigo}`)return B.cc;for(const O of i.agremiacao){const V=O.partido.find(se=>se.sigla===B.cc);if(null!=V&&V.nome)return V.nome}return B.cc}(i,O),this.coligacao=(null==_e?void 0:_e.nome)||\"\",this.tipoAgremiacao=function N(B){return B?\"c\"===B.toLowerCase()?\"Coliga\\xe7\\xe3o\":\"f\"===B.toLowerCase()?\"Federa\\x"
+        },
+        {
+          "contract": "booleanSemantics",
+          "offset": 3571,
+          "excerpt": "E=r(9341),m=r(3116);function c(w){return\"\"+w}function g(w){return w?c(w):void 0}function S(w){return\"S\"===w||\"s\"===w}function A(w){return w.trim().replace(/&(#(x?))?(\\w+);/g,(B,i,O,V)=>i?String.fromCharCode(O?parseInt(V,16):parseInt(V,10)):v[V]||B)}const v={apos:\"'\",quot:'\"',amp:\"&\",lt:\"<\",gt:\">\"};function x(w,B){return new Date(+w.slice(6,10),+w.slice(3,5)-1,+w.slice(0,2),B?+B.slice(0,2):0,B?+B.slice(3,5):0,B?+B.slice(6,8):0)}function N(w,B){return E.F.parseDateTime(w,B,\"dd/MM/yyyy HH:mm:ss XXX\")}function q(w,B){if(!w||!B)return null;const[i,O,V]=w.split(\"/\"),[se,Ae,_e]=B.split(\":\");if(!(i&&O&&V&&se&&Ae&&_e))return null;const Pe=+`${V}${O}${i}${se}${Ae}${_e}`;return Numb"
+        },
+        {
+          "contract": "runtimeTrustResolution",
+          "offset": 61962,
+          "excerpt": "lverChave().catch(p=>{throw this.chaveResolvida=void 0,p})),this.chaveResolvida}resolverChave(){var p=this;return(0,I.A)(function*(){var P,fe;const ye=null===(P=oe.c.assinaturaJwsJwksUrl)||void 0===P?void 0:P.trim();if(ye)return function Lt(a,u){const D=new Mi(a,u),p=function(){var P=(0,I.A)(function*(fe,ye){return D.getKey(fe,ye)});return function(ye,$e){return P.apply(this,arguments)}}();return Object.defineProperties(p,{coolingDown:{get:()=>D.coolingDown(),enumerable:!0,configurable:!1},fresh:{get:()=>D.fresh(),enumerable:!0,configurable:!1},reload:{value:()=>D.reload(),enumerable:!0,configurable:!1,writable:!1},reloading:{get:()=>!!D._pendingFetch,enumerable:!0,configurable:!1},jwks:{value:()=>{var P;return null===(P=D._local)||void 0===P?void 0:P.jwks()},enumerable:!0,configurable:!1,writable:!1}}),p}(new URL(ye));const $e=null===(fe=yield p.apontamentoAmbienteSvc.obterChavePublicaJws())||void 0===fe?void 0:fe.trim();if(!$e)throw new Qt(\"Chave p\\xfablica de assinatura n\\xe3o configurada. Defina ASSINATURA_JWS_AMBIENTE_CHAVE ou o JWK do ambiente.\");try{let nt=$e;$e.startsWith(\"{\")||(nt=(new TextDecoder).decode(Uint8Array.from(atob($e),ft=>ft.charCodeAt(0))));const ut=JSON.parse(nt);if(!ut.kid)throw new Qt(\"JWK sem kid. Inclua o identificador da chave no arquivo .jwk.json.\");return Jt({keys:[ut]})}catch(nt){throw nt instanceof Qt?nt:new Qt(\"Chave p\\xfablica de assinatura inv\\xe1lida. Informe um JWK ou Base64 de JWK.\",nt instanceof Error?nt:{message:Stri"
+        },
+        {
+          "contract": "jwsVerification",
+          "offset": 59881,
+          "excerpt": ".c.assinaturaJwsAtiva}get consoleHabilitado(){return!!oe.c.assinaturaJwsConsole}verificarEExtrairPayload(p,P){var fe=this;return(0,I.A)(function*(){const ye=p.trim();if(!ye||3!==ye.split(\".\").length)throw fe.logConsole(\"[JWS] N\\xc3O validado \\u2014 assinatura inv\\xe1lida ou incompleta\",{origem:P,ambiente:fe.assinaturaJwsAmbienteChave}),new Qt(\"Assinatura JWS inv\\xe1lida ou incompleta.\");const $e=fe.lerHeader(ye);if(null==$e||!$e.kid)throw fe.logConsole(\"[JWS] N\\xc3O validado \\u2014 cabe\\xe7alho sem kid\",{origem:P,ambiente:fe.assinaturaJwsAmbienteChave,alg:null==$e?void 0:$e.alg,typ:null==$e?void 0:$e.typ}),new Qt(\"Cabe\\xe7alho JWS sem kid. A assinatura deve incluir o identificador da chave.\");try{var nt,ut,ft;const st=yield fe.obterChaveVerificacao(),Zt=yield function Ei(a,u,D){return Li.apply(this,arguments)}(ye,st);fe.logConsole(\"[JWS] Validado\",{origem:P,ambiente:fe.assinaturaJwsAmbienteChave,kid:null!==(nt=Zt.protectedHeader.kid)&&void 0!==nt?nt:$e.kid,alg:null!==(ut=Zt.protectedHeader.alg)&&void 0!==ut?ut:$e.alg,typ:null!==(ft=Zt.protectedHeader.typ)&&void 0!==ft?ft:$e.typ});const ci=(new TextDecoder).decode(Zt.payload);return JSON.parse(ci)}catch(st){throw st instanceof Qt?st:(fe.logConsole(\"[JWS] N\\xc3O validado\",{origem:P,ambiente:fe.assinaturaJwsAmbienteChave,kid:$e.kid,alg:$e.alg,erro:st instanceof Error?st.message:String(st)}),new Qt(\"Falha na verifica\\xe7\\xe3o da assinatura JWS.\",st instanceof Error?st:{message:String(st)}))}})()}logConsole(p,P"
+        }
+      ]
+    }
+  ]
+}

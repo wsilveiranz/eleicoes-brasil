@@ -1,0 +1,48 @@
+.geography-table-card {
+  margin: 20px 0;
+  padding: clamp(18px, 3vw, 32px);
+  background: #fff;
+  border: 1px solid #dce3e8;
+  border-radius: 16px;
+  min-width: 0;
+}
+
+.geography-table-card h2 { margin: 0 0 10px; font-size: 1.2rem; }
+.geography-table-card p { color: #4d6071; font-size: .88rem; }
+.geography-table-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 14px;
+  align-items: end;
+  margin-top: 22px;
+}
+.geography-table-filters :is(input, select, button) { min-height: 44px; }
+.geography-table-scroll {
+  overflow: auto;
+  max-height: 36rem;
+  border: 1px solid #dce3e8;
+  border-radius: 10px;
+}
+.geography-results-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: .88rem; }
+.geography-results-table caption { text-align: left; padding: 14px; background: #f6f8f9; }
+.geography-results-table th, .geography-results-table td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e7eb;
+  vertical-align: top;
+}
+.geography-results-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f6f8f9;
+  text-align: left;
+}
+.geography-results-table tbody th { text-align: left; min-width: 200px; }
+.geography-results-table tbody tr:last-child > * { border-bottom: 0; }
+.geography-results-table tbody tr:nth-child(even) { background: #fafbf9; }
+.geography-results-table a { color: #265541; text-underline-offset: 3px; }
+.geography-results-table small { display: block; margin-top: 5px; font-weight: 400; color: #4d6071; }
+.geography-results-table .geography-number { text-align: right; font-variant-numeric: tabular-nums; }
+.geography-number strong { white-space: nowrap; }
+.geography-results-table .geography-row-error { color: #8a3e19; max-width: 300px; }
+.geography-table-note { margin-bottom: 0; }

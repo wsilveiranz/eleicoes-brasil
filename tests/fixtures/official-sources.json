@@ -1,0 +1,237 @@
+{
+  "sources": [
+    {
+      "name": "elections",
+      "url": "https://resultados.tse.jus.br/oficial/comum/config/ele-c.jws",
+      "retrievedAt": "2026-10-25T22:23:36.618561+00:00",
+      "sha256": "8738768cf947ce7d617baa42b62e42bf061cb63c5921788e8c5d3fcd314f0b5d",
+      "payloadSha256": "91d1c4fe50dbe92067b83677d77a4f1856f5deca69a04b013a679ff690791721",
+      "protectedHeader": {
+        "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+        "typ": "JOSE",
+        "alg": "EdDSA"
+      },
+      "headers": {
+        "Last-Modified": "Sun, 18 Oct 2026 15:38:27 GMT",
+        "ETag": "\"2c89969444c6c4ab63110d02e3ad2eab\"",
+        "x-amz-request-id": "tx00000834c84759be8bcaf-006ade48a0-cff447-default",
+        "X-RateLimit-Limit": "5000, 5000;w=1",
+        "X-RateLimit-Remaining": "4961",
+        "X-RateLimit-Reset": "1",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "max-age=26",
+        "Expires": "Sun, 25 Oct 2026 22:24:02 GMT",
+        "Date": "Sun, 25 Oct 2026 22:23:36 GMT",
+        "Content-Length": "35606",
+        "Connection": "close",
+        "Alt-Svc": "h3=\":443\"; ma=93600",
+        "Content-Type": "application/json",
+        "Strict-Transport-Security": "max-age=63072000 ; includeSubDomains ; preload",
+        "Akamai-GRN": "0.1f8fe077.1792967016.a25f412",
+        "cdn-cache-status": "RefreshHit from child",
+        "Access-Control-Allow-Origin": "http://localhost:5173"
+      },
+      "notes": "Unmodified public official payload; decoded JSON is test data, not a trust bypass."
+    },
+    {
+      "name": "municipalities",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/config/mun-e006258-cm.jws",
+      "retrievedAt": "2026-10-25T22:23:36.762932+00:00",
+      "sha256": "83ce939fbbcf3bb2645a5d585433ab2f779c422a4ae0a23ddcd9acc1c9eee266",
+      "payloadSha256": "e4a2f2d45bac325f486e1866973fd65ae86744896d0f19e791b0bbb58d86e839",
+      "protectedHeader": {
+        "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+        "typ": "JOSE",
+        "alg": "EdDSA"
+      },
+      "headers": {
+        "Last-Modified": "Thu, 15 Oct 2026 12:38:55 GMT",
+        "ETag": "\"08578298af0c662d38fc9204e499e055\"",
+        "x-amz-request-id": "tx00000d34978a6abfd7cd7-006ade48a1-cffee3-default",
+        "X-RateLimit-Limit": "5000, 5000;w=1",
+        "X-RateLimit-Remaining": "4478",
+        "X-RateLimit-Reset": "1",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "max-age=13",
+        "Expires": "Sun, 25 Oct 2026 22:23:49 GMT",
+        "Date": "Sun, 25 Oct 2026 22:23:36 GMT",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Alt-Svc": "h3=\":443\"; ma=93600",
+        "Content-Type": "application/json",
+        "Strict-Transport-Security": "max-age=63072000 ; includeSubDomains ; preload",
+        "Akamai-GRN": "0.378fe077.1792967016.353075ed",
+        "cdn-cache-status": "RefreshHit from child",
+        "Access-Control-Allow-Origin": "http://localhost:5173"
+      },
+      "notes": "Unmodified public official payload; decoded JSON is test data, not a trust bypass."
+    },
+    {
+      "name": "overall",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.jws",
+      "retrievedAt": "2026-10-25T22:23:36.829811+00:00",
+      "sha256": "7b8f882a25468905c52fdadf041f7ce9c814a7dbd222b3f1d3d21f4c076da3a7",
+      "payloadSha256": "3bdc75c71e12cb819aded3ed77c47b734b7874614c6c0b763c88ce71c498a83c",
+      "protectedHeader": {
+        "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+        "typ": "JOSE",
+        "alg": "EdDSA"
+      },
+      "headers": {
+        "Last-Modified": "Sun, 25 Oct 2026 22:22:46 GMT",
+        "ETag": "\"ab2ea6e36cf4f2ea19c113da24fa24d4\"",
+        "x-amz-request-id": "tx0000067a44253836d9930-006ade8138-9a61f0-default",
+        "X-RateLimit-Limit": "5000, 5000;w=1",
+        "X-RateLimit-Remaining": "4902",
+        "X-RateLimit-Reset": "1",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "max-age=27",
+        "Expires": "Sun, 25 Oct 2026 22:24:03 GMT",
+        "Date": "Sun, 25 Oct 2026 22:23:36 GMT",
+        "Content-Length": "4460",
+        "Connection": "close",
+        "Alt-Svc": "h3=\":443\"; ma=93600",
+        "Content-Type": "application/json",
+        "Strict-Transport-Security": "max-age=63072000 ; includeSubDomains ; preload",
+        "Akamai-GRN": "0.c78fe077.1792967016.263bd3e3",
+        "cdn-cache-status": "Hit from child",
+        "Access-Control-Allow-Origin": "http://localhost:5173"
+      },
+      "notes": "Unmodified public official payload; decoded JSON is test data, not a trust bypass."
+    },
+    {
+      "name": "overseas",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz-c0001-e006258-u.jws",
+      "retrievedAt": "2026-10-25T22:23:36.913000+00:00",
+      "sha256": "0fbbef24e0831d8641fc7f16774f54dc6e147357bc243d0765e6486a3af57f3d",
+      "payloadSha256": "29c41ffa390e588655206e2d0f0414a1d8816dba56c90af51b69be331c0e3f9f",
+      "protectedHeader": {
+        "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+        "typ": "JOSE",
+        "alg": "EdDSA"
+      },
+      "headers": {
+        "Last-Modified": "Sun, 25 Oct 2026 22:22:54 GMT",
+        "ETag": "\"eebffef7c80e384c3f23dd78f838e962\"",
+        "x-amz-request-id": "tx00000ebf81fd1ae052b3c-006ade8141-14f1890-default",
+        "X-RateLimit-Limit": "5000, 5000;w=1",
+        "X-RateLimit-Remaining": "4984",
+        "X-RateLimit-Reset": "1",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "max-age=45",
+        "Expires": "Sun, 25 Oct 2026 22:24:21 GMT",
+        "Date": "Sun, 25 Oct 2026 22:23:36 GMT",
+        "Content-Length": "4429",
+        "Connection": "close",
+        "Alt-Svc": "h3=\":443\"; ma=93600",
+        "Content-Type": "application/json",
+        "Strict-Transport-Security": "max-age=63072000 ; includeSubDomains ; preload",
+        "Akamai-GRN": "0.be8fe077.1792967016.db2e100",
+        "cdn-cache-status": "Miss from child",
+        "Access-Control-Allow-Origin": "http://localhost:5173"
+      },
+      "notes": "Unmodified public official payload; decoded JSON is test data, not a trust bypass."
+    },
+    {
+      "name": "state-sp",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/sp/sp-c0001-e006258-u.jws",
+      "retrievedAt": "2026-10-25T22:23:37.021749+00:00",
+      "sha256": "4a5091c893467d3f4d19919b1423fff7ae8743a5963bb1912d3b5d49f82af17b",
+      "payloadSha256": "97679133fd06a819aac80b7c09e2093338ed70ae1346de2582636934ad1b55c9",
+      "protectedHeader": {
+        "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+        "typ": "JOSE",
+        "alg": "EdDSA"
+      },
+      "headers": {
+        "x-amz-server-side-encryption": "AES256",
+        "Last-Modified": "Sun, 25 Oct 2026 22:22:27 GMT",
+        "ETag": "\"76f29079b4f6bd20b6c4e89bb7558bd1\"",
+        "x-amz-request-id": "tx00000b711111ea6b498ee-006ade8129-18a950f-default",
+        "X-RateLimit-Limit": "5000, 5000;w=1",
+        "X-RateLimit-Remaining": "4937",
+        "X-RateLimit-Reset": "1",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "max-age=36",
+        "Expires": "Sun, 25 Oct 2026 22:24:12 GMT",
+        "Date": "Sun, 25 Oct 2026 22:23:36 GMT",
+        "Content-Length": "4345",
+        "Connection": "close",
+        "Alt-Svc": "h3=\":443\"; ma=93600",
+        "Content-Type": "application/json",
+        "Strict-Transport-Security": "max-age=63072000 ; includeSubDomains ; preload",
+        "Akamai-GRN": "0.1f8fe077.1792967016.a25f5c8",
+        "cdn-cache-status": "Miss from child",
+        "Access-Control-Allow-Origin": "http://localhost:5173"
+      },
+      "notes": "Unmodified public official payload; decoded JSON is test data, not a trust bypass."
+    },
+    {
+      "name": "municipality-sp71072",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/sp/sp71072-c0001-e006258-u.jws",
+      "retrievedAt": "2026-10-25T22:23:37.659059+00:00",
+      "sha256": "8010bd1b25f1ca5c956cd6da068640613abaa8328b3a091283972d9e17735ae9",
+      "payloadSha256": "fab867aba3439e145820db2982b3c2f20e70a5e01b97aafef2a08d5e4c423741",
+      "protectedHeader": {
+        "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+        "typ": "JOSE",
+        "alg": "EdDSA"
+      },
+      "headers": {
+        "x-amz-server-side-encryption": "AES256",
+        "Last-Modified": "Wed, 21 Oct 2026 23:32:51 GMT",
+        "ETag": "\"7bc0ead86e52086913f1dc19ea61c52c\"",
+        "x-amz-request-id": "tx000003718a9838be00652-006ade48a0-d02626-default",
+        "X-RateLimit-Limit": "5000, 5000;w=1",
+        "X-RateLimit-Remaining": "4692",
+        "X-RateLimit-Reset": "1",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "max-age=56",
+        "Expires": "Sun, 25 Oct 2026 22:24:33 GMT",
+        "Date": "Sun, 25 Oct 2026 22:23:37 GMT",
+        "Content-Length": "4006",
+        "Connection": "close",
+        "Alt-Svc": "h3=\":443\"; ma=93600",
+        "Content-Type": "application/json",
+        "Strict-Transport-Security": "max-age=63072000 ; includeSubDomains ; preload",
+        "Akamai-GRN": "0.bc8fe077.1792967017.307f526b",
+        "cdn-cache-status": "Miss from child, Miss from parent",
+        "Access-Control-Allow-Origin": "http://localhost:5173"
+      },
+      "notes": "Unmodified public official payload; decoded JSON is test data, not a trust bypass."
+    },
+    {
+      "name": "locality-zz29513",
+      "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz29513-c0001-e006258-u.jws",
+      "retrievedAt": "2026-10-25T22:23:38.262713+00:00",
+      "sha256": "342a346673d1dc9f8027b2f9ee96ce67db12703f08671052b38ae294ff878a85",
+      "payloadSha256": "15d5bd44aadca258eed84d7f24fdcb9478bd7669e26d98bf9e2d1ab6417f4cac",
+      "protectedHeader": {
+        "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+        "typ": "JOSE",
+        "alg": "EdDSA"
+      },
+      "headers": {
+        "Last-Modified": "Sat, 24 Oct 2026 23:12:13 GMT",
+        "ETag": "\"2cc24f66efc9ceef166b172875f5a33c\"",
+        "x-amz-request-id": "tx00000ec3b574aa6d61f7b-006ade48a7-2248f35-default",
+        "X-RateLimit-Limit": "5000, 5000;w=1",
+        "X-RateLimit-Remaining": "4766",
+        "X-RateLimit-Reset": "1",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "max-age=55",
+        "Expires": "Sun, 25 Oct 2026 22:24:33 GMT",
+        "Date": "Sun, 25 Oct 2026 22:23:38 GMT",
+        "Content-Length": "3957",
+        "Connection": "close",
+        "Alt-Svc": "h3=\":443\"; ma=93600",
+        "Content-Type": "application/json",
+        "Strict-Transport-Security": "max-age=63072000 ; includeSubDomains ; preload",
+        "Akamai-GRN": "0.c48fe077.1792967017.2c987818",
+        "cdn-cache-status": "Miss from child, Hit from parent",
+        "Access-Control-Allow-Origin": "http://localhost:5173"
+      },
+      "notes": "Unmodified public official payload; decoded JSON is test data, not a trust bypass."
+    }
+  ]
+}

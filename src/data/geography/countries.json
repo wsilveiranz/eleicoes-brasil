@@ -1,0 +1,3236 @@
+{
+  "schemaVersion": 1,
+  "election": "6258",
+  "cycle": "ele2026",
+  "metadataSource": "https://resultados.tse.jus.br/oficial/ele2026/6258/config/mun-e006258-cm.jws",
+  "metadataPayloadSha256": "e4a2f2d45bac325f486e1866973fd65ae86744896d0f19e791b0bbb58d86e839",
+  "metadataJwsSha256": "83ce939fbbcf3bb2645a5d585433ab2f779c422a4ae0a23ddcd9acc1c9eee266",
+  "sourcePage": "https://www.tre-df.jus.br/eleicoes/mesas-receptoras-de-votos-no-exterior-2026",
+  "sourceMetadata": "tests/fixtures/tre-df-sources.json",
+  "coverage": {
+    "expected": 186,
+    "mapped": 186,
+    "unique": 186
+  },
+  "classificationNote": "Country names are the explicit TRE-DF País labels, not inferred ISO/sovereignty codes. In particular Caiena is labelled Guiana Francesa and Saint Georges de Loyapock is labelled França by the published workbooks. These official classifications are retained verbatim; the mapping is voting-locality geography, never voter residence or citizenship.",
+  "countries": [
+    {
+      "id": "africadosul",
+      "name": "África do Sul",
+      "localityCodes": [
+        "29530",
+        "30376"
+      ]
+    },
+    {
+      "id": "albania",
+      "name": "Albânia",
+      "localityCodes": [
+        "99139"
+      ]
+    },
+    {
+      "id": "alemanha",
+      "name": "Alemanha",
+      "localityCodes": [
+        "29386",
+        "29696",
+        "30180"
+      ]
+    },
+    {
+      "id": "angola",
+      "name": "Angola",
+      "localityCodes": [
+        "29998"
+      ]
+    },
+    {
+      "id": "antiguaebarbuda",
+      "name": "Antigua e Barbuda",
+      "localityCodes": [
+        "99147"
+      ]
+    },
+    {
+      "id": "arabiasaudita",
+      "name": "Arábia Saudita",
+      "localityCodes": [
+        "30422"
+      ]
+    },
+    {
+      "id": "argelia",
+      "name": "Argélia",
+      "localityCodes": [
+        "29300"
+      ]
+    },
+    {
+      "id": "argentina",
+      "name": "Argentina",
+      "localityCodes": [
+        "29467",
+        "29602",
+        "30295",
+        "39004",
+        "99155"
+      ]
+    },
+    {
+      "id": "armenia",
+      "name": "Armênia",
+      "localityCodes": [
+        "38989"
+      ]
+    },
+    {
+      "id": "australia",
+      "name": "Austrália",
+      "localityCodes": [
+        "29491",
+        "30562"
+      ]
+    },
+    {
+      "id": "austria",
+      "name": "Áustria",
+      "localityCodes": [
+        "30767"
+      ]
+    },
+    {
+      "id": "azerbaijao",
+      "name": "Azerbaijão",
+      "localityCodes": [
+        "39128"
+      ]
+    },
+    {
+      "id": "bahamas",
+      "name": "Bahamas",
+      "localityCodes": [
+        "99180"
+      ]
+    },
+    {
+      "id": "bahrein",
+      "name": "Bahrein",
+      "localityCodes": [
+        "99473"
+      ]
+    },
+    {
+      "id": "bangladesh",
+      "name": "Bangladesh",
+      "localityCodes": [
+        "29629"
+      ]
+    },
+    {
+      "id": "barbados",
+      "name": "Barbados",
+      "localityCodes": [
+        "29424"
+      ]
+    },
+    {
+      "id": "belgica",
+      "name": "Bélgica",
+      "localityCodes": [
+        "29432"
+      ]
+    },
+    {
+      "id": "belize",
+      "name": "Belize",
+      "localityCodes": [
+        "38881"
+      ]
+    },
+    {
+      "id": "benin",
+      "name": "Benin",
+      "localityCodes": [
+        "38920"
+      ]
+    },
+    {
+      "id": "bolivia",
+      "name": "Bolívia",
+      "localityCodes": [
+        "29572",
+        "29904",
+        "30473",
+        "99210",
+        "99236"
+      ]
+    },
+    {
+      "id": "bosniaherzegovina",
+      "name": "Bósnia-Herzegovina",
+      "localityCodes": [
+        "30988"
+      ]
+    },
+    {
+      "id": "botsuana",
+      "name": "Botsuana",
+      "localityCodes": [
+        "30669"
+      ]
+    },
+    {
+      "id": "bulgaria",
+      "name": "Bulgária",
+      "localityCodes": [
+        "30546"
+      ]
+    },
+    {
+      "id": "burkinafaso",
+      "name": "Burkina Faso",
+      "localityCodes": [
+        "39284"
+      ]
+    },
+    {
+      "id": "caboverde",
+      "name": "Cabo Verde",
+      "localityCodes": [
+        "30368"
+      ]
+    },
+    {
+      "id": "camaroes",
+      "name": "Camarões",
+      "localityCodes": [
+        "29815"
+      ]
+    },
+    {
+      "id": "canada",
+      "name": "Canadá",
+      "localityCodes": [
+        "30155",
+        "30252",
+        "30635",
+        "39063"
+      ]
+    },
+    {
+      "id": "catar",
+      "name": "Catar",
+      "localityCodes": [
+        "29653"
+      ]
+    },
+    {
+      "id": "cazaquistao",
+      "name": "Cazaquistão",
+      "localityCodes": [
+        "39241"
+      ]
+    },
+    {
+      "id": "chile",
+      "name": "Chile",
+      "localityCodes": [
+        "30481"
+      ]
+    },
+    {
+      "id": "china",
+      "name": "China",
+      "localityCodes": [
+        "29793",
+        "30317",
+        "30651",
+        "30848"
+      ]
+    },
+    {
+      "id": "chipre",
+      "name": "Chipre",
+      "localityCodes": [
+        "39322"
+      ]
+    },
+    {
+      "id": "colombia",
+      "name": "Colômbia",
+      "localityCodes": [
+        "29408"
+      ]
+    },
+    {
+      "id": "congo",
+      "name": "Congo",
+      "localityCodes": [
+        "39187"
+      ]
+    },
+    {
+      "id": "coreiadonorte",
+      "name": "Coréia do Norte",
+      "localityCodes": [
+        "99295"
+      ]
+    },
+    {
+      "id": "coreiadosul",
+      "name": "Coréia do Sul",
+      "localityCodes": [
+        "30538"
+      ]
+    },
+    {
+      "id": "costadomarfim",
+      "name": "Costa do Marfim",
+      "localityCodes": [
+        "29254"
+      ]
+    },
+    {
+      "id": "costarica",
+      "name": "Costa Rica",
+      "localityCodes": [
+        "30511"
+      ]
+    },
+    {
+      "id": "croacia",
+      "name": "Croácia",
+      "localityCodes": [
+        "39020"
+      ]
+    },
+    {
+      "id": "cuba",
+      "name": "Cuba",
+      "localityCodes": [
+        "29777"
+      ]
+    },
+    {
+      "id": "dinamarca",
+      "name": "Dinamarca",
+      "localityCodes": [
+        "29599"
+      ]
+    },
+    {
+      "id": "eau",
+      "name": "EAU",
+      "localityCodes": [
+        "29262"
+      ]
+    },
+    {
+      "id": "egito",
+      "name": "Egito",
+      "localityCodes": [
+        "29483"
+      ]
+    },
+    {
+      "id": "elsalvador",
+      "name": "El Salvador",
+      "localityCodes": [
+        "30520"
+      ]
+    },
+    {
+      "id": "equador",
+      "name": "Equador",
+      "localityCodes": [
+        "30392"
+      ]
+    },
+    {
+      "id": "eslovaquia",
+      "name": "Eslováquia",
+      "localityCodes": [
+        "39209"
+      ]
+    },
+    {
+      "id": "eslovenia",
+      "name": "Eslovênia",
+      "localityCodes": [
+        "39160"
+      ]
+    },
+    {
+      "id": "espanha",
+      "name": "Espanha",
+      "localityCodes": [
+        "29351",
+        "30066"
+      ]
+    },
+    {
+      "id": "estadosunidos",
+      "name": "Estados Unidos",
+      "localityCodes": [
+        "29416",
+        "29513",
+        "29807",
+        "29980",
+        "30112",
+        "30228",
+        "30503",
+        "30783",
+        "30902",
+        "39080",
+        "99490"
+      ]
+    },
+    {
+      "id": "estonia",
+      "name": "Estônia",
+      "localityCodes": [
+        "99317"
+      ]
+    },
+    {
+      "id": "etiopia",
+      "name": "Etiópia",
+      "localityCodes": [
+        "99325"
+      ]
+    },
+    {
+      "id": "filipinas",
+      "name": "Filipinas",
+      "localityCodes": [
+        "30082"
+      ]
+    },
+    {
+      "id": "finlandia",
+      "name": "Finlândia",
+      "localityCodes": [
+        "29785"
+      ]
+    },
+    {
+      "id": "franca",
+      "name": "França",
+      "localityCodes": [
+        "30287",
+        "99333",
+        "99511"
+      ]
+    },
+    {
+      "id": "gabao",
+      "name": "Gabão",
+      "localityCodes": [
+        "29939"
+      ]
+    },
+    {
+      "id": "gana",
+      "name": "Gana",
+      "localityCodes": [
+        "29270"
+      ]
+    },
+    {
+      "id": "georgia",
+      "name": "Georgia",
+      "localityCodes": [
+        "99104"
+      ]
+    },
+    {
+      "id": "grecia",
+      "name": "Grécia",
+      "localityCodes": [
+        "29335"
+      ]
+    },
+    {
+      "id": "guatemala",
+      "name": "Guatemala",
+      "localityCodes": [
+        "98000"
+      ]
+    },
+    {
+      "id": "guiana",
+      "name": "Guiana",
+      "localityCodes": [
+        "29718"
+      ]
+    },
+    {
+      "id": "guianafrancesa",
+      "name": "Guiana Francesa",
+      "localityCodes": [
+        "29475"
+      ]
+    },
+    {
+      "id": "guine",
+      "name": "Guiné",
+      "localityCodes": [
+        "38903"
+      ]
+    },
+    {
+      "id": "guinebissau",
+      "name": "Guiné-Bissau",
+      "localityCodes": [
+        "29394"
+      ]
+    },
+    {
+      "id": "guineequatorial",
+      "name": "Guiné Equatorial",
+      "localityCodes": [
+        "39263"
+      ]
+    },
+    {
+      "id": "haiti",
+      "name": "Haiti",
+      "localityCodes": [
+        "30333"
+      ]
+    },
+    {
+      "id": "holanda",
+      "name": "Holanda",
+      "localityCodes": [
+        "30457"
+      ]
+    },
+    {
+      "id": "honduras",
+      "name": "Honduras",
+      "localityCodes": [
+        "30600"
+      ]
+    },
+    {
+      "id": "hungria",
+      "name": "Hungria",
+      "localityCodes": [
+        "29459"
+      ]
+    },
+    {
+      "id": "india",
+      "name": "Índia",
+      "localityCodes": [
+        "30171",
+        "30210"
+      ]
+    },
+    {
+      "id": "indonesia",
+      "name": "Indonésia",
+      "localityCodes": [
+        "29840"
+      ]
+    },
+    {
+      "id": "ira",
+      "name": "Irã",
+      "localityCodes": [
+        "30597"
+      ]
+    },
+    {
+      "id": "iraque",
+      "name": "Iraque",
+      "localityCodes": [
+        "99171"
+      ]
+    },
+    {
+      "id": "irlanda",
+      "name": "Irlanda",
+      "localityCodes": [
+        "29661"
+      ]
+    },
+    {
+      "id": "israel",
+      "name": "Israel",
+      "localityCodes": [
+        "30619"
+      ]
+    },
+    {
+      "id": "italia",
+      "name": "Itália",
+      "localityCodes": [
+        "30120",
+        "30449"
+      ]
+    },
+    {
+      "id": "jamaica",
+      "name": "Jamaica",
+      "localityCodes": [
+        "99430"
+      ]
+    },
+    {
+      "id": "japao",
+      "name": "Japão",
+      "localityCodes": [
+        "29742",
+        "30198",
+        "30627"
+      ]
+    },
+    {
+      "id": "jordania",
+      "name": "Jordânia",
+      "localityCodes": [
+        "29289"
+      ]
+    },
+    {
+      "id": "kuwait",
+      "name": "Kuwait",
+      "localityCodes": [
+        "29882"
+      ]
+    },
+    {
+      "id": "libano",
+      "name": "Líbano",
+      "localityCodes": [
+        "29360"
+      ]
+    },
+    {
+      "id": "libia",
+      "name": "Líbia",
+      "localityCodes": [
+        "30686"
+      ]
+    },
+    {
+      "id": "malasia",
+      "name": "Malásia",
+      "localityCodes": [
+        "29890"
+      ]
+    },
+    {
+      "id": "malawi",
+      "name": "Malawi",
+      "localityCodes": [
+        "99341"
+      ]
+    },
+    {
+      "id": "mali",
+      "name": "Mali",
+      "localityCodes": [
+        "99350"
+      ]
+    },
+    {
+      "id": "marrocos",
+      "name": "Marrocos",
+      "localityCodes": [
+        "30406"
+      ]
+    },
+    {
+      "id": "mexico",
+      "name": "México",
+      "localityCodes": [
+        "30104"
+      ]
+    },
+    {
+      "id": "mocambique",
+      "name": "Moçambique",
+      "localityCodes": [
+        "30090"
+      ]
+    },
+    {
+      "id": "myanmar",
+      "name": "Myanmar",
+      "localityCodes": [
+        "99376"
+      ]
+    },
+    {
+      "id": "namibia",
+      "name": "Namíbia",
+      "localityCodes": [
+        "30821"
+      ]
+    },
+    {
+      "id": "nepal",
+      "name": "Nepal",
+      "localityCodes": [
+        "29173"
+      ]
+    },
+    {
+      "id": "nicaragua",
+      "name": "Nicarágua",
+      "localityCodes": [
+        "30074"
+      ]
+    },
+    {
+      "id": "nigeria",
+      "name": "Nigéria",
+      "localityCodes": [
+        "29912",
+        "99198"
+      ]
+    },
+    {
+      "id": "noruega",
+      "name": "Noruega",
+      "localityCodes": [
+        "30244"
+      ]
+    },
+    {
+      "id": "novazelandia",
+      "name": "Nova Zelândia",
+      "localityCodes": [
+        "30805"
+      ]
+    },
+    {
+      "id": "oma",
+      "name": "Omã",
+      "localityCodes": [
+        "39102"
+      ]
+    },
+    {
+      "id": "palestina",
+      "name": "Palestina",
+      "localityCodes": [
+        "30414"
+      ]
+    },
+    {
+      "id": "panama",
+      "name": "Panamá",
+      "localityCodes": [
+        "30260"
+      ]
+    },
+    {
+      "id": "paquistao",
+      "name": "Paquistão",
+      "localityCodes": [
+        "29831"
+      ]
+    },
+    {
+      "id": "paraguai",
+      "name": "Paraguai",
+      "localityCodes": [
+        "29327",
+        "29556",
+        "29580",
+        "29670",
+        "30309",
+        "30465"
+      ]
+    },
+    {
+      "id": "peru",
+      "name": "Peru",
+      "localityCodes": [
+        "29823",
+        "29947"
+      ]
+    },
+    {
+      "id": "polonia",
+      "name": "Polônia",
+      "localityCodes": [
+        "30740"
+      ]
+    },
+    {
+      "id": "portugal",
+      "name": "Portugal",
+      "localityCodes": [
+        "29955",
+        "30341",
+        "30961"
+      ]
+    },
+    {
+      "id": "quenia",
+      "name": "Quênia",
+      "localityCodes": [
+        "30201"
+      ]
+    },
+    {
+      "id": "reinounido",
+      "name": "Reino Unido",
+      "localityCodes": [
+        "29971",
+        "99503"
+      ]
+    },
+    {
+      "id": "repdemocraticadocongo",
+      "name": "Rep. Democrática do Congo",
+      "localityCodes": [
+        "29874"
+      ]
+    },
+    {
+      "id": "republicadominicana",
+      "name": "República Dominicana",
+      "localityCodes": [
+        "30490"
+      ]
+    },
+    {
+      "id": "republicatcheca",
+      "name": "República Tcheca",
+      "localityCodes": [
+        "30350"
+      ]
+    },
+    {
+      "id": "romenia",
+      "name": "Romênia",
+      "localityCodes": [
+        "29440"
+      ]
+    },
+    {
+      "id": "russia",
+      "name": "Rússia",
+      "localityCodes": [
+        "30163"
+      ]
+    },
+    {
+      "id": "santalucia",
+      "name": "Santa Lúcia",
+      "localityCodes": [
+        "99384"
+      ]
+    },
+    {
+      "id": "saotomeeprincipe",
+      "name": "São Tomé e Princípe",
+      "localityCodes": [
+        "39225"
+      ]
+    },
+    {
+      "id": "senegal",
+      "name": "Senegal",
+      "localityCodes": [
+        "29610"
+      ]
+    },
+    {
+      "id": "servia",
+      "name": "Sérvia",
+      "localityCodes": [
+        "29378"
+      ]
+    },
+    {
+      "id": "singapura",
+      "name": "Singapura",
+      "localityCodes": [
+        "29548"
+      ]
+    },
+    {
+      "id": "siria",
+      "name": "Síria",
+      "localityCodes": [
+        "29637"
+      ]
+    },
+    {
+      "id": "srilanka",
+      "name": "Sri-Lanka",
+      "localityCodes": [
+        "30929"
+      ]
+    },
+    {
+      "id": "suecia",
+      "name": "Suécia",
+      "localityCodes": [
+        "29688"
+      ]
+    },
+    {
+      "id": "suica",
+      "name": "Suíça",
+      "localityCodes": [
+        "29700",
+        "30864"
+      ]
+    },
+    {
+      "id": "suriname",
+      "name": "Suriname",
+      "localityCodes": [
+        "30279"
+      ]
+    },
+    {
+      "id": "tailandia",
+      "name": "Tailândia",
+      "localityCodes": [
+        "29343"
+      ]
+    },
+    {
+      "id": "taiwan",
+      "name": "Taiwan",
+      "localityCodes": [
+        "30570"
+      ]
+    },
+    {
+      "id": "tanzania",
+      "name": "Tanzânia",
+      "localityCodes": [
+        "38962"
+      ]
+    },
+    {
+      "id": "timorleste",
+      "name": "Timor Leste",
+      "localityCodes": [
+        "29645"
+      ]
+    },
+    {
+      "id": "togo",
+      "name": "Togo",
+      "localityCodes": [
+        "29963"
+      ]
+    },
+    {
+      "id": "trinidadandtobago",
+      "name": "Trinidad and Tobago",
+      "localityCodes": [
+        "30325"
+      ]
+    },
+    {
+      "id": "tunisia",
+      "name": "Tunísia",
+      "localityCodes": [
+        "30708"
+      ]
+    },
+    {
+      "id": "turquia",
+      "name": "Turquia",
+      "localityCodes": [
+        "29297",
+        "39306"
+      ]
+    },
+    {
+      "id": "ucrania",
+      "name": "Ucrânia",
+      "localityCodes": [
+        "29858"
+      ]
+    },
+    {
+      "id": "uruguai",
+      "name": "Uruguai",
+      "localityCodes": [
+        "29319",
+        "29521",
+        "30147",
+        "30430",
+        "99244"
+      ]
+    },
+    {
+      "id": "venezuela",
+      "name": "Venezuela",
+      "localityCodes": [
+        "29505",
+        "29564",
+        "99279"
+      ]
+    },
+    {
+      "id": "vietna",
+      "name": "Vietnã",
+      "localityCodes": [
+        "29750"
+      ]
+    },
+    {
+      "id": "zambia",
+      "name": "Zâmbia",
+      "localityCodes": [
+        "99287"
+      ]
+    },
+    {
+      "id": "zimbabue",
+      "name": "Zimbábue",
+      "localityCodes": [
+        "29769"
+      ]
+    }
+  ],
+  "localities": [
+    {
+      "code": "29173",
+      "name": "KATMANDU",
+      "countryId": "nepal",
+      "countryName": "Nepal",
+      "sourceCity": "Katmandu",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 27,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29254",
+      "name": "ABIDJÃ",
+      "countryId": "costadomarfim",
+      "countryName": "Costa do Marfim",
+      "sourceCity": "Abidjã",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 5,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29262",
+      "name": "ABU DHABI",
+      "countryId": "eau",
+      "countryName": "EAU",
+      "sourceCity": "Abu Dhabi",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 68,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29270",
+      "name": "ACCRA",
+      "countryId": "gana",
+      "countryName": "Gana",
+      "sourceCity": "Accra",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 23,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29289",
+      "name": "AMÃ",
+      "countryId": "jordania",
+      "countryName": "Jordânia",
+      "sourceCity": "Amã",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 82,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29297",
+      "name": "ANCARA",
+      "countryId": "turquia",
+      "countryName": "Turquia",
+      "sourceCity": "Ancara",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 12,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29300",
+      "name": "ARGEL",
+      "countryId": "argelia",
+      "countryName": "Argélia",
+      "sourceCity": "Argel",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 20,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29319",
+      "name": "ARTIGAS",
+      "countryId": "uruguai",
+      "countryName": "Uruguai",
+      "sourceCity": "Artigas",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 104,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29327",
+      "name": "ASSUNÇÃO",
+      "countryId": "paraguai",
+      "countryName": "Paraguai",
+      "sourceCity": "Assunção",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 75,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29335",
+      "name": "ATENAS",
+      "countryId": "grecia",
+      "countryName": "Grécia",
+      "sourceCity": "Atenas",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 86,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29343",
+      "name": "BANGKOK",
+      "countryId": "tailandia",
+      "countryName": "Tailândia",
+      "sourceCity": "Bangkok",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 116,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29351",
+      "name": "BARCELONA",
+      "countryId": "espanha",
+      "countryName": "Espanha",
+      "sourceCity": "Barcelona",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 26,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29360",
+      "name": "BEIRUTE",
+      "countryId": "libano",
+      "countryName": "Líbano",
+      "sourceCity": "Beirute",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 51,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29378",
+      "name": "BELGRADO",
+      "countryId": "servia",
+      "countryName": "Sérvia",
+      "sourceCity": "Belgrado",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 139,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29386",
+      "name": "BERLIM",
+      "countryId": "alemanha",
+      "countryName": "Alemanha",
+      "sourceCity": "Berlim",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 32,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29394",
+      "name": "BISSAU",
+      "countryId": "guinebissau",
+      "countryName": "Guiné-Bissau",
+      "sourceCity": "Bissau",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 7,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29408",
+      "name": "BOGOTÁ",
+      "countryId": "colombia",
+      "countryName": "Colômbia",
+      "sourceCity": "Bogotá",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 81,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29416",
+      "name": "BOSTON",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Boston",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 3,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29424",
+      "name": "BRIDGETOWN",
+      "countryId": "barbados",
+      "countryName": "Barbados",
+      "sourceCity": "Bridgetown",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 7,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29432",
+      "name": "BRUXELAS",
+      "countryId": "belgica",
+      "countryName": "Bélgica",
+      "sourceCity": "Bruxelas",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 53,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29440",
+      "name": "BUCARESTE",
+      "countryId": "romenia",
+      "countryName": "Romênia",
+      "sourceCity": "Bucareste",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 137,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29459",
+      "name": "BUDAPESTE",
+      "countryId": "hungria",
+      "countryName": "Hungria",
+      "sourceCity": "Budapeste",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 92,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29467",
+      "name": "BUENOS AIRES",
+      "countryId": "argentina",
+      "countryName": "Argentina",
+      "sourceCity": "Buenos Aires",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 47,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29475",
+      "name": "CAIENA",
+      "countryId": "guianafrancesa",
+      "countryName": "Guiana Francesa",
+      "sourceCity": "Caiena",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 67,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29483",
+      "name": "CAIRO",
+      "countryId": "egito",
+      "countryName": "Egito",
+      "sourceCity": "Cairo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 122,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29491",
+      "name": "CAMBERRA",
+      "countryId": "australia",
+      "countryName": "Austrália",
+      "sourceCity": "Camberra",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 56,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29505",
+      "name": "CARACAS",
+      "countryId": "venezuela",
+      "countryName": "Venezuela",
+      "sourceCity": "Caracas",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 88,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29513",
+      "name": "CHICAGO",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Chicago",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 43,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29521",
+      "name": "CHUY",
+      "countryId": "uruguai",
+      "countryName": "Uruguai",
+      "sourceCity": "Chuí",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 5,
+      "match": "documented-name-alias"
+    },
+    {
+      "code": "29530",
+      "name": "CIDADE DO CABO",
+      "countryId": "africadosul",
+      "countryName": "África do Sul",
+      "sourceCity": "Cidade do Cabo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 111,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29548",
+      "name": "SINGAPURA",
+      "countryId": "singapura",
+      "countryName": "Singapura",
+      "sourceCity": "Singapura",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 91,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29556",
+      "name": "CIUDAD DEL ESTE",
+      "countryId": "paraguai",
+      "countryName": "Paraguai",
+      "sourceCity": "Ciudad Del Este",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 59,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29564",
+      "name": "CIUDAD GUAYANA",
+      "countryId": "venezuela",
+      "countryName": "Venezuela",
+      "sourceCity": "Ciudad Guayana",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 13,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29572",
+      "name": "COCHABAMBA",
+      "countryId": "bolivia",
+      "countryName": "Bolívia",
+      "sourceCity": "Cochabamba",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 110,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29580",
+      "name": "CONCEPCIÓN",
+      "countryId": "paraguai",
+      "countryName": "Paraguai",
+      "sourceCity": "Concepcion",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 11,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29599",
+      "name": "COPENHAGUE",
+      "countryId": "dinamarca",
+      "countryName": "Dinamarca",
+      "sourceCity": "Copenhague",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 70,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29602",
+      "name": "CÓRDOBA",
+      "countryId": "argentina",
+      "countryName": "Argentina",
+      "sourceCity": "Córdoba",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 89,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29610",
+      "name": "DACAR",
+      "countryId": "senegal",
+      "countryName": "Senegal",
+      "sourceCity": "Dacar",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 135,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29629",
+      "name": "DACCA",
+      "countryId": "bangladesh",
+      "countryName": "Bangladesh",
+      "sourceCity": "Dacca",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 39,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29637",
+      "name": "DAMASCO",
+      "countryId": "siria",
+      "countryName": "Síria",
+      "sourceCity": "Damasco",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 93,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29645",
+      "name": "DÍLI",
+      "countryId": "timorleste",
+      "countryName": "Timor Leste",
+      "sourceCity": "Díli",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 6,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29653",
+      "name": "DOHA",
+      "countryId": "catar",
+      "countryName": "Catar",
+      "sourceCity": "Doha",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 94,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29661",
+      "name": "DUBLIN",
+      "countryId": "irlanda",
+      "countryName": "Irlanda",
+      "sourceCity": "Dublin",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 27,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29670",
+      "name": "ENCARNACIÓN",
+      "countryId": "paraguai",
+      "countryName": "Paraguai",
+      "sourceCity": "Encarnación",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 118,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29688",
+      "name": "ESTOCOLMO",
+      "countryId": "suecia",
+      "countryName": "Suécia",
+      "sourceCity": "Estocolmo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 60,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29696",
+      "name": "FRANKFURT",
+      "countryId": "alemanha",
+      "countryName": "Alemanha",
+      "sourceCity": "Frankfurt",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 40,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29700",
+      "name": "GENEBRA",
+      "countryId": "suica",
+      "countryName": "Suíça",
+      "sourceCity": "Genebra",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 46,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29718",
+      "name": "GEORGETOWN",
+      "countryId": "guiana",
+      "countryName": "Guiana",
+      "sourceCity": "Georgetown",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 123,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29742",
+      "name": "HAMAMATSU",
+      "countryId": "japao",
+      "countryName": "Japão",
+      "sourceCity": "Hamamatsu",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 38,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29750",
+      "name": "HANÓI",
+      "countryId": "vietna",
+      "countryName": "Vietnã",
+      "sourceCity": "Hanói",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 10,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29769",
+      "name": "HARARE",
+      "countryId": "zimbabue",
+      "countryName": "Zimbábue",
+      "sourceCity": "Harare",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 26,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29777",
+      "name": "HAVANA",
+      "countryId": "cuba",
+      "countryName": "Cuba",
+      "sourceCity": "Havana",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 4,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29785",
+      "name": "HELSINQUE",
+      "countryId": "finlandia",
+      "countryName": "Finlândia",
+      "sourceCity": "Helsinque",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 85,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29793",
+      "name": "HONG KONG",
+      "countryId": "china",
+      "countryName": "China",
+      "sourceCity": "Hong-Kong",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 100,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29807",
+      "name": "HOUSTON",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Houston",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 28,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29815",
+      "name": "IAUNDÊ",
+      "countryId": "camaroes",
+      "countryName": "Camarões",
+      "sourceCity": "Iaundê",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 13,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29823",
+      "name": "IQUITOS",
+      "countryId": "peru",
+      "countryName": "Peru",
+      "sourceCity": "Iquitos",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 12,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29831",
+      "name": "ISLAMABADE",
+      "countryId": "paquistao",
+      "countryName": "Paquistão",
+      "sourceCity": "Islamabade",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 9,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29840",
+      "name": "JACARTA",
+      "countryId": "indonesia",
+      "countryName": "Indonésia",
+      "sourceCity": "Jacarta",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 124,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29858",
+      "name": "KIEV",
+      "countryId": "ucrania",
+      "countryName": "Ucrânia",
+      "sourceCity": "Kiev",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 16,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29874",
+      "name": "KINSHASA",
+      "countryId": "repdemocraticadocongo",
+      "countryName": "Rep. Democrática do Congo",
+      "sourceCity": "Kinshasa",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 6,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29882",
+      "name": "KUAITE",
+      "countryId": "kuwait",
+      "countryName": "Kuwait",
+      "sourceCity": "Kuaite",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 131,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29890",
+      "name": "KUALA LUMPUR",
+      "countryId": "malasia",
+      "countryName": "Malásia",
+      "sourceCity": "Kuala Lumpur",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 125,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29904",
+      "name": "LA PAZ",
+      "countryId": "bolivia",
+      "countryName": "Bolívia",
+      "sourceCity": "La Paz",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 108,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29912",
+      "name": "LAGOS",
+      "countryId": "nigeria",
+      "countryName": "Nigéria",
+      "sourceCity": "Lagos",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 9,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29939",
+      "name": "LIBREVILLE",
+      "countryId": "gabao",
+      "countryName": "Gabão",
+      "sourceCity": "Libreville",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 11,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29947",
+      "name": "LIMA",
+      "countryId": "peru",
+      "countryName": "Peru",
+      "sourceCity": "Lima",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 78,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29955",
+      "name": "LISBOA",
+      "countryId": "portugal",
+      "countryName": "Portugal",
+      "sourceCity": "Lisboa",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 2,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29963",
+      "name": "LOMÉ",
+      "countryId": "togo",
+      "countryName": "Togo",
+      "sourceCity": "Lomé",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 27,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29971",
+      "name": "LONDRES",
+      "countryId": "reinounido",
+      "countryName": "Reino Unido",
+      "sourceCity": "Londres",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 13,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29980",
+      "name": "LOS ANGELES",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Los Angeles",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 23,
+      "match": "normalized-name"
+    },
+    {
+      "code": "29998",
+      "name": "LUANDA",
+      "countryId": "angola",
+      "countryName": "Angola",
+      "sourceCity": "Luanda",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 97,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30066",
+      "name": "MADRI",
+      "countryId": "espanha",
+      "countryName": "Espanha",
+      "sourceCity": "Madri",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 20,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30074",
+      "name": "MANÁGUA",
+      "countryId": "nicaragua",
+      "countryName": "Nicarágua",
+      "sourceCity": "Manágua",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 134,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30082",
+      "name": "MANILA",
+      "countryId": "filipinas",
+      "countryName": "Filipinas",
+      "sourceCity": "Manila",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 121,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30090",
+      "name": "MAPUTO",
+      "countryId": "mocambique",
+      "countryName": "Moçambique",
+      "sourceCity": "Maputo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 105,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30104",
+      "name": "MEXICO",
+      "countryId": "mexico",
+      "countryName": "México",
+      "sourceCity": "Cidade do México",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 62,
+      "match": "documented-name-alias"
+    },
+    {
+      "code": "30112",
+      "name": "MIAMI",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Miami",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 12,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30120",
+      "name": "MILÃO",
+      "countryId": "italia",
+      "countryName": "Itália",
+      "sourceCity": "Milão",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 18,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30147",
+      "name": "MONTEVIDÉU",
+      "countryId": "uruguai",
+      "countryName": "Uruguai",
+      "sourceCity": "Montevideu",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 73,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30155",
+      "name": "MONTREAL",
+      "countryId": "canada",
+      "countryName": "Canadá",
+      "sourceCity": "Montreal",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 48,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30163",
+      "name": "MOSCOU",
+      "countryId": "russia",
+      "countryName": "Rússia",
+      "sourceCity": "Moscou",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 119,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30171",
+      "name": "MUMBAI",
+      "countryId": "india",
+      "countryName": "Índia",
+      "sourceCity": "Mumbai",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 19,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30180",
+      "name": "MUNIQUE",
+      "countryId": "alemanha",
+      "countryName": "Alemanha",
+      "sourceCity": "Munique",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 39,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30198",
+      "name": "NAGÓIA",
+      "countryId": "japao",
+      "countryName": "Japão",
+      "sourceCity": "Nagóia",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 7,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30201",
+      "name": "NAIRÓBI",
+      "countryId": "quenia",
+      "countryName": "Quênia",
+      "sourceCity": "Nairóbi",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 140,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30210",
+      "name": "NOVA DELHI",
+      "countryId": "india",
+      "countryName": "Índia",
+      "sourceCity": "Nova Delhi",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 130,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30228",
+      "name": "NOVA YORK",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Nova York",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 14,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30244",
+      "name": "OSLO",
+      "countryId": "noruega",
+      "countryName": "Noruega",
+      "sourceCity": "Oslo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 76,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30252",
+      "name": "OTTAWA",
+      "countryId": "canada",
+      "countryName": "Canadá",
+      "sourceCity": "Ottawa",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 74,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30260",
+      "name": "PANAMA",
+      "countryId": "panama",
+      "countryName": "Panamá",
+      "sourceCity": "Panamá",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 84,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30279",
+      "name": "PARAMARIBO",
+      "countryId": "suriname",
+      "countryName": "Suriname",
+      "sourceCity": "Paramaribo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 83,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30287",
+      "name": "PARIS",
+      "countryId": "franca",
+      "countryName": "França",
+      "sourceCity": "Paris",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 17,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30295",
+      "name": "PASO LOS LIBRES",
+      "countryId": "argentina",
+      "countryName": "Argentina",
+      "sourceCity": "Paso Los Libres",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 24,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30309",
+      "name": "PEDRO JUAN CABALLERO",
+      "countryId": "paraguai",
+      "countryName": "Paraguai",
+      "sourceCity": "Pedro Juan Caballero",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 102,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30317",
+      "name": "PEQUIM",
+      "countryId": "china",
+      "countryName": "China",
+      "sourceCity": "Pequim",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 112,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30325",
+      "name": "PORT OF SPAIN",
+      "countryId": "trinidadandtobago",
+      "countryName": "Trinidad and Tobago",
+      "sourceCity": "Port of Spain",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 8,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30333",
+      "name": "PORTO PRÍNCIPE",
+      "countryId": "haiti",
+      "countryName": "Haiti",
+      "sourceCity": "Porto Príncipe",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 26,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30341",
+      "name": "PORTO",
+      "countryId": "portugal",
+      "countryName": "Portugal",
+      "sourceCity": "Porto",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 6,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30350",
+      "name": "PRAGA",
+      "countryId": "republicatcheca",
+      "countryName": "República Tcheca",
+      "sourceCity": "Praga",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 99,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30368",
+      "name": "PRAIA",
+      "countryId": "caboverde",
+      "countryName": "Cabo Verde",
+      "sourceCity": "Praia",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 129,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30376",
+      "name": "PRETÓRIA",
+      "countryId": "africadosul",
+      "countryName": "África do Sul",
+      "sourceCity": "Pretória",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 101,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30392",
+      "name": "QUITO",
+      "countryId": "equador",
+      "countryName": "Equador",
+      "sourceCity": "Quito",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 87,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30406",
+      "name": "RABAT",
+      "countryId": "marrocos",
+      "countryName": "Marrocos",
+      "sourceCity": "Rabat",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 138,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30414",
+      "name": "RAMALLAH",
+      "countryId": "palestina",
+      "countryName": "Palestina",
+      "sourceCity": "Ramallah",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 77,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30422",
+      "name": "RIADE",
+      "countryId": "arabiasaudita",
+      "countryName": "Arábia Saudita",
+      "sourceCity": "Riade",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 115,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30430",
+      "name": "RIO BRANCO",
+      "countryId": "uruguai",
+      "countryName": "Uruguai",
+      "sourceCity": "Rio Branco",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 18,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30449",
+      "name": "ROMA",
+      "countryId": "italia",
+      "countryName": "Itália",
+      "sourceCity": "Roma",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 35,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30457",
+      "name": "AMSTERDÃ",
+      "countryId": "holanda",
+      "countryName": "Holanda",
+      "sourceCity": "Amsterdã",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 42,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30465",
+      "name": "SALTO DEL GUAIRÁ",
+      "countryId": "paraguai",
+      "countryName": "Paraguai",
+      "sourceCity": "Salto del Guairá",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 90,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30473",
+      "name": "SANTA CRUZ DE LA SIERRA",
+      "countryId": "bolivia",
+      "countryName": "Bolívia",
+      "sourceCity": "Santa Cruz de la Sierra",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 71,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30481",
+      "name": "SANTIAGO",
+      "countryId": "chile",
+      "countryName": "Chile",
+      "sourceCity": "Santiago",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 63,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30490",
+      "name": "SÃO DOMINGOS",
+      "countryId": "republicadominicana",
+      "countryName": "República Dominicana",
+      "sourceCity": "São Domingos",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 109,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30503",
+      "name": "SÃO FRANCISCO",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "São Francisco",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 31,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30511",
+      "name": "SÃO JOSÉ",
+      "countryId": "costarica",
+      "countryName": "Costa Rica",
+      "sourceCity": "São José",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 98,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30520",
+      "name": "SÃO SALVADOR",
+      "countryId": "elsalvador",
+      "countryName": "El Salvador",
+      "sourceCity": "São Salvador",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 127,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30538",
+      "name": "SEUL",
+      "countryId": "coreiadosul",
+      "countryName": "Coréia do Sul",
+      "sourceCity": "Seul",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 106,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30546",
+      "name": "SÓFIA",
+      "countryId": "bulgaria",
+      "countryName": "Bulgária",
+      "sourceCity": "Sófia",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 2,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30562",
+      "name": "SYDNEY",
+      "countryId": "australia",
+      "countryName": "Austrália",
+      "sourceCity": "Sydney",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 36,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30570",
+      "name": "TAIPÉ",
+      "countryId": "taiwan",
+      "countryName": "Taiwan",
+      "sourceCity": "Taipé",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 103,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30597",
+      "name": "TEERÃ",
+      "countryId": "ira",
+      "countryName": "Irã",
+      "sourceCity": "Teerã",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 22,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30600",
+      "name": "TEGUCIGALPA",
+      "countryId": "honduras",
+      "countryName": "Honduras",
+      "sourceCity": "Tegucigalpa",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 128,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30619",
+      "name": "TEL AVIV",
+      "countryId": "israel",
+      "countryName": "Israel",
+      "sourceCity": "Tel Aviv",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 64,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30627",
+      "name": "TÓQUIO",
+      "countryId": "japao",
+      "countryName": "Japão",
+      "sourceCity": "Tóquio",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 15,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30635",
+      "name": "TORONTO",
+      "countryId": "canada",
+      "countryName": "Canadá",
+      "sourceCity": "Toronto",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 21,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30651",
+      "name": "CANTÃO",
+      "countryId": "china",
+      "countryName": "China",
+      "sourceCity": "Cantão",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 107,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30669",
+      "name": "GABORONE",
+      "countryId": "botsuana",
+      "countryName": "Botsuana",
+      "sourceCity": "Gaborone",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 20,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30686",
+      "name": "TRÍPOLI",
+      "countryId": "libia",
+      "countryName": "Líbia",
+      "sourceCity": "Tripoli",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 29,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30708",
+      "name": "TUNIS",
+      "countryId": "tunisia",
+      "countryName": "Tunísia",
+      "sourceCity": "Tunis",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 21,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30740",
+      "name": "VARSÓVIA",
+      "countryId": "polonia",
+      "countryName": "Polônia",
+      "sourceCity": "Varsóvia",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 95,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30767",
+      "name": "VIENA",
+      "countryId": "austria",
+      "countryName": "Áustria",
+      "sourceCity": "Viena",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 65,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30783",
+      "name": "WASHINGTON",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Washington DC",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 25,
+      "match": "documented-name-alias"
+    },
+    {
+      "code": "30805",
+      "name": "WELLINGTON",
+      "countryId": "novazelandia",
+      "countryName": "Nova Zelândia",
+      "sourceCity": "Wellington",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 66,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30821",
+      "name": "WINDHOEK",
+      "countryId": "namibia",
+      "countryName": "Namíbia",
+      "sourceCity": "Windhoek",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 25,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30848",
+      "name": "XANGAI",
+      "countryId": "china",
+      "countryName": "China",
+      "sourceCity": "Xangai",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 96,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30864",
+      "name": "ZURIQUE",
+      "countryId": "suica",
+      "countryName": "Suíça",
+      "sourceCity": "Zurique",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 34,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30902",
+      "name": "HARTFORD",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Hartford",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 50,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30929",
+      "name": "COLOMBO",
+      "countryId": "srilanka",
+      "countryName": "Sri-Lanka",
+      "sourceCity": "Colombo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 18,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30961",
+      "name": "FARO",
+      "countryId": "portugal",
+      "countryName": "Portugal",
+      "sourceCity": "Faro",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 55,
+      "match": "normalized-name"
+    },
+    {
+      "code": "30988",
+      "name": "SARAJEVO",
+      "countryId": "bosniaherzegovina",
+      "countryName": "Bósnia-Herzegovina",
+      "sourceCity": "Sarajevo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 17,
+      "match": "normalized-name"
+    },
+    {
+      "code": "38881",
+      "name": "BELMOPAN",
+      "countryId": "belize",
+      "countryName": "Belize",
+      "sourceCity": "Belmopan",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 14,
+      "match": "normalized-name"
+    },
+    {
+      "code": "38903",
+      "name": "CONACRI",
+      "countryId": "guine",
+      "countryName": "Guiné",
+      "sourceCity": "Conacri",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 32,
+      "match": "normalized-name"
+    },
+    {
+      "code": "38920",
+      "name": "COTONOU",
+      "countryId": "benin",
+      "countryName": "Benin",
+      "sourceCity": "Cotonou",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 23,
+      "match": "normalized-name"
+    },
+    {
+      "code": "38962",
+      "name": "DAR ES SALAAM",
+      "countryId": "tanzania",
+      "countryName": "Tanzânia",
+      "sourceCity": "Dar Es Salaam",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 28,
+      "match": "normalized-name"
+    },
+    {
+      "code": "38989",
+      "name": "IEREVAN",
+      "countryId": "armenia",
+      "countryName": "Armênia",
+      "sourceCity": "Ierevan",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 16,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39004",
+      "name": "MENDOZA",
+      "countryId": "argentina",
+      "countryName": "Argentina",
+      "sourceCity": "Mendoza",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 120,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39020",
+      "name": "ZAGREB",
+      "countryId": "croacia",
+      "countryName": "Croácia",
+      "sourceCity": "Zagreb",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 133,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39063",
+      "name": "VANCOUVER",
+      "countryId": "canada",
+      "countryName": "Canadá",
+      "sourceCity": "Vancouver",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 44,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39080",
+      "name": "ATLANTA",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Atlanta",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 30,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39102",
+      "name": "MASCATE",
+      "countryId": "oma",
+      "countryName": "Omã",
+      "sourceCity": "Mascate",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 3,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39128",
+      "name": "BAKU",
+      "countryId": "azerbaijao",
+      "countryName": "Azerbaijão",
+      "sourceCity": "Baku",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 31,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39160",
+      "name": "LIUBLIANA",
+      "countryId": "eslovenia",
+      "countryName": "Eslovênia",
+      "sourceCity": "Liubliana",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 126,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39187",
+      "name": "BRAZZAVILLE",
+      "countryId": "congo",
+      "countryName": "Congo",
+      "sourceCity": "Brazzaville",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 37,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39209",
+      "name": "BRATISLAVA",
+      "countryId": "eslovaquia",
+      "countryName": "Eslováquia",
+      "sourceCity": "Bratislava",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 136,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39225",
+      "name": "SÃO TOMÉ",
+      "countryId": "saotomeeprincipe",
+      "countryName": "São Tomé e Princípe",
+      "sourceCity": "São Tomé",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 10,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39241",
+      "name": "ASTANA",
+      "countryId": "cazaquistao",
+      "countryName": "Cazaquistão",
+      "sourceCity": "Astana",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 15,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39263",
+      "name": "MALABO",
+      "countryId": "guineequatorial",
+      "countryName": "Guiné Equatorial",
+      "sourceCity": "Malabo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 33,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39284",
+      "name": "UAGADUGU",
+      "countryId": "burkinafaso",
+      "countryName": "Burkina Faso",
+      "sourceCity": "Uagadugu",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 28,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39306",
+      "name": "ISTAMBUL",
+      "countryId": "turquia",
+      "countryName": "Turquia",
+      "sourceCity": "Istambul",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 113,
+      "match": "normalized-name"
+    },
+    {
+      "code": "39322",
+      "name": "NICOSIA",
+      "countryId": "chipre",
+      "countryName": "Chipre",
+      "sourceCity": "Nicosia",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 132,
+      "match": "normalized-name"
+    },
+    {
+      "code": "98000",
+      "name": "GUATEMALA",
+      "countryId": "guatemala",
+      "countryName": "Guatemala",
+      "sourceCity": "Guatemala",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 117,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99104",
+      "name": "TBILISI",
+      "countryId": "georgia",
+      "countryName": "Georgia",
+      "sourceCity": "Tbilisi",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 3,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99139",
+      "name": "TIRANA",
+      "countryId": "albania",
+      "countryName": "Albânia",
+      "sourceCity": "Tirana",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 22,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99147",
+      "name": "SAINT JOHNS",
+      "countryId": "antiguaebarbuda",
+      "countryName": "Antigua e Barbuda",
+      "sourceCity": "Saint Johns",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 41,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99155",
+      "name": "PUERTO IGUAZÚ",
+      "countryId": "argentina",
+      "countryName": "Argentina",
+      "sourceCity": "Puerto Iguazu",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 17,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99171",
+      "name": "BAGDÁ",
+      "countryId": "iraque",
+      "countryName": "Iraque",
+      "sourceCity": "Bagdá",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 19,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99180",
+      "name": "NASSAU",
+      "countryId": "bahamas",
+      "countryName": "Bahamas",
+      "sourceCity": "Nassau",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 14,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99198",
+      "name": "ABUJA",
+      "countryId": "nigeria",
+      "countryName": "Nigéria",
+      "sourceCity": "Abuja",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 35,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99210",
+      "name": "COBIJA",
+      "countryId": "bolivia",
+      "countryName": "Bolívia",
+      "sourceCity": "Cobija",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 38,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99236",
+      "name": "PUERTO QUIJARRO",
+      "countryId": "bolivia",
+      "countryName": "Bolívia",
+      "sourceCity": "Puerto Quijarro",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 24,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99244",
+      "name": "RIVERA",
+      "countryId": "uruguai",
+      "countryName": "Uruguai",
+      "sourceCity": "Rivera",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 8,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99279",
+      "name": "SANTA ELENA DE UAIRÉN",
+      "countryId": "venezuela",
+      "countryName": "Venezuela",
+      "sourceCity": "Santa Elena de Uairén",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 42,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99287",
+      "name": "LUSACA",
+      "countryId": "zambia",
+      "countryName": "Zâmbia",
+      "sourceCity": "Lusaca",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 4,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99295",
+      "name": "PYONGYANG",
+      "countryId": "coreiadonorte",
+      "countryName": "Coréia do Norte",
+      "sourceCity": "Pyongyang",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 40,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99317",
+      "name": "TALIN",
+      "countryId": "estonia",
+      "countryName": "Estônia",
+      "sourceCity": "Talin",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 114,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99325",
+      "name": "ADIS ABEBA",
+      "countryId": "etiopia",
+      "countryName": "Etiópia",
+      "sourceCity": "Adis Abeba",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 36,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99333",
+      "name": "ST GEORGES DE LOYAPOCK",
+      "countryId": "franca",
+      "countryName": "França",
+      "sourceCity": "Saint Georges de Loyapock",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 21,
+      "match": "documented-name-alias"
+    },
+    {
+      "code": "99341",
+      "name": "LILONGUE",
+      "countryId": "malawi",
+      "countryName": "Malawi",
+      "sourceCity": "Lilongue",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 30,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99350",
+      "name": "BAMAKO",
+      "countryId": "mali",
+      "countryName": "Mali",
+      "sourceCity": "Bamako",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 34,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99376",
+      "name": "YANGON",
+      "countryId": "myanmar",
+      "countryName": "Myanmar",
+      "sourceCity": "Yangon",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 29,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99384",
+      "name": "CASTRIES",
+      "countryId": "santalucia",
+      "countryName": "Santa Lúcia",
+      "sourceCity": "Castries",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_dispensadas___exterior",
+      "workbook": "Secoes_Dispensadas___Exterior.xlsx",
+      "sheet": "sheet1",
+      "row": 25,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99430",
+      "name": "KINGSTON-JAMAICA",
+      "countryId": "jamaica",
+      "countryName": "Jamaica",
+      "sourceCity": "Kingston",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 141,
+      "match": "documented-name-alias"
+    },
+    {
+      "code": "99473",
+      "name": "BAREIN",
+      "countryId": "bahrein",
+      "countryName": "Bahrein",
+      "sourceCity": "Bahrein",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes_eleitorais___exterior___votacao_manual",
+      "workbook": "Secoes_Eleitorais___Exterior___Votacao_Manual.xlsx",
+      "sheet": "sheet1",
+      "row": 15,
+      "match": "documented-name-alias"
+    },
+    {
+      "code": "99490",
+      "name": "ORLANDO",
+      "countryId": "estadosunidos",
+      "countryName": "Estados Unidos",
+      "sourceCity": "Orlando",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 19,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99503",
+      "name": "EDIMBURGO",
+      "countryId": "reinounido",
+      "countryName": "Reino Unido",
+      "sourceCity": "Edimburgo",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 79,
+      "match": "normalized-name"
+    },
+    {
+      "code": "99511",
+      "name": "MARSELHA",
+      "countryId": "franca",
+      "countryName": "França",
+      "sourceCity": "Marselha",
+      "source": "https://www.tre-df.jus.br/eleicoes/arquivos-eleicoes-2026/secoes___exterior___votacao_eletronica",
+      "workbook": "Secoes___Exterior___Votacao_Eletronica.xlsx",
+      "sheet": "sheet1",
+      "row": 72,
+      "match": "normalized-name"
+    }
+  ]
+}

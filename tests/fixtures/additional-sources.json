@@ -1,0 +1,205 @@
+[
+  {
+    "file": "locality-zz29955.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz29955-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:51.281Z",
+    "sha256": "51fa0d67635ed7cdc4644ffd8bb8056a11dc92d7e0eafab98bbad19517f7657f",
+    "signatureVerified": true
+  },
+  {
+    "file": "locality-zz30341.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz30341-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:51.032Z",
+    "sha256": "dc0ce3fb5c4430e26636eb841cd63b7e0c77925f58ca0b3f35142b4c073e58e4",
+    "signatureVerified": true
+  },
+  {
+    "file": "locality-zz30961.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz30961-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:51.173Z",
+    "sha256": "831d7d8493f4d65c470b30f0e21676f6cec7e38fbfd8dfeddbc07d5832d0060b",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-ac.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/ac/ac-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.042Z",
+    "sha256": "4019b99bc092807d8ede56e7f8ad6a99b1b58b2d7baafa559612f35e6e394a81",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-al.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/al/al-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.038Z",
+    "sha256": "fb333da94c2153b6a9e4cf739acb3513097da0d33604056987939a2530c53e7a",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-am.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/am/am-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.024Z",
+    "sha256": "4f351d819ddf5d367aa6a95849456ded2d754fc329146117e21dedfa443faf72",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-ap.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/ap/ap-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.025Z",
+    "sha256": "5fb9f20a1f5840bf947e14663f84cc8e5556a3a732f4f245fa23cfa15d3ed2db",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-ba.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/ba/ba-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.071Z",
+    "sha256": "f9892ed65bbdd876daf0578303a8021785465c8683fb796d04361b8578e48618",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-ce.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/ce/ce-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.272Z",
+    "sha256": "72a2fdd7b4571b7b93fce8df7ba7ab8028effc5c72547a080f24fadd67792590",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-df.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/df/df-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.096Z",
+    "sha256": "ec5a3c98d393b2eeae481df9d5e1f5a45029add8874782d9dc6b37e2807930ce",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-es.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/es/es-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.688Z",
+    "sha256": "cbc411b3e4a203a78257ebdb7ea8072aef26cc0e85c956c7500c35ab8b2052f5",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-go.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/go/go-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.376Z",
+    "sha256": "bf8d12f89e2b54b668cf61d6ecfaf103293ca27e5d99b1f77dc0d98c2c149068",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-ma.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/ma/ma-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.639Z",
+    "sha256": "f0f948e58af10d9853a9ac5f41f7d41686f424893b877fd9fb85921684234b36",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-mg.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/mg/mg-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.431Z",
+    "sha256": "29dd033fbb8b4bda9baa0f460bd4160ca28d630c5eae0aa4f927e7778dbdb633",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-ms.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/ms/ms-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.043Z",
+    "sha256": "59c9aa490223e83c8c845a6fbb1a5ec53f2ea34af511b0119c13feda0930e61b",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-mt.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/mt/mt-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.345Z",
+    "sha256": "27a0c466e98eb6e56e9b31cd7e00ab28392696f309515a12a46c45ae18133688",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-pa.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/pa/pa-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.328Z",
+    "sha256": "94554157fd4328923a147f712206319e103f52156c3ee90d7fbf0a1f20b7158f",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-pb.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/pb/pb-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.688Z",
+    "sha256": "7e4275215025f232b9e3ae3ddfcc73873eaab63bea1b320925fe865691b61a61",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-pe.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/pe/pe-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.213Z",
+    "sha256": "3ca34ab62e698161c532aaca509039f1618c082af384dee97a45cb164d99c0a6",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-pi.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/pi/pi-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.570Z",
+    "sha256": "3d4a2df728b1804e687e6202bc7da09073480a10a0145682a12cd45a9855e3a8",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-pr.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/pr/pr-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:49.991Z",
+    "sha256": "76dae8a4187e879140040a5e94875768fc1bd21f412bbf20b3442e63f9071798",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-rj.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/rj/rj-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.102Z",
+    "sha256": "1f3d8b438ecf40678ee679753ac27bb11ab40b55e54a0a802008dc32ea0edda5",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-rn.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/rn/rn-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.153Z",
+    "sha256": "9e04b225d7d3af1d73139fc68e00e101a2685461342a286e4b41b35d55e3b1fc",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-ro.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/ro/ro-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.767Z",
+    "sha256": "687ab0070ec50fa329aa2abb352a7113735ce9277b4354eb859924b475368e35",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-rr.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/rr/rr-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.823Z",
+    "sha256": "a744dff9dcb84a48959f1b54355ccd7881a36d9c7c8d21c7f2a3d847e8f6ed1d",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-rs.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/rs/rs-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.257Z",
+    "sha256": "cd58616a7966faddb8c99037e0bb72aa7515d0f7df54d9cf961c4591ce9bda93",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-sc.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/sc/sc-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.368Z",
+    "sha256": "85c114c1d934968bfef59ac742c6af8a8b43587a3453d23fba518db7deb54082",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-se.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/se/se-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:50.951Z",
+    "sha256": "1eef0e12950aa8b2f73f1824b191e2ddf129bb68c27ffd74dde5fda2e074f759",
+    "signatureVerified": true
+  },
+  {
+    "file": "state-to.jws",
+    "url": "https://resultados.tse.jus.br/oficial/ele2026/6258/dados/to/to-c0001-e006258-u.jws",
+    "retrievedAt": "2026-10-25T22:28:51.251Z",
+    "sha256": "8a1eecc6ccc08c383f75e96ebdf52e522e03a42c205670f266619be2ac8ca7a8",
+    "signatureVerified": true
+  }
+]

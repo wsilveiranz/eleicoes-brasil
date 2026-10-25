@@ -1,0 +1,212 @@
+:root {
+  color: #172c33;
+  background: #f3f5f3;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: radial-gradient(ellipse at 95% 0, #e4eee8 0, transparent 42%), #f3f5f3;
+}
+
+button, a, input, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button { cursor: pointer; }
+button:disabled { cursor: wait; opacity: .65; }
+
+.app-shell {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.app-skip {
+  position: fixed;
+  top: -100px;
+  left: 20px;
+  padding: 12px 20px;
+  z-index: 10;
+  background: #fff;
+  color: #173e31;
+}
+
+.app-skip:focus { top: 12px; }
+
+.app-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid #d5ded8;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: .85rem;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.app-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #194b3b;
+  color: #e7d48a;
+  font-size: 1.35rem;
+}
+
+.app-masthead-note {
+  font-size: .78rem;
+  color: #4d625a;
+  text-align: right;
+}
+
+.app-hero { padding: 46px 0 32px; }
+.app-kicker {
+  margin: 0 0 12px;
+  color: #315d4d;
+  font-weight: 750;
+  font-size: .77rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.app-hero h1 {
+  margin: 0;
+  font-size: clamp(2.3rem, 7vw, 4.2rem);
+  line-height: 1.08;
+  font-weight: 780;
+  letter-spacing: -.055em;
+}
+
+.app-hero-subtitle {
+  margin: 15px 0 10px;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: #4b6158;
+}
+
+.app-hero-description {
+  max-width: 680px;
+  margin: 0;
+  color: #58695f;
+  font-size: .92rem;
+}
+
+.app-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 0 24px;
+}
+
+.app-live {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #385e4d;
+  font-size: .83rem;
+}
+
+.app-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #367953;
+  box-shadow: 0 0 0 4px #e1ece1;
+  flex-shrink: 0;
+}
+
+.app-refresh, .app-action {
+  border: 1px solid #b9cbbf;
+  border-radius: 8px;
+  padding: 9px 15px;
+  background: #fff;
+  color: #244e3d;
+  font-weight: 650;
+  font-size: .85rem;
+}
+
+.app-refresh:hover:not(:disabled), .app-action:hover {
+  background: #e5eee7;
+}
+
+.app-status {
+  border: 1px solid #cfdbd0;
+  background: #f9fbf8;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 0 0 20px;
+  color: #3f5949;
+  overflow-wrap: anywhere;
+}
+
+.app-status h2 { font-size: 1.05rem; margin: 0 0 6px; }
+.app-status p { margin: 6px 0; }
+.app-status-error { background: #fff7ed; border-color: #e3c89d; color: #73411f; }
+.app-status .app-action { margin-top: 10px; }
+
+.app-geography-heading {
+  padding: 28px 0 18px;
+}
+
+.app-geography-heading h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: -.025em;
+}
+
+.app-geography-heading p {
+  margin: 7px 0 0;
+  font-size: .88rem;
+  color: #53665c;
+}
+
+.app-footer {
+  margin-top: 34px;
+  padding: 28px 0 40px;
+  border-top: 1px solid #d5ded8;
+  color: #58695f;
+  font-size: .78rem;
+  line-height: 1.7;
+}
+
+.app-footer p { margin: 6px 0; }
+.app-footer a { color: #265541; text-underline-offset: 3px; }
+
+.app-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 600px) {
+  .app-shell { width: calc(100% - 28px); }
+  .app-masthead { padding: 20px 0; gap: 12px; }
+  .app-brand { font-size: .7rem; gap: 8px; letter-spacing: .06em; }
+  .app-masthead-note { max-width: 100px; font-size: .7rem; }
+  .app-hero { padding: 32px 0 22px; }
+  .app-hero h1 { letter-spacing: -.045em; }
+  .app-toolbar { align-items: flex-start; }
+  .app-live { font-size: .76rem; max-width: 210px; }
+  .app-geography-heading { padding-top: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}

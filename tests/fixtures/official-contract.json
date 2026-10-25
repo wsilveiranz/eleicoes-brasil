@@ -1,0 +1,101 @@
+{
+  "verifiedAt": "2026-10-25T22:25:00Z",
+  "election": "6258",
+  "cycle": "ele2026",
+  "round": "2",
+  "office": "1",
+  "trust": {
+    "appSource": "https://resultados.tse.jus.br/oficial/app/main.f31aece23cbbdd2d.js",
+    "verificationSource": "https://resultados.tse.jus.br/oficial/app/9132.8749a27d2987737e.js",
+    "build": "26.10.17 (7216371)",
+    "format": "Compact JWS; three base64url components. Verify the signature over ASCII protectedHeader.payload before decoding JSON as UTF-8.",
+    "algorithm": "EdDSA",
+    "curve": "Ed25519",
+    "kid": "sNbt9Q_fLS65zE1_ZLNV-XRRwPY",
+    "typ": "JOSE",
+    "keySource": "Official app build configuration assinaturaJwsChavePublica; obterChavePublicaJws returns that build configuration value.",
+    "rotation": "The official app supports a configured JWKS URL but this production build sets assinaturaJwsJwksUrl to an empty string. No automatic public rotation endpoint is advertised by this build. Pin the reviewed official public JWK; reject unknown kid, wrong algorithm and signature failures. Review a new official app build over HTTPS before changing the pin. Do not accept JWK/jku supplied by untrusted JWS headers.",
+    "verificationEvidence": "All seven captured signed fixtures passed Node crypto Ed25519 verification. browser-jws-verification.json records a successful browser Web Crypto verification and rejected tampered signing input."
+  },
+  "fields": {
+    "totalVotes": "v.tv",
+    "validVotes": "v.vv",
+    "blankVotes": "v.vb",
+    "totalNullVotes": "v.tvn",
+    "ordinaryNullVotes": "v.vn",
+    "technicalNullVotes": "v.vnt",
+    "votesToCompetingCandidates": "v.vvc",
+    "annulledVotes": "v.van",
+    "annulledSubJudiceVotes": "v.vansj",
+    "totalSections": "s.ts",
+    "countedSections": "s.st",
+    "notCountedSections": "s.snt",
+    "installedSections": "s.si",
+    "notInstalledSections": "s.sni",
+    "apuradasSections": "s.sa",
+    "notApuradasSections": "s.sna",
+    "final": "tf: official totalizacaoFinal boolean helper accepts s or S only",
+    "publishVotes": "dv: same official boolean helper",
+    "generatedDateTime": "dg/hg",
+    "totalizationDateTime": "dt/ht; official app falls back to dg/hg",
+    "candidatePath": "carg[].agr[].par[].cand[]",
+    "candidateIdentity": "sqcand",
+    "candidateBallotNumber": "n",
+    "candidateDisplayName": "nmu",
+    "candidateFullName": "nm",
+    "candidateVoteCount": "vap",
+    "candidateVotePercent": "pvap; high-precision source variant pvapn",
+    "candidateElected": "e: official boolean helper accepts s or S only; never infer election from the vote lead",
+    "candidateStatus": "st",
+    "candidateVoteDestination": "dvt",
+    "partyAbbreviation": "candidate parent par[].sg"
+  },
+  "denominators": {
+    "candidateShare": "v.vv, not v.tv; recompute after summing integer candidate counts and valid-vote denominators.",
+    "blankAndNullShare": "v.tv",
+    "countingProgress": "s.st / s.ts, not s.sa / s.ts and not an average of locality percentages.",
+    "warning": "v.vvc is votosAVotaveisConcorrentes, not a universal substitute for v.vv. The official model uses v.vv when present, falling back to v.vvc for other historical formats. This election publishes v.vv explicitly."
+  },
+  "sampleAssertions": [
+    "Across overall, overseas, SP and overseas locality fixtures, tv = vvc + vb + tvn.",
+    "Across these samples, vv equals the sum of candidate vap counts.",
+    "Across these samples, ts = st + snt.",
+    "Overseas aggregate: ts=1351, st=817, si=776, sa=776; this demonstrates that installed/apuradas are not the total counted-section numerator.",
+    "Numeric source counts are decimal strings; percentage source strings use comma decimal separators."
+  ],
+  "domesticAggregate": {
+    "status": "No separate domestic-only official aggregate was verified.",
+    "verifiedMetadata": "Municipality configuration lists all 26 states, DF and ZZ. The official election discovery uses BR for presidential national scope, and BR result is the overall election scope.",
+    "implementation": "Sum complete 27 domestic UF result feeds, including DF and excluding ZZ. Do not subtract an independently refreshed overseas total from BR.",
+    "limits": "This is a verified absence of an advertised domestic scope in the inspected metadata/app contract, not a claim that no undocumented endpoint can exist."
+  },
+  "countryMapping": {
+    "source": "https://www.tre-df.jus.br/eleicoes/mesas-receptoras-de-votos-no-exterior-2026",
+    "expected": 186,
+    "mapped": 186,
+    "unique": 186,
+    "publishedCountryLabels": 133,
+    "join": "Explicit TRE-DF País/Cidade workbook rows joined to official TSE ZZ locality metadata by accent/punctuation-normalized city name, with six recorded textual aliases. Countries are never guessed from city names.",
+    "aliases": {
+      "99473": "TSE BAREIN = TRE-DF Bahrein",
+      "29521": "TSE CHUY = TRE-DF Chuí",
+      "99430": "TSE KINGSTON-JAMAICA = TRE-DF Kingston",
+      "30104": "TSE MEXICO = TRE-DF Cidade do México",
+      "99333": "TSE ST GEORGES DE LOYAPOCK = TRE-DF Saint Georges de Loyapock",
+      "30783": "TSE WASHINGTON = TRE-DF Washington DC"
+    },
+    "classificationCaveat": "Keep TRE-DF labels explicit: the electronic-voting workbook labels Caiena as Guiana Francesa, whereas the dispensed-sections workbook labels Saint Georges de Loyapock as França. Do not misrepresent this source classification as an independently verified ISO sovereign-country normalization.",
+    "rebuild": "python scripts\\generate-country-map.py",
+    "check": "python scripts\\generate-country-map.py --check"
+  },
+  "cors": {
+    "evidence": "overseas-browser-cors.json",
+    "scope": "Real browser cross-origin fetch from https://www.tre-df.jus.br to the Chicago overseas locality returned HTTP 200 and response type cors. Captured direct requests with Origin http://localhost:5173 also returned allowing CORS headers.",
+    "releaseConstraint": "Recheck from the chosen production deployment origin; this observation is not a permanent upstream availability/CORS guarantee."
+  },
+  "accessGuidance": {
+    "officialAppBuildCooldownSeconds": 10,
+    "observedResponseHeaders": "Rate-limit/cache/Retry-After behavior is service-specific. Preserve response headers in official-sources.json.",
+    "limits": "No universal access policy or promised client request quota was verified. A build cooldown or server rate-limit header must not be represented as permission to generate that volume. Use lazy loading, bounded concurrency, caching and backoff."
+  }
+}
