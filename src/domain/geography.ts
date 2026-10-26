@@ -26,7 +26,7 @@ export interface ElectionMetadata {
     /** ISO calendar date (YYYY-MM-DD). */
     date: string
     year: number
-    round: '2'
+    round: '1' | '2'
   }
   states: StateMetadata[]
   countries: CountryMetadata[]

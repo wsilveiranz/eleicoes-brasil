@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { loadMetadata } from '../data/tse/client'
+import { loadDataset } from '../data/comparison'
 import { useSelection } from '../hooks/useSelection'
 import { GeographyNavigation } from './GeographyNavigation'
 import { ResultView } from './ResultView'
@@ -7,12 +7,15 @@ import '../styles/app.css'
 
 export default function App() {
   const navigation = useSelection()
-  const metadata = useQuery({
-    queryKey: ['metadata', '2026', '2'],
-    queryFn: ({ signal }) => loadMetadata(signal),
+  const dataset = useQuery({
+    queryKey: ['comparison-dataset', '2026'],
+    queryFn: ({ signal }) => loadDataset(signal),
     enabled: navigation.error === null,
-    staleTime: 60 * 60_000,
+    staleTime: Infinity,
     gcTime: 60 * 60_000,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   })
 
   return (
@@ -27,12 +30,12 @@ export default function App() {
           <span className="app-masthead-note">Painel independente<br />Fontes oficiais</span>
         </div>
         <div className="app-hero">
-          <p className="app-kicker">Presidente da República · Segundo turno</p>
+          <p className="app-kicker">Presidente da República · Primeiro e segundo turnos</p>
           <h1>Eleições 2026</h1>
-          <p className="app-hero-subtitle">Um país. Cada voto. Todos os detalhes.</p>
+          <p className="app-hero-subtitle">Do primeiro turno à decisão.</p>
           <p className="app-hero-description">
-            Acompanhe a apuração no Brasil e no exterior, do total geral à sua cidade
-            ou país de votação. Dados publicados pelo Tribunal Superior Eleitoral.
+            Compare os votos de Lula e Bolsonaro entre os dois turnos, no Brasil e no exterior.
+            Do total geral à sua cidade ou país de votação, com resultados oficiais do TSE.
           </p>
         </div>
       </header>
@@ -47,35 +50,35 @@ export default function App() {
             </button>
           </div>
         )}
-        {!navigation.error && !metadata.data && metadata.isPending && (
+        {!navigation.error && !dataset.data && dataset.isPending && (
           <div className="app-status" role="status">
-            <h2>Preparando a consulta oficial</h2>
-            <p>Verificando a eleição, as localidades e o mapeamento de países.</p>
+            <h2>Preparando a comparação</h2>
+            <p>Verificando os dados finais dos dois turnos e as localidades.</p>
           </div>
         )}
-        {!navigation.error && metadata.isError && (
+        {!navigation.error && dataset.isError && (
           <div className="app-status app-status-error" role="alert">
-            <h2>{metadata.data ? 'Não foi possível atualizar as localidades' : 'Dados da eleição indisponíveis'}</h2>
-            <p>{metadata.error.message}</p>
+            <h2>Dados da eleição indisponíveis</h2>
+            <p>{dataset.error.message}</p>
             <p>Não usamos resultados simulados ou de outra eleição como substituição.</p>
             <button
               className="app-action"
-              disabled={metadata.isFetching}
-              onClick={() => { void metadata.refetch() }}
+              disabled={dataset.isFetching}
+              onClick={() => { void dataset.refetch() }}
             >
               Consultar novamente
             </button>
           </div>
         )}
-        {metadata.data && navigation.selection && (
+        {dataset.data && navigation.selection && (
           <>
             <GeographyNavigation
-              metadata={metadata.data}
+              metadata={dataset.data.summary.metadata}
               selection={navigation.selection}
               onSelect={navigation.navigate}
             />
             <ResultView
-              metadata={metadata.data}
+              dataset={dataset.data}
               selection={navigation.selection}
             />
           </>
@@ -87,7 +90,7 @@ export default function App() {
           Painel independente, sem vínculo com a Justiça Eleitoral. Fonte dos resultados:{' '}
           <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noreferrer">
             TSE (abre em nova aba)
-          </a>. Uma vantagem parcial não é uma declaração de eleição.
+          </a>. Comparações entre localidades e turnos não permitem identificar transferências individuais de votos.
         </p>
         <p>
           Países e territórios seguem a classificação publicada pelo{' '}
@@ -97,8 +100,8 @@ export default function App() {
           O recorte identifica o local de votação, não a residência de cada eleitor.
         </p>
         <p>
-          Fontes podem ser atualizadas em horários diferentes.
-          Consulte o horário da fonte e a cobertura junto a cada resultado.
+          Retrato estático dos resultados finais, verificado na importação.
+          Consulte as datas das fontes e a versão dos dados; eventuais correções oficiais exigem nova publicação.
         </p>
       </footer>
     </div>

@@ -65,7 +65,7 @@ export const resultEnvelopeSchema = z.object({
 
 export const resultSchema = z.object({
   ele: code,
-  t: z.literal('2'),
+  t: z.enum(['1', '2']),
   f: z.literal('o'),
   tpabr: z.enum(['br', 'uf', 'mu']),
   cdabr: text,

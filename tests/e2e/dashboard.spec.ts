@@ -1,204 +1,180 @@
 import { expect, test, type Page } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
+import type {
+  DatasetManifest,
+  DatasetSummary,
+  MunicipalityShard,
+  RoundComparison,
+} from '../../src/domain/comparison'
 
-const fixtures = path.join(process.cwd(), 'tests', 'fixtures')
+const dataRoot = path.join(process.cwd(), 'public', 'data', '2026')
 const format = new Intl.NumberFormat('pt-BR')
+let manifest: DatasetManifest
+let summary: DatasetSummary
+let sp: MunicipalityShard
 
-async function fixture(name: string) {
-  return await readFile(path.join(fixtures, name), 'utf8')
+test.beforeAll(async () => {
+  manifest = JSON.parse(await readFile(path.join(dataRoot, 'manifest.json'), 'utf8'))
+  summary = JSON.parse(await readFile(path.join(dataRoot, manifest.summary.path), 'utf8'))
+  const resource = manifest.municipalities.sp
+  if (!resource) throw new Error('São Paulo municipality shard missing from dataset')
+  sp = JSON.parse(await readFile(path.join(dataRoot, resource.path), 'utf8'))
+})
+
+function comparison(id: string): RoundComparison {
+  const result = [...summary.comparisons, ...sp.comparisons].find((item) => item.geography.id === id)
+  if (!result) throw new Error(`Missing comparison ${id}`)
+  return result
 }
 
-async function mockOfficialFeeds(page: Page, overallOverride?: () => string | null) {
-  await page.route('https://resultados.tse.jus.br/oficial/**', async (route) => {
-    const url = new URL(route.request().url())
-    const name = url.pathname.split('/').at(-1)
-    let file: string
-    if (name === 'ele-c.jws') {
-      file = 'elections.jws'
-    } else if (name === 'mun-e006258-cm.jws') {
-      file = 'municipalities.jws'
-    } else if (name === 'br-c0001-e006258-u.jws') {
-      const override = overallOverride?.()
-      if (override !== undefined && override !== null) {
-        await route.fulfill({ status: 200, contentType: 'application/jose', body: override })
-        return
-      }
-      file = 'overall.jws'
-    } else if (name === 'zz-c0001-e006258-u.jws') {
-      file = 'overseas.jws'
-    } else {
-      const match = name?.match(/^([a-z]{2})(\d{5})?-c0001-e006258-u\.jws$/)
-      if (!match) throw new Error(`Unexpected official request: ${url}`)
-      file = match[2]
-        ? match[1] === 'zz'
-          ? `locality-zz${match[2]}.jws`
-          : `municipality-${match[1]}${match[2]}.jws`
-        : `state-${match[1]}.jws`
-    }
-    let body: string
-    try {
-      body = await fixture(file)
-    } catch (error) {
-      if (!(error instanceof Error) || !('code' in error) || error.code !== 'ENOENT') throw error
-      await route.fulfill({ status: 404, body: 'Fixture unavailable' })
-      return
-    }
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/jose',
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body,
-    })
-  })
+async function expectTotals(page: Page, result: RoundComparison) {
+  const panel = page.locator('.results-panel')
+  await expect(panel).toBeVisible()
+  await expect(panel).toContainText(format.format(result.first.validVotes))
+  await expect(panel).toContainText(format.format(result.second.validVotes))
+  await expect(page.getByRole('table', { name: 'Comparação de votos por candidatura' })).toBeVisible()
 }
 
-function payload(jws: string): { v: { vv: string } } {
-  const part = jws.trim().split('.')[1]
-  if (!part) throw new Error('Invalid test fixture')
-  return JSON.parse(Buffer.from(part, 'base64url').toString('utf8'))
-}
-
-async function expectValidVotes(page: Page, expected: number) {
-  const table = page.getByRole('table', { name: 'Votos por candidatura · percentuais dos votos válidos' })
-  await expect(table.getByRole('row', { name: /Total de votos válidos/ }))
-    .toContainText(format.format(expected))
-}
-
-test('overall, domestic, state and municipality journeys preserve shareable navigation', async ({ page }) => {
-  await mockOfficialFeeds(page)
+test('both-round domestic journeys preserve summary-first layout, filters and shareable navigation', async ({ page }) => {
   await page.goto('/')
-  await expectValidVotes(page, Number(payload(await fixture('overall.jws')).v.vv))
-  const scopes = page.getByRole('navigation', { name: 'Abrangência dos resultados' })
-  await scopes.getByRole('button', { name: 'Brasil', exact: true }).click()
-  const metadata = JSON.parse(await fixture('municipalities.json')) as { abr: { cd: string }[] }
-  const stateResults = await Promise.all(metadata.abr.filter((state) => state.cd !== 'zz')
-    .map(async (state) => Number(payload(await fixture(`state-${state.cd}.jws`)).v.vv)))
-  await expectValidVotes(page, stateResults.reduce((total, votes) => total + votes, 0))
-  const stateTable = page.getByRole('table', { name: 'Resultados por estado' })
-  await expect(stateTable.getByRole('row')).toHaveCount(28)
-  await expect(stateTable.getByRole('row', { name: /SÃO PAULO/ })).toContainText(/votos/)
-  await expect(stateTable.getByRole('row', { name: /DISTRITO FEDERAL/ })).toContainText(/dos válidos/)
-  const summary = page.getByRole('region', { name: 'Votos para presidente' })
-  expect(await summary.evaluate((element) =>
+  await expectTotals(page, comparison('overall'))
+  await page.getByRole('navigation', { name: 'Abrangência dos resultados' })
+    .getByRole('button', { name: 'Brasil', exact: true }).click()
+  await expectTotals(page, comparison('domestic'))
+  const states = page.getByRole('table', { name: 'Resultados por estado' })
+  await expect(states.getByRole('row')).toHaveCount(28)
+  expect(await page.locator('.results-panel').evaluate((element) =>
     Boolean(element.compareDocumentPosition(document.querySelector('.geography-table-card')!) & Node.DOCUMENT_POSITION_FOLLOWING),
   )).toBe(true)
   await page.getByLabel('Buscar estado', { exact: true }).fill('sao')
-  await expect(stateTable.getByRole('row')).toHaveCount(2)
+  await expect(states.getByRole('row')).toHaveCount(2)
   await expect(page).toHaveURL(/\?visao=brasil$/)
-  await expectValidVotes(page, stateResults.reduce((total, votes) => total + votes, 0))
+  await expectTotals(page, comparison('domestic'))
   await page.getByRole('button', { name: 'Limpar filtros' }).click()
   await page.getByLabel('Estado', { exact: true }).selectOption('sp')
-  await expect(stateTable.getByRole('row')).toHaveCount(2)
-  await expect(page).toHaveURL(/\?visao=brasil$/)
-  await stateTable.getByRole('link', { name: 'SÃO PAULO', exact: true }).click()
-  await expectValidVotes(page, Number(payload(await fixture('state-sp.jws')).v.vv))
+  await expect(states.getByRole('row')).toHaveCount(2)
+  await states.getByRole('link', { name: 'SÃO PAULO', exact: true }).click()
+  await expectTotals(page, comparison('state:sp'))
   await page.getByLabel('Município', { exact: true }).selectOption('71072')
   await expect(page).toHaveURL(/visao=brasil&uf=sp&municipio=71072/)
-  const cityVotes = Number(payload(await fixture('municipality-sp71072.jws')).v.vv)
-  await expectValidVotes(page, cityVotes)
+  await expectTotals(page, comparison('municipality:sp:71072'))
   await page.reload()
-  await expectValidVotes(page, cityVotes)
+  await expectTotals(page, comparison('municipality:sp:71072'))
   await page.goBack()
   await expect(page).toHaveURL(/visao=brasil&uf=sp$/)
-  await expectValidVotes(page, Number(payload(await fixture('state-sp.jws')).v.vv))
+  await expectTotals(page, comparison('state:sp'))
 })
 
-test('overseas and Portugal use the complete official constituent results', async ({ page }) => {
-  await mockOfficialFeeds(page)
+test('overseas country comparisons use complete static pairs and table-only metric selection', async ({ page }) => {
   await page.goto('/?visao=exterior')
-  await expectValidVotes(page, Number(payload(await fixture('overseas.jws')).v.vv))
+  await expectTotals(page, comparison('overseas'))
   const countries = page.getByRole('table', { name: 'Resultados por país de votação' })
-  await expect(countries.getByRole('row')).toHaveCount(134)
-  await expect(countries.getByRole('row', { name: /Portugal/ })).toContainText(/votos/)
-  await expect(countries.getByRole('row', { name: /Albânia/ })).toContainText(/Indisponível/)
-  await page.setViewportSize({ width: 360, height: 800 })
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+  await expect(countries.getByRole('row')).toHaveCount(summary.metadata.countries.length + 1)
   await page.getByLabel('País de votação', { exact: true }).selectOption('portugal')
   await expect(countries.getByRole('row')).toHaveCount(2)
+  const lula = summary.finalists.find((candidate) => candidate.number === '13')
+  if (!lula) throw new Error('Missing canonical Lula identity')
+  await page.getByLabel('Métrica de comparação', { exact: true }).selectOption(lula.id)
+  const portugal = comparison('country:portugal')
+  await expect(countries).toContainText(format.format(portugal.first.votes[lula.id]!))
+  await expect(countries).toContainText(format.format(portugal.second.votes[lula.id]!))
   await expect(page).toHaveURL(/\?visao=exterior$/)
-  await expectValidVotes(page, Number(payload(await fixture('overseas.jws')).v.vv))
+  await expectTotals(page, comparison('overseas'))
   await countries.getByRole('link', { name: 'Portugal', exact: true }).click()
-  const mapping = JSON.parse(await readFile(
-    path.join(process.cwd(), 'src', 'data', 'geography', 'countries.json'), 'utf8',
-  )) as { countries: { id: string; localityCodes: string[] }[] }
-  const country = mapping.countries.find((item) => item.id === 'portugal')
-  if (!country) throw new Error('Missing official Portugal mapping')
-  const counts = await Promise.all(country.localityCodes.map(async (code) =>
-    Number(payload(await fixture(`locality-zz${code}.jws`)).v.vv),
-  ))
-  await expectValidVotes(page, counts.reduce((total, value) => total + value, 0))
   await expect(page).toHaveURL(/visao=exterior&pais=portugal/)
-  await expect(page.getByText(/3 de 3/)).toBeVisible()
+  await expectTotals(page, portugal)
 })
 
-test('invalid signatures and malformed navigation never look like valid zero results', async ({ page }) => {
-  const signed = (await fixture('overall.jws')).trim()
-  const [header, body, signature] = signed.split('.')
-  if (!header || !body || !signature) throw new Error('Invalid fixture')
-  const modifiedSignature = `${signature[0] === 'A' ? 'B' : 'A'}${signature.slice(1)}`
-  await mockOfficialFeeds(page, () => `${header}.${body}.${modifiedSignature}`)
+test('initial views do not fetch city shards, live feeds or poll; cities share one state shard', async ({ page }) => {
+  const requested: string[] = []
+  page.on('request', (request) => requested.push(request.url()))
+  await page.clock.install()
   await page.goto('/')
-  await expect(page.getByRole('alert')).toContainText(/assinatura|verifica|autentic/i)
+  await expectTotals(page, comparison('overall'))
+  const shardUrls = Object.values(manifest.municipalities).map((resource) => `/data/2026/${resource.path}`)
+  expect(requested.filter((url) => shardUrls.some((suffix) => url.endsWith(suffix)))).toHaveLength(0)
+  await page.getByRole('button', { name: 'Exterior', exact: true }).click()
+  await expectTotals(page, comparison('overseas'))
+  const count = requested.length
+  await page.clock.fastForward('02:00')
+  expect(requested).toHaveLength(count)
+  await page.goto('/?visao=brasil&uf=sp')
+  await expectTotals(page, comparison('state:sp'))
+  const resource = manifest.municipalities.sp!
+  const shardSuffix = `/data/2026/${resource.path}`
+  await page.getByLabel('Município', { exact: true }).selectOption('71072')
+  await expectTotals(page, comparison('municipality:sp:71072'))
+  const other = sp.comparisons.find((item) => item.geography.id !== 'municipality:sp:71072')
+  if (!other) throw new Error('Missing second city for shard cache test')
+  await page.getByLabel('Município', { exact: true }).selectOption(other.geography.id.split(':')[2]!)
+  await expectTotals(page, other)
+  expect(requested.filter((url) => url.endsWith(shardSuffix))).toHaveLength(1)
+  expect(requested.some((url) => url.includes('resultados.tse.jus.br'))).toBe(false)
+})
+
+test('tampered static data and malformed navigation fail explicitly instead of displaying zeros', async ({ page }) => {
+  await page.route(`**/data/2026/${manifest.summary.path}`, async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ ...summary, version: 'tampered-version' }),
+    })
+  })
+  await page.goto('/')
+  await expect(page.getByRole('alert')).toContainText(/integridade|hash|SHA-256|tamanho|verifica|versão|inválid/i)
   await expect(page.getByRole('table')).toHaveCount(0)
   await page.goto('/?visao=brasil&municipio=71072')
   await expect(page.getByRole('alert')).toContainText(/endereço|localidade/i)
   await expect(page.getByRole('table')).toHaveCount(0)
 })
 
-test('small-screen layout stays within the viewport and table sorting is keyboard accessible', async ({ page }) => {
-  await mockOfficialFeeds(page)
-  await page.setViewportSize({ width: 360, height: 800 })
-  await page.goto('/')
-  await expect(page.getByRole('table')).toBeVisible()
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
-  const votesHeading = page.getByRole('columnheader', { name: 'Votos', exact: true })
-  await votesHeading.getByRole('button').focus()
-  await page.keyboard.press('Enter')
-  await expect(votesHeading).toHaveAttribute('aria-sort', 'ascending')
-  await page.keyboard.press('Space')
-  await expect(votesHeading).toHaveAttribute('aria-sort', 'descending')
+test('missing municipality data never reuses the parent result or invents a comparison', async ({ page }) => {
+  const resource = manifest.municipalities.sp!
+  await page.route(`**/data/2026/${resource.path}`, (route) =>
+    route.fulfill({ status: 404, body: 'Unavailable test shard' }),
+  )
+  await page.goto('/?visao=brasil&uf=sp&municipio=71072')
+  await expect(page.getByRole('alert')).toContainText(/indisponível|404|carregar/i)
+  await expect(page.getByRole('table')).toHaveCount(0)
 })
 
-test('candidate comparison uses a fixed midpoint and party colors on desktop and mobile', async ({ page }) => {
-  await mockOfficialFeeds(page)
+test('two stacked charts retain party colors and exact midpoint on desktop and mobile', async ({ page }) => {
   await page.goto('/')
-  const chart = page.getByRole('img', { name: /Comparação dos votos válidos/ })
-  await expect(chart).toBeVisible()
-  const colors = await chart.locator('.results-stack-segment').evaluateAll((segments) =>
-    segments.map((segment) => getComputedStyle(segment).backgroundColor),
+  await expectTotals(page, comparison('overall'))
+  const charts = page.locator('.results-stack-track')
+  await expect(charts).toHaveCount(2)
+  const colors = await charts.first().locator('.results-stack-segment').evaluateAll((elements) =>
+    elements.map((element) => getComputedStyle(element).backgroundColor),
   )
-  expect(colors).toEqual(['rgb(196, 30, 58)', 'rgb(21, 94, 171)'])
+  expect(colors.slice(0, 2)).toEqual(['rgb(196, 30, 58)', 'rgb(21, 94, 171)'])
+  expect(colors).toHaveLength(3)
+  await expect(charts.nth(1).locator('.results-stack-segment')).toHaveCount(2)
+  const candidates = page.getByRole('table', { name: 'Comparação de votos por candidatura' })
+  await expect(candidates.getByRole('row')).toHaveCount(3)
+  await expect(candidates).not.toContainText('Outros')
   for (const width of [1280, 360]) {
-    await page.setViewportSize({ width, height: 800 })
-    const geometry = await chart.evaluate((element) => {
-      const track = element.getBoundingClientRect()
-      const marker = element.querySelector('.results-midpoint')?.getBoundingClientRect()
-      const segments = [...element.querySelectorAll('.results-stack-segment')]
-        .map((segment) => segment.getBoundingClientRect().width)
-      return {
-        expectedMidpoint: track.x + track.width / 2,
-        actualMidpoint: marker ? marker.x + marker.width / 2 : null,
-        trackWidth: track.width,
-        segmentsWidth: segments.reduce((sum, segment) => sum + segment, 0),
-      }
-    })
-    expect(geometry.actualMidpoint).not.toBeNull()
-    expect(geometry.actualMidpoint).toBeCloseTo(geometry.expectedMidpoint, 0)
-    expect(geometry.segmentsWidth).toBeCloseTo(geometry.trackWidth, 0)
+    await page.setViewportSize({ width, height: 900 })
+    for (const chart of await charts.all()) {
+      const geometry = await chart.evaluate((element) => {
+        const track = element.getBoundingClientRect()
+        const marker = element.querySelector('.results-midpoint')!.getBoundingClientRect()
+        const segments = [...element.querySelectorAll('.results-stack-segment')]
+        return {
+          trackWidth: track.width,
+          midpointDifference: Math.abs(marker.x + marker.width / 2 - track.x - track.width / 2),
+          segmentWidth: segments.reduce((sum, segment) => sum + segment.getBoundingClientRect().width, 0),
+        }
+      })
+      expect(geometry.midpointDifference).toBeLessThan(0.1)
+      expect(geometry.segmentWidth).toBeCloseTo(geometry.trackWidth, 0)
+    }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   }
-})
-
-test('a failed refresh retains the last successful snapshot with an explicit warning', async ({ page }) => {
-  await mockOfficialFeeds(page)
-  await page.goto('/')
-  const votes = Number(payload(await fixture('overall.jws')).v.vv)
-  await expectValidVotes(page, votes)
-  await page.route('**/dados/br/br-c0001-e006258-u.jws', async (route) => {
-    await route.fulfill({ status: 503, body: 'Temporarily unavailable' })
-  })
-  await page.getByRole('button', { name: 'Atualizar agora', exact: true }).click()
-  await expect(page.getByRole('alert')).toContainText(/últim|desatualizad/i, { timeout: 15_000 })
-  await expectValidVotes(page, votes)
+  const header = candidates.getByRole('columnheader').filter({ has: page.getByRole('button') }).first()
+  await header.getByRole('button').focus()
+  await page.keyboard.press('Enter')
+  const direction = await header.getAttribute('aria-sort')
+  await page.keyboard.press('Space')
+  expect(await header.getAttribute('aria-sort')).not.toBe(direction)
 })

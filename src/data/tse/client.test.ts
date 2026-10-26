@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { createHash } from 'node:crypto'
 import { generateKeyPair, SignJWT } from 'jose'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import mapping from '../geography/countries.json'
@@ -43,8 +44,25 @@ describe('official pinned JWS verification', () => {
   it.each([
     'elections', 'municipalities', 'overall', 'overseas',
     'state-sp', 'municipality-sp71072', 'locality-zz29513',
+    'comparison-elections', 'first-municipalities', 'second-municipalities',
+    'first-overall', 'first-state-sp', 'second-overall', 'first-overseas', 'second-overseas',
+    'first-zero-overseas', 'second-zero-overseas',
   ])('verifies the actual signed %s fixture and decodes UTF-8 exactly', async (name) => {
     expect(await verifyOfficialJws(fixtureText(name, 'jws'))).toEqual(payload(name))
+  })
+
+  it('preserves exact signed comparison source and payload hashes in fixture provenance', () => {
+    const provenance = JSON.parse(fixtureText('comparison-sources')) as {
+      captures: Array<{ name: string; sha256: string; payloadSha256: string; url: string }>
+    }
+    for (const capture of provenance.captures) {
+      const token = fixtureText(capture.name, 'jws')
+      const bytes = Buffer.from(token.trim().split('.')[1]!, 'base64url')
+      expect(createHash('sha256').update(token).digest('hex')).toBe(capture.sha256)
+      expect(createHash('sha256').update(bytes).digest('hex')).toBe(capture.payloadSha256)
+      expect(bytes.toString('utf8')).toBe(fixtureText(capture.name))
+      expect(capture.url.startsWith('https://resultados.tse.jus.br/oficial/')).toBe(true)
+    }
   })
 
   it('rejects payload tampering and broken signatures', async () => {
@@ -83,6 +101,70 @@ describe('official pinned JWS verification', () => {
 })
 
 describe('discovery and complete government-source country mapping', () => {
+  it('discovers and verifies both official presidential rounds with explicit inventory coverage', async () => {
+    const source = await verifyOfficialJws(fixtureText('comparison-elections', 'jws'))
+    const firstElection = discoverElection(source, '1')
+    const secondElection = discoverElection(source, '2')
+    expect(firstElection).toMatchObject({ id: '6257', round: '1', date: '2026-10-04' })
+    expect(secondElection).toMatchObject({ id: '6258', round: '2', date: '2026-10-25' })
+    const first = normalizeMetadata(firstElection, await verifyOfficialJws(fixtureText('first-municipalities', 'jws')))
+    const second = normalizeMetadata(secondElection, await verifyOfficialJws(fixtureText('second-municipalities', 'jws')))
+    expect(first.states).toEqual(second.states)
+    expect(first.countries).toEqual(second.countries)
+    expect(first.overseasMunicipalities).toEqual(second.overseasMunicipalities)
+    expect(first.states.flatMap((state) => state.municipalities)).toHaveLength(5571)
+    expect(first.overseasMunicipalities).toHaveLength(186)
+    expect(() => normalizeMetadata({ ...firstElection, id: '9999' }, payload('first-municipalities'))).toThrow('não cobre')
+  })
+
+  it('normalizes signed first-round counts and canonical finalists independent of candidate order', async () => {
+    const election = discoverElection(payload('comparison-elections'), '1')
+    const data = normalizeMetadata(election, payload('first-municipalities'))
+    const source = await verifyOfficialJws(fixtureText('first-overall', 'jws'))
+    const snapshot = normalizeResult(source, data, { state: 'br' })
+    expect(snapshot.validVotes).toBe(119300788)
+    expect(snapshot.candidates).toHaveLength(12)
+    expect(snapshot.candidates.find((item) => item.number === '13')).toMatchObject({ id: '280002542548', party: 'PT' })
+    expect(snapshot.candidates.find((item) => item.number === '22')).toMatchObject({ id: '280002551544', party: 'PL' })
+    expect(snapshot.candidates.reduce((sum, item) => sum + item.votes, 0)).toBe(snapshot.validVotes)
+    expect(snapshot.countingComplete).toBe(true)
+    expect(() => normalizeResult(source, metadata(), { state: 'br' })).toThrow('turno')
+  })
+
+  it.each([
+    ['1', 'first', '119300788'],
+    ['2', 'second', '124082273'],
+  ] as const)('verifies the final round %s national and overseas contracts, including official zero-vote locations', async (round, prefix, nationalVotes) => {
+    const data = normalizeMetadata(
+      discoverElection(payload('comparison-elections'), round),
+      payload(`${prefix}-municipalities`),
+    )
+    const national = normalizeResult(await verifyOfficialJws(fixtureText(`${prefix}-overall`, 'jws')), data, { state: 'br' })
+    const overseas = normalizeResult(await verifyOfficialJws(fixtureText(`${prefix}-overseas`, 'jws')), data, { state: 'zz' })
+    expect(national.validVotes).toBe(Number(nationalVotes))
+    expect(national.countingComplete).toBe(true)
+    expect(overseas.countingComplete).toBe(true)
+    const zero = normalizeResult(
+      await verifyOfficialJws(fixtureText(`${prefix}-zero-overseas`, 'jws')),
+      data, { state: 'zz', municipality: '29424' },
+    )
+    expect(zero).toMatchObject({
+      validVotes: 0, totalVotes: 0, countingComplete: true, sections: { total: 1, counted: 1 },
+    })
+    expect(zero.candidates.every((candidate) => candidate.votes === 0)).toBe(true)
+  })
+
+  it('rejects unreviewed vote destinations, including zero-vote annulled candidates', () => {
+    const source = JSON.parse(fixtureText('first-overall')) as {
+      carg: Array<{ agr: Array<{ par: Array<{ cand: Array<{ dvt?: string }> }> }> }>
+    }
+    source.carg[0]!.agr[0]!.par[0]!.cand[0]!.dvt = 'Anulado'
+    const data = normalizeMetadata(discoverElection(payload('comparison-elections'), '1'), payload('first-municipalities'))
+    expect(() => normalizeResult(source, data, { state: 'br' })).toThrow('Destino de votos')
+    delete source.carg[0]!.agr[0]!.par[0]!.cand[0]!.dvt
+    expect(normalizeResult(source, data, { state: 'br' }).validVotes).toBe(119300788)
+  })
+
   it('discovers the presidential runoff, preserves codes, and covers all 186 overseas localities once', () => {
     const data = metadata()
     expect(data.election).toMatchObject({ id: '6258', cycle: 'ele2026', round: '2', date: '2026-10-25' })
@@ -233,7 +315,7 @@ describe('official count and geography normalization', () => {
     const changed = result()
     changed.v.vv = String(Number(changed.v.vv) - 10)
     changed.v.van = '10'
-    expect(normalizeResult(changed, metadata(), { state: 'br' }).totalVotes).toBe(3751061)
+    expect(() => normalizeResult(changed, metadata(), { state: 'br' })).toThrow('inconsistentes')
   })
 
   it('accepts the official uppercase publication flag', () => {
@@ -267,6 +349,20 @@ describe('official count and geography normalization', () => {
 })
 
 describe('transport integration', () => {
+  it('loads and requests the explicitly selected first-round signed sources', async () => {
+    vi.mocked(fetchOfficialText).mockResolvedValueOnce(fixtureText('comparison-elections', 'jws'))
+      .mockResolvedValueOnce(fixtureText('first-municipalities', 'jws'))
+    const signal = new AbortController().signal
+    const data = await loadMetadata(signal, '1')
+    expect(data.election.id).toBe('6257')
+    expect(fetchOfficialText).toHaveBeenNthCalledWith(2, '/oficial/ele2026/6257/config/mun-e006257-cm.jws', signal)
+    vi.mocked(fetchOfficialText).mockResolvedValueOnce(fixtureText('first-overall', 'jws'))
+    expect((await loadDirectResult(data, { state: 'br' }, signal)).validVotes).toBe(119300788)
+    expect(fetchOfficialText).toHaveBeenLastCalledWith(
+      '/oficial/ele2026/6257/dados/br/br-c0001-e006257-u.jws', signal,
+    )
+  })
+
   it('loads only signed discovery and metadata files through the shared transport', async () => {
     vi.mocked(fetchOfficialText).mockResolvedValueOnce(fixtureText('elections', 'jws'))
       .mockResolvedValueOnce(fixtureText('municipalities', 'jws'))

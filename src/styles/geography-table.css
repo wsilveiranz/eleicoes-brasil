@@ -19,6 +19,8 @@
 .geography-table-filters :is(input, select, button) { min-height: 44px; }
 .geography-table-scroll {
   overflow: auto;
+  width: 100%;
+  max-width: 100%;
   max-height: 36rem;
   border: 1px solid #dce3e8;
   border-radius: 10px;
@@ -37,6 +39,23 @@
   background: #f6f8f9;
   text-align: left;
 }
+.geography-sort {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-align: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+.geography-sort:focus-visible,
+.geography-table-scroll:focus-visible {
+  outline: 3px solid #155eab;
+  outline-offset: 3px;
+}
+.geography-sort span { white-space: nowrap; }
 .geography-results-table tbody th { text-align: left; min-width: 200px; }
 .geography-results-table tbody tr:last-child > * { border-bottom: 0; }
 .geography-results-table tbody tr:nth-child(even) { background: #fafbf9; }
@@ -44,6 +63,8 @@
 .geography-results-table small { display: block; margin-top: 5px; font-weight: 400; color: #4d6071; }
 .geography-results-table .geography-number { text-align: right; font-variant-numeric: tabular-nums; }
 .geography-number strong { white-space: nowrap; }
+.geography-results-table td.geography-number { color: #263a4b; white-space: nowrap; }
+.geography-results-table .geography-provenance { font-size: .72rem; }
 .geography-candidate-key {
   display: inline-block;
   width: .65rem;
@@ -51,5 +72,4 @@
   margin-right: .4rem;
   border-radius: 50%;
 }
-.geography-results-table .geography-row-error { color: #8a3e19; max-width: 300px; }
 .geography-table-note { margin-bottom: 0; }

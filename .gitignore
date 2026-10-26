@@ -10,3 +10,4 @@ blob-report/
 .env
 .env.*
 !.env.example
+.tse-import-cache/

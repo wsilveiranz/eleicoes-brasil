@@ -31,19 +31,19 @@ function unique(values: string[], field: string) {
   }
 }
 
-export function discoverElection(payload: unknown): ElectionMetadata['election'] {
+export function discoverElection(payload: unknown, round: '1' | '2' = '2'): ElectionMetadata['election'] {
   const source = parseSource(discoverySchema, payload)
   const matches = source.pl.flatMap((cycle) =>
     cycle.e.filter((election) =>
       cycle.c === 'ele2026' &&
-      election.t === '2' &&
+      election.t === round &&
       election.abr.some((scope) =>
         scope.cd === 'br' && scope.cp.some((office) => office.cd === '1'),
       ),
     ).map((election) => ({ cycle, election })),
   )
   if (matches.length !== 1) {
-    throw new AwaitingPublicationError('Eleição presidencial de 2026, segundo turno, ausente ou ambígua.')
+    throw new AwaitingPublicationError(`Eleição presidencial de 2026, turno ${round}, ausente ou ambígua.`)
   }
   const match = matches[0]!
   const date = sourceDate(match.cycle.dt)
@@ -54,7 +54,7 @@ export function discoverElection(payload: unknown): ElectionMetadata['election']
     name: match.election.nm,
     date,
     year: 2026,
-    round: '2',
+    round,
   }
 }
 
@@ -65,7 +65,9 @@ export function normalizeMetadata(
 ): ElectionMetadata {
   const source = parseSource(municipalitySchema, payload)
   const countries = parseSource(countryMappingSchema, mapping)
-  if (countries.election !== election.id || countries.cycle !== election.cycle) {
+  const reviewedFirstRound = countries.election === '6258' && election.id === '6257' &&
+    countries.cycle === 'ele2026' && election.round === '1'
+  if ((countries.election !== election.id && !reviewedFirstRound) || countries.cycle !== election.cycle) {
     throw new OfficialValidationError('O mapeamento oficial de países não cobre esta eleição.')
   }
   unique(source.abr.map((state) => state.cd), 'UF')
@@ -108,10 +110,10 @@ export function normalizeMetadata(
   }
 }
 
-export async function loadMetadata(signal: AbortSignal): Promise<ElectionMetadata> {
+export async function loadMetadata(signal: AbortSignal, round: '1' | '2' = '2'): Promise<ElectionMetadata> {
   const discovery = await verifyOfficialJws(await fetchOfficialText('/oficial/comum/config/ele-c.jws', signal))
   signal.throwIfAborted()
-  const election = discoverElection(discovery)
+  const election = discoverElection(discovery, round)
   const path = `/oficial/${election.cycle}/${election.id}/config/mun-e${election.id.padStart(6, '0')}-cm.jws`
   const municipalities = await verifyOfficialJws(await fetchOfficialText(path, signal))
   signal.throwIfAborted()
@@ -152,7 +154,7 @@ export function normalizeResult(
   const envelope = parseSource(resultEnvelopeSchema, payload)
   const expectedType = location.municipality !== undefined ? 'mu' : location.state === 'br' ? 'br' : 'uf'
   if (
-    envelope.ele !== metadata.election.id || envelope.t !== '2' || envelope.f !== 'o' ||
+    envelope.ele !== metadata.election.id || envelope.t !== metadata.election.round || envelope.f !== 'o' ||
     envelope.tpabr !== expectedType || envelope.cdabr !== (location.municipality ?? location.state) ||
     envelope.carg.length !== 1 || envelope.carg[0]?.cd !== '1'
   ) {
@@ -160,6 +162,15 @@ export function normalizeResult(
   }
   if (envelope.dv !== 's' && envelope.dv !== 'S') throw new AwaitingPublicationError()
   const result = parseSource(resultSchema, payload)
+  for (const group of result.carg[0]!.agr) {
+    for (const party of group.par) {
+      for (const candidate of party.cand) {
+        if (candidate.dvt !== undefined && candidate.dvt !== 'Válido') {
+          throw new OfficialValidationError(`Destino de votos não revisado: ${candidate.dvt}.`)
+        }
+      }
+    }
+  }
   const candidates = result.carg[0]!.agr.flatMap((group) =>
     group.par.flatMap((party) => party.cand.map((candidate) => ({
       id: candidate.sqcand,
@@ -180,7 +191,7 @@ export function normalizeResult(
     result.s.st > result.s.ts ||
     (result.s.snt !== undefined && sum([result.s.st, result.s.snt]) !== result.s.ts) ||
     // Annulled votes can be separate from the displayed candidate tallies.
-    vv > vvc || candidateVotes < vv || candidateVotes > vvc ||
+    vv > vvc || candidateVotes !== vv ||
     candidates.some((candidate) => candidate.votes > vv) ||
     sum([vvc, vb, tvn]) !== tv ||
     (vn !== undefined && vnt !== undefined && sum([vn, vnt]) !== tvn)
@@ -211,7 +222,7 @@ export async function loadDirectResult(
 ): Promise<ResultSnapshot> {
   requestedGeography(metadata, location)
   if (!/^ele2026$/.test(metadata.election.cycle) || !/^\d+$/.test(metadata.election.id) ||
-    metadata.election.round !== '2' || metadata.election.year !== 2026) {
+    !['1', '2'].includes(metadata.election.round) || metadata.election.year !== 2026) {
     throw new OfficialValidationError('Metadados da eleição inválidos.')
   }
   const { state, municipality } = location

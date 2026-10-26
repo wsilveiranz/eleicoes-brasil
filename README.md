@@ -1,105 +1,185 @@
-# Eleições Brasil — Presidência 2026, segundo turno
+# Brasil em votos — comparação dos turnos de 2026
 
-Painel independente em português, estático, feito com Vite, React e TypeScript.
-Consulta resultados oficiais do TSE diretamente no navegador; não é um serviço da Justiça Eleitoral.
-Não usa backend, banco de dados, credenciais de API nem proxy de desenvolvimento.
+Painel independente em português para comparar os resultados finais da eleição
+presidencial de 2026. React, TypeScript e Vite, sem backend, banco de dados,
+credenciais ou consultas periódicas ao TSE por visitante.
+
+**Site:** https://wsilveiranz.github.io/eleicoes-brasil/
+
+## Leitura da comparação
+
+As mesmas localidades estão disponíveis nos dois turnos:
+
+- **Total geral:** Brasil e exterior, conforme a totalização oficial.
+- **Brasil:** soma dos 26 estados e DF, com detalhamento por UF e município.
+- **Exterior:** total oficial ZZ, com detalhamento por país/território de votação.
+
+Cada página mostra primeiro a comparação da localidade: votos válidos dos dois
+turnos e sua variação, duas barras de participação percentual, barras de votos
+absolutos em escala comum e tabela dos finalistas. Lula/PT usa vermelho;
+Flávio Bolsonaro/PL, azul. Os demais candidatos aparecem apenas no bloco neutro
+**Outros** da barra do primeiro turno, não como uma candidatura do segundo turno.
+
+As barras percentuais usam **os votos válidos da própria localidade e do próprio
+turno**. A linha de 50% é uma referência de participação, não progresso de apuração.
+As barras absolutas compartilham a mesma escala entre os dois candidatos e turnos
+na localidade selecionada.
+
+A diferença de votos é `segundo turno − primeiro turno`. A diferença de participação
+é expressa em **pontos percentuais**, calculados antes do arredondamento.
+O crescimento relativo do total de votos válidos usa o primeiro turno como base.
+Denominadores iguais a zero produzem `—`, não percentuais inventados.
+
+**Mudanças agregadas não identificam como eleitores individuais mudaram seu voto.**
+O painel não atribui os votos de Outros a nenhum finalista.
+Brancos e nulos permanecem separados dos votos válidos.
+
+Nas páginas Brasil/Exterior, os filtros e o seletor de métrica afetam apenas a
+tabela de estados/países, nunca o resultado geral ou o endereço. A métrica inicial
+é o total de votos válidos; também é possível comparar cada finalista e ordenar
+as variações. Os nomes das localidades abrem os detalhes.
 
 ## Executar e verificar
 
-Requer Node.js compatível com `engines.node` do `package.json`: `^22.12.0 || >=24.0.0`, e npm.
-O navegador precisa oferecer WebCrypto com Ed25519 (navegador moderno e contexto seguro: HTTPS ou localhost).
+Requer Node.js compatível com `engines.node` em `package.json` e npm. O navegador
+deve oferecer WebCrypto em contexto seguro (HTTPS ou localhost).
 
 ```powershell
 npm ci
 npm run dev
 ```
 
-Abra o endereço informado pelo Vite. Comandos de qualidade e produção:
-
 ```powershell
 npm run typecheck
 npm run lint
 npm run test
+npm run data:check
+python scripts\generate-country-map.py --check
 npx playwright install chromium
 npm run test:e2e
 npm run build
 npm run preview
 ```
 
-O Playwright precisa do runtime de navegador Chromium instalado pelo comando acima.
-`build` inclui a checagem de tipos e gera `dist`; `preview` serve esse artefato localmente, não é um servidor de produção.
-Esses comandos são instruções de execução, não uma declaração de que todas as verificações passaram.
+`build` inclui a checagem de tipos e gera `dist`. Os testes de navegador exercitam
+o artefato de produção com os dados estáticos, incluindo alterações indevidas
+em arquivos, navegação, filtros, cache por UF e disposição em telas pequenas.
 
-## Escopos e leitura dos números
+## Dados estáticos e proveniência
 
-- **Total geral:** agregado oficial, incluindo Brasil e exterior.
-- **Brasil:** soma completa das 27 UFs domésticas (26 estados e DF), excluindo ZZ; não subtrai o exterior do total geral. Permite selecionar UF e município.
-- **Exterior:** agregado oficial ZZ; cada país soma suas localidades de votação mapeadas, sem duplicações.
-- As páginas principais mostram primeiro o resultado geral, seguido de busca/filtros e tabela por estado/DF ou país, com avanço da apuração e votos/% local por candidatura. Os filtros alteram somente as linhas, sem modificar os totais gerais; os nomes abrem o detalhamento. Linhas indisponíveis ou desatualizadas são sinalizadas.
-- Barras e tabela mostram candidato, partido, votos e percentual sobre **votos válidos do recorte selecionado** (`v.vv`). Brancos e nulos são separados, com percentual sobre **votos totais** (`v.tv`).
-- Percentuais agregados são recalculados após somar contagens inteiras; denominador zero não significa 0%. Ausência de dados não é zero.
-- Progresso usa seções totalizadas/total de seções (`s.st / s.ts`), não a média dos percentuais locais.
+Os dados publicados ficam em `public\data\2026\`. Um manifesto versionado descreve
+o resumo e os arquivos municipais por UF, com tamanho e SHA-256. O navegador
+valida os arquivos antes de apresentá-los; não usa fixtures ou resultados de outra
+eleição como fallback.
 
-Não há previsões nem inferência de vencedor pela liderança; eventual indicação de eleito depende do status oficial.
-Horários da fonte e da consulta são distintos. Agregados podem reunir horários diferentes, não uma fotografia atômica:
-totais de pai e filhos consultados separadamente podem divergir durante a atualização.
+O resumo reúne os dois turnos para os totais geral/Brasil/exterior e para todas
+as UFs e países. Os resultados municipais são carregados apenas ao selecionar
+um município: uma consulta obtém o arquivo de sua UF e o reutiliza para os demais
+municípios daquele estado. Não há download de todos os resultados municipais na
+entrada nem tempestade de consultas individuais por país.
 
-## Fontes, assinatura e atualização
+O conjunto inicial contém 5.571 municípios brasileiros e 133 países/territórios
+nos dois turnos. Manifesto e resumo somam aproximadamente **371 KB sem compressão**;
+o maior arquivo municipal por UF tem aproximadamente **681 KB**. O conjunto
+completo, incluindo a proveniência das 11.575 fontes assinadas, ocupa cerca de
+**9,25 MB**, mas não é carregado inteiro na entrada.
 
-Referência pública: https://resultados.tse.jus.br/oficial/app/index.html
-O cliente descobre e valida eleição, turno, cargo e geografia; não usa candidatos fixos nem troca silenciosamente de eleição.
-Endpoints JWS observados para o segundo turno de 2026 (eleição `6258`, cargo `0001`):
+O manifesto e a interface registram a data da importação. Cada resultado preserva
+os horários da fonte, a cobertura e o status final de ambos os turnos.
+**Final não significa imutável:** eventuais retificações oficiais exigem uma nova
+importação revisada e publicação. O site não mistura automaticamente um retrato
+estático com resultados ao vivo.
 
-```text
-https://resultados.tse.jus.br/oficial/comum/config/ele-c.jws
-https://resultados.tse.jus.br/oficial/ele2026/6258/config/mun-e006258-cm.jws
-https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.jws
-https://resultados.tse.jus.br/oficial/ele2026/6258/dados/zz/zz-c0001-e006258-u.jws
-https://resultados.tse.jus.br/oficial/ele2026/6258/dados/sp/sp-c0001-e006258-u.jws
-https://resultados.tse.jus.br/oficial/ele2026/6258/dados/sp/sp71072-c0001-e006258-u.jws
+### Atualizar a captura
+
+```powershell
+npm run data:import
+npm run data:check
 ```
 
-`src\data\tse\trust.ts` fixa a JWK pública Ed25519 revisada no aplicativo oficial, build `26.10.17 (7216371)`.
-Essa chave **não é segredo**. O build oficial inspecionado não anuncia URL pública de rotação automática.
-Chave desconhecida, algoritmo incorreto ou assinatura inválida bloqueiam o dado (fail closed); não basta decodificar base64.
-Antes de atualizar o pin, verifique um novo build oficial por HTTPS e sua configuração de confiança; nunca aceite chaves fornecidas pelo próprio token.
-O contrato e a proveniência das capturas estão em `tests\fixtures\official-contract.json`.
-Fixtures de resultados são exclusivamente para testes: nunca são dados de produção nem fallback offline.
+A execução padrão retoma a mesma captura e reutiliza arquivos já verificados.
+Para obter eventuais **retificações**, inicie uma captura com um nome novo:
 
-Com a página visível, a atualização ocorre a cada 30 segundos, sujeita a falhas e backoff.
-As consultas são carregadas sob demanda por visão, com limite global de quatro requisições simultâneas.
-Na visão geral do Exterior, a tabela consulta todas as 186 localidades para compor os 133 países/territórios, mantendo falhas isoladas por país. Brasil reutiliza as 27 UFs já consultadas, sem duplicar requisições para a tabela.
-Falha ao atualizar preserva o último snapshot bem-sucedido **da mesma visão**, com aviso de dados desatualizados; não publica soma incompleta como completa.
-O cache é em memória e por visitante, sem cache compartilhado nem garantia de capacidade em alto tráfego ou de cota do TSE.
+```powershell
+npm run data:import -- --capture correction-2026-11-01
+```
 
-## Mapeamento de países
+Use o mesmo nome para retomar essa nova captura caso seja interrompida. Os nomes
+são identificadores locais; não selecionam outra eleição nem alteram o escopo.
+Revise os dados e execute as verificações antes de publicar a nova versão.
 
-Fonte: https://www.tre-df.jus.br/eleicoes/mesas-receptoras-de-votos-no-exterior-2026
-Os ZIPs oficiais preservados em `tests\fixtures\tre-df-*-2026.zip` contêm planilhas País/Cidade de votação eletrônica, manual e seções dispensadas.
-`tests\fixtures\tre-df-sources.json` registra URLs, coleta e SHA-256; o gerador valida esses hashes e os da configuração TSE capturada.
-O arquivo gerado `src\data\geography\countries.json` registra proveniência por linha e cobre 186 códigos únicos, com 133 rótulos oficiais.
+A importação consulta as fontes oficiais, verifica suas assinaturas e valida
+eleição, turno, cargo, candidatos, localidade, contagens, finalização e cobertura.
+Ela reutiliza capturas bem-sucedidas de um cache local para permitir retomada,
+limita a concorrência e respeita falhas e intervalos solicitados pela fonte.
+O cache de captura não integra o site publicado.
+
+Antes de publicar, é necessário verificar todos os municípios/localidades e
+reconciliar seus totais com UFs, exterior, países e total geral. Ausência de
+dados não é zero. Uma importação incompleta não substitui o conjunto publicado.
+Revise o manifesto, a proveniência e os relatórios de verificação junto com os
+arquivos gerados. `data:check` e o CI validam os arquivos locais sem baixar
+novamente os resultados oficiais.
+
+### Fontes oficiais e confiança
+
+Aplicativo oficial: https://resultados.tse.jus.br/oficial/app/index.html
+
+Descoberta das eleições:
+https://resultados.tse.jus.br/oficial/comum/config/ele-c.jws
+
+Os identificadores verificados para presidente em 2026 são **6257**, primeiro
+turno de 04/10, e **6258**, segundo turno de 25/10, ciclo `ele2026`, cargo `0001`.
+Os arquivos oficiais são JWS assinados, não JSON que possa ser aceito apenas
+decodificando base64.
+
+`src\data\tse\trust.ts` fixa a chave pública Ed25519 revisada no aplicativo
+oficial, build `26.10.17 (7216371)`. Essa chave **não é segredo**.
+Chave/algoritmo desconhecido ou assinatura inválida bloqueiam a importação.
+O build inspecionado não anuncia endereço público de rotação automática:
+revise o aplicativo oficial antes de atualizar a chave; nunca aceite material
+de confiança fornecido pelo próprio token.
+
+Votos válidos usam `v.vv`, não `v.tv` nem um denominador recalculado para ocultar
+divergências. Seções contabilizadas usam `s.st`, e a finalização usa o indicador
+oficial `tf`, não apenas um percentual visual de 100%.
+Os contratos e as capturas de testes anteriores continuam documentados em
+`tests\fixtures\official-contract.json`; fixtures nunca são dados de produção.
+
+## Mapeamento dos países
+
+Fonte:
+https://www.tre-df.jus.br/eleicoes/mesas-receptoras-de-votos-no-exterior-2026
+
+O mapeamento em `src\data\geography\countries.json` deriva das planilhas oficiais
+do TRE-DF, com proveniência por linha. A cobertura é conferida contra o inventário
+dos dois turnos: 186 localidades em 133 países/territórios.
 
 ```powershell
 python scripts\generate-country-map.py --check
-python scripts\generate-country-map.py
 ```
 
-Requer Python 3 (somente biblioteca padrão). `--check` compara sem atualizar; sem opção, regenera a partir das fontes locais, sem baixá-las.
-Para atualizar fontes, obtenha novamente os ZIPs oficiais e metadados TSE verificados, revise proveniência/hashes e aliases explícitos, regenere e valide cobertura completa/única e testes antes de publicar.
-Nunca deduza países por nomes de cidades nem omita códigos novos sem aviso.
-São preservados os rótulos **País** publicados, não uma normalização ISO de soberania: Caiena aparece como **Guiana Francesa** na planilha eletrônica e Saint Georges de Loyapock como **França** na de seções dispensadas.
-“País” indica o local de votação, não residência ou cidadania do eleitor.
+O gerador usa apenas a biblioteca padrão do Python e verifica os hashes das
+fontes preservadas em `tests\fixtures`. Não deduza países por nomes de cidades.
+Os rótulos são os publicados pelo TRE-DF, não uma classificação ISO inferida:
+Caiena aparece como Guiana Francesa e Saint Georges de Loyapock como França.
+O recorte indica o **local de votação**, não residência ou cidadania do eleitor.
 
-## Publicação estática e limites
+## Publicação
 
-Hospedagem: GitHub Pages em https://wsilveiranz.github.io/eleicoes-brasil/ .
-O workflow `.github/workflows/pages.yml` valida e publica o site a cada push em `main`, ou manualmente pela aba Actions.
-Em Settings → Pages, a origem de publicação deve ser **GitHub Actions**. O deploy usa as permissões do workflow; não exige token pessoal nos arquivos do projeto.
-Para hospedar em outro provedor:
-Após as verificações, execute `npm run build` e publique **o conteúdo de `dist`** em GitHub Pages, Netlify ou qualquer hospedagem estática equivalente, sem runtime Node no destino.
-`vite.config.ts` usa `base: './'`, permitindo raiz ou subdiretório; mantenha a estrutura dos arquivos e a URL de diretório com barra final.
-A navegação usa parâmetros de consulta, portanto não exige regras de rewrite de rotas.
-Sirva por HTTPS, com MIME correto para HTML, JavaScript e CSS; teste abertura direta, recarga e links com query na raiz/subcaminho escolhido.
-Antes de liberar, confira fetch real e CORS **a partir da origem final**: sucesso local não garante permissão futura.
-Disponibilidade, publicação, correções e políticas de acesso dos endpoints externos do TSE estão fora do controle deste painel.
-Se o tráfego exigir cache compartilhado/proxy, isso requer nova decisão de arquitetura, não configuração secreta no frontend.
+O workflow `.github\workflows\pages.yml` valida os dados, código e build, e publica
+o conteúdo de `dist` no GitHub Pages a cada push em `main`. Não importa novamente
+milhares de arquivos do TSE durante builds comuns.
+
+O site é portátil para qualquer hospedagem estática HTTPS. `vite.config.ts`
+usa `base: './'`; mantenha a estrutura dos arquivos e a barra final do diretório.
+A navegação usa parâmetros de consulta e não requer rewrites:
+
+```text
+?visao=brasil
+?visao=brasil&uf=sp&municipio=71072
+?visao=exterior&pais=portugal
+```
+
+Verifique abertura direta, recarga, voltar/avançar e carregamento dos arquivos
+de dados no subcaminho real antes de divulgar uma nova publicação.

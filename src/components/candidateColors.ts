@@ -6,7 +6,7 @@ const partyColors: Readonly<Record<string, string>> = {
 }
 const fallbackColors = ['#355e85', '#865339', '#586c3e', '#79547e', '#316f70', '#85546a']
 
-export function candidateColor(candidate: CandidateResult): string {
+export function candidateColor(candidate: Pick<CandidateResult, 'id' | 'number' | 'party'>): string {
   const partyColor = partyColors[candidate.party.toUpperCase()]
   if (partyColor) return partyColor
   const hash = Array.from(candidate.number || candidate.id).reduce(
