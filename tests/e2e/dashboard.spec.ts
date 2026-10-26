@@ -167,6 +167,27 @@ test('two stacked charts retain party colors and exact midpoint on desktop and m
   await expect(candidates.getByRole('row').last()).toContainText(format.format(comparison('overall').first.otherVotes))
   for (const width of [1280, 360]) {
     await page.setViewportSize({ width, height: 900 })
+    const headings = await candidates.locator('thead button').evaluateAll((buttons) =>
+      buttons.map((button) => {
+        const range = document.createRange()
+        range.selectNodeContents(button.firstChild!)
+        return {
+          lines: range.getClientRects().length,
+          textWidth: range.getBoundingClientRect().width,
+          availableWidth: button.getBoundingClientRect().width,
+        }
+      }),
+    )
+    for (const heading of headings) {
+      expect(heading.lines).toBe(1)
+      expect(heading.textWidth).toBeGreaterThan(0)
+      expect(heading.textWidth).toBeLessThan(heading.availableWidth)
+    }
+    if (width === 1280) {
+      expect(await candidates.evaluate((table) =>
+        table.scrollWidth <= table.parentElement!.clientWidth + 1,
+      )).toBe(true)
+    }
     for (const chart of await charts.all()) {
       const geometry = await chart.evaluate((element) => {
         const track = element.getBoundingClientRect()

@@ -162,7 +162,7 @@
   font: inherit;
   font-weight: 650;
   text-align: inherit;
-  white-space: normal;
+  white-space: nowrap;
   cursor: pointer;
   border-radius: .25rem;
 }

@@ -281,21 +281,21 @@ describe('ResultsPanel', () => {
 
   it('exposes focusable sorting controls, semantic headers, and independently scrollable table', () => {
     render(panel())
-    const numberHeader = screen.getByRole('columnheader', { name: 'Número' })
+    const numberHeader = screen.getByRole('columnheader', { name: 'Nº' })
     expect(numberHeader).toHaveAttribute('aria-sort', 'ascending')
-    const votes = screen.getByRole('button', { name: 'Votos · 2º turno' })
+    const votes = screen.getByRole('button', { name: 'Votos · 2º: Votos no 2º turno' })
     votes.focus()
     expect(votes).toHaveFocus()
     expect(votes).toHaveAttribute('type', 'button')
     fireEvent.click(votes)
     expect(candidateRows()[0]).toHaveTextContent('Bolsonaro')
-    expect(screen.getByRole('columnheader', { name: 'Votos · 2º turno' })).toHaveAttribute('aria-sort', 'ascending')
+    expect(screen.getByRole('columnheader', { name: 'Votos · 2º' })).toHaveAttribute('aria-sort', 'ascending')
     expect(numberHeader).toHaveAttribute('aria-sort', 'none')
     fireEvent.click(votes)
     expect(candidateRows()[0]).toHaveTextContent('Lula')
     expect(votes).toHaveFocus()
-    expect(screen.getByRole('columnheader', { name: 'Votos · 2º turno' })).toHaveAttribute('aria-sort', 'descending')
-    fireEvent.click(screen.getByRole('button', { name: 'Variação em pp' }))
+    expect(screen.getByRole('columnheader', { name: 'Votos · 2º' })).toHaveAttribute('aria-sort', 'descending')
+    fireEvent.click(screen.getByRole('button', { name: 'Dif. (pp): Variação em pontos percentuais' }))
     expect(candidateRows()[0]).toHaveTextContent('Bolsonaro')
     expect(screen.getByRole('region', { name: 'Tabela de votos por candidatura' })).toHaveAttribute('tabindex', '0')
     expect(within(screen.getByRole('table')).getAllByRole('rowheader')).toHaveLength(3)
@@ -320,9 +320,9 @@ describe('ResultsPanel', () => {
 
   it('keeps tied values deterministically ordered by ballot number', () => {
     render(panel(comparison({}, { votes: { '13': 1200, '22': 1200 } })))
-    fireEvent.click(screen.getByRole('button', { name: 'Votos · 2º turno' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Votos · 2º: Votos no 2º turno' }))
     expect(candidateRows()[0]).toHaveTextContent('Lula')
-    fireEvent.click(screen.getByRole('button', { name: 'Votos · 2º turno' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Votos · 2º: Votos no 2º turno' }))
     expect(candidateRows()[0]).toHaveTextContent('Lula')
     expect(segments(stacks()[1]!)[0]).toHaveStyle({ width: '50%' })
     expect(segments(stacks()[1]!)[1]).toHaveStyle({ width: '50%' })
@@ -347,6 +347,19 @@ describe('ResultsPanel', () => {
     expect(screen.getByText(/não formam um retrato simultâneo/)).toBeVisible()
     expect(screen.getByRole('link', { name: /Tribunal Superior Eleitoral/ })).toHaveAttribute('href', 'https://resultados.tse.jus.br/oficial/app/index.html')
     expect(screen.queryByText(/Consulta aos dados/)).not.toBeInTheDocument()
+  })
+
+  it('uses compact headings with full descriptions and visible labels in accessible names', () => {
+    render(panel())
+    const buttons = within(screen.getByRole('table')).getAllByRole('button')
+    const labels = ['Nº', 'Nome', 'Partido', 'Votos · 1º', '% · 1º', 'Votos · 2º', '% · 2º', 'Dif. votos', 'Dif. (pp)']
+    expect(buttons.map((button) => button.firstChild?.textContent)).toEqual(labels)
+    buttons.forEach((button, index) => {
+      expect(button.getAttribute('aria-label')).toContain(labels[index])
+      expect(button).toHaveAttribute('title')
+    })
+    expect(buttons[4]).toHaveAttribute('title', 'Percentual dos votos válidos no 1º turno')
+    expect(buttons[8]).toHaveAttribute('title', 'Variação em pontos percentuais')
   })
 
   it('reports incomplete finality/coverage as secondary provenance, never fabricated complete analysis', () => {

@@ -232,10 +232,10 @@ export function ResultsPanel({ comparison, finalists, elections }: ResultsPanelP
   const maximum = Math.max(0, ...[...values.values()].flatMap(({ firstVotes, secondVotes }) =>
     [firstVotes, secondVotes]))
 
-  function sortableHeading(key: SortKey, label: string, numeric = false) {
+  function sortableHeading(key: SortKey, label: string, numeric = false, description = label) {
     return (
       <th scope="col" aria-sort={sort.key === key ? sort.direction : 'none'} className={numeric ? 'results-number' : undefined}>
-        <button type="button" onClick={() => setSort((previous) => ({
+        <button type="button" title={description} aria-label={description === label ? label : `${label}: ${description}`} onClick={() => setSort((previous) => ({
           key, direction: previous.key === key && previous.direction === 'ascending' ? 'descending' : 'ascending',
         }))}>
           {label}
@@ -319,6 +319,7 @@ export function ResultsPanel({ comparison, finalists, elections }: ResultsPanelP
         <h3>Comparação das candidaturas</h3>
         <p className="results-muted" id={tableHintId}>
           Use os botões dos cabeçalhos para ordenar. Percentuais usam os votos válidos de cada turno.
+          1º e 2º indicam os turnos; Dif. indica a diferença entre o 2º e o 1º turno.
           A diferença de participações é expressa em pontos percentuais (pp), não em variação relativa (%).
           Outros reúne as demais candidaturas do 1º turno e permanece na última linha, sem comparação com o 2º turno.
           Em telas pequenas, deslize a tabela horizontalmente.
@@ -328,15 +329,15 @@ export function ResultsPanel({ comparison, finalists, elections }: ResultsPanelP
             <caption>Comparação de votos por candidatura</caption>
             <thead>
               <tr>
-                {sortableHeading('number', 'Número')}
+                {sortableHeading('number', 'Nº', false, 'Número')}
                 {sortableHeading('name', 'Nome')}
                 {sortableHeading('party', 'Partido')}
-                {sortableHeading('firstVotes', 'Votos · 1º turno', true)}
-                {sortableHeading('firstShare', '% válidos · 1º turno', true)}
-                {sortableHeading('secondVotes', 'Votos · 2º turno', true)}
-                {sortableHeading('secondShare', '% válidos · 2º turno', true)}
-                {sortableHeading('voteChange', 'Variação de votos', true)}
-                {sortableHeading('percentagePointChange', 'Variação em pp', true)}
+                {sortableHeading('firstVotes', 'Votos · 1º', true, 'Votos no 1º turno')}
+                {sortableHeading('firstShare', '% · 1º', true, 'Percentual dos votos válidos no 1º turno')}
+                {sortableHeading('secondVotes', 'Votos · 2º', true, 'Votos no 2º turno')}
+                {sortableHeading('secondShare', '% · 2º', true, 'Percentual dos votos válidos no 2º turno')}
+                {sortableHeading('voteChange', 'Dif. votos', true, 'Variação de votos')}
+                {sortableHeading('percentagePointChange', 'Dif. (pp)', true, 'Variação em pontos percentuais')}
               </tr>
             </thead>
             <tbody>
