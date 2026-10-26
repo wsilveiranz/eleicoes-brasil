@@ -100,8 +100,14 @@ permitem comparação lado a lado. Não são percentuais de preferência em cada
 O perfil etário mede **comparecimento por idade**, não votos por candidato.
 Mostra a distribuição das pessoas que compareceram, aptos, taxa de comparecimento,
 participação nos presentes e, quando ambos os turnos estão completos, diferenças
-absolutas e em pontos percentuais. As faixas oficiais são preservadas, incluindo
-categorias desconhecidas quando presentes. Comparecimento por idade não revela
+absolutas e em pontos percentuais. Gráficos e tabelas usam oito grupos:
+**16–17, 18–24, 25–34, 35–44, 45–54, 55–64, 65–69 e 70+**.
+Idade desconhecida/inválida fica separada, sem excluir essas pessoas dos totais.
+Os grupos somam contagens antes de calcular taxas e participações; não são médias
+dos percentuais originais. `age-turnout.json` preserva as faixas oficiais para
+reutilização e análises com outros recortes. Novos códigos de faixa não mapeados
+geram erro explícito de validação, nunca descarte silencioso.
+Comparecimento por idade não revela
 preferências individuais nem prova que uma faixa etária causou um resultado.
 
 ### Atualização automática do perfil etário

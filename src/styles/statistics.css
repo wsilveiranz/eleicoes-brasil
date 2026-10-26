@@ -23,7 +23,7 @@
 .statistics-table thead th, .statistics-table caption { background: #f6f8f9; }
 .statistics-table caption { text-align: left; padding: 12px; }
 .statistics-table tbody tr:nth-child(even) { background: #fafbf9; }
-.statistics-age-table tbody th { position: sticky; left: 0; background: #fff; }
+.statistics-age-table tbody th { position: sticky; left: 0; background: #fff; min-width: 8rem; max-width: 10rem; white-space: normal; overflow-wrap: anywhere; }
 .statistics-age-table tbody tr:nth-child(even) th { background: #fafbf9; }
 .statistics-round-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: .9rem; }
 .statistics-round-picker select { min-height: 44px; border: 1px solid #b9cbbf; border-radius: 6px; padding: 8px; font: inherit; }

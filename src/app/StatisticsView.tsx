@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import type { DatasetSummary } from '../domain/comparison'
-import { regionalVotes } from '../domain/statistics'
+import { ageGroups, groupAgeBands, regionalVotes } from '../domain/statistics'
 import { regions } from '../domain/regions'
 import { loadAgeData, loadParticipation, type AgeData, type AgeBand, type ParticipationData } from '../data/statistics'
 import { candidateColor } from '../components/candidateColors'
@@ -12,8 +12,7 @@ import '../styles/statistics.css'
 
 const ageColors = [
   '#1b4965', '#276749', '#7356a1', '#a66317', '#a53f62', '#126e82', '#57613a', '#864930',
-  '#4460a0', '#8e466b', '#236c61', '#6a5980', '#85611d', '#596f89', '#65717c', '#954153',
-  '#3a6372', '#78684b', '#43548b', '#6e8141', '#8c5f79', '#496664', '#866c60',
+  '#65717c',
 ]
 function publicationLabel(round: AgeData['first'], title: string) {
   return round.status === 'not-published'
@@ -22,13 +21,12 @@ function publicationLabel(round: AgeData['first'], title: string) {
 }
 
 function AgeStatistics({ data }: { data: AgeData }) {
-  const first = data.first
-  const second = data.second
-  const bands = [...new Map([...first.bands, ...second.bands].map((band) => [band.code, band])).values()]
-    .sort((a, b) => Number(a.code) - Number(b.code))
+  const first = { ...data.first, bands: groupAgeBands(data.first.bands) }
+  const second = { ...data.second, bands: groupAgeBands(data.second.bands) }
   const firstMap = new Map(first.bands.map((band) => [band.code, band]))
   const secondMap = new Map(second.bands.map((band) => [band.code, band]))
-  const bandColors = new Map(bands.map((band, index) => [band.code, ageColors[index % ageColors.length]!]))
+  const bands = ageGroups.filter(({ code }) => firstMap.has(code) || secondMap.has(code))
+  const bandColors = new Map(ageGroups.map((band, index) => [band.code, ageColors[index % ageColors.length]!]))
   const totals = {
     first: first.bands.reduce((sum, band) => sum + band.attended, 0),
     second: second.bands.reduce((sum, band) => sum + band.attended, 0),
@@ -49,6 +47,9 @@ function AgeStatistics({ data }: { data: AgeData }) {
         participação no comparecimento usa todos os que compareceram naquele turno. Brasil e exterior.</p>
       <p>Esta fonte tem data de geração e cadastro próprios; seus totais podem diferir dos arquivos de resultados usados nas barras acima.
         Os números de cada fonte são preservados, sem ajustes artificiais.</p>
+      <p>Oito faixas para facilitar a comparação: 16–17, 18–24, 25–34, 35–44, 45–54, 55–64, 65–69 e 70+.
+        Idades desconhecidas ou inválidas ficam separadas e permanecem nos totais.
+        Taxas e participações são recalculadas a partir das contagens somadas.</p>
       <p>Última tentativa: <time dateTime={data.checkedAt}>{timeText(data.checkedAt)}</time>.
         {' '}Última verificação bem-sucedida: {data.lastSuccessAt ? <time dateTime={data.lastSuccessAt}>{timeText(data.lastSuccessAt)}</time> : 'nenhuma'}.
         {' '}Verificação automática diária, sujeita à disponibilidade do TSE e do GitHub.</p>
@@ -56,7 +57,7 @@ function AgeStatistics({ data }: { data: AgeData }) {
       {stale && <p role="status" className="statistics-warning">Verificação atrasada: não houve confirmação bem-sucedida da fonte nas últimas 72 horas.</p>}
       <div className="statistics-pair">
         {(['first', 'second'] as const).map((key) => {
-          const round = data[key]
+          const round = key === 'first' ? first : second
           const title = key === 'first' ? '1º turno' : '2º turno'
           return (
             <div key={key}>
@@ -203,7 +204,8 @@ export function StatisticsView({ summary }: { summary: DatasetSummary }) {
             O perfil etário vem de outro sistema/data de geração e pode ter totais diferentes; não há ajuste artificial entre as fontes.</p>
           <p>Regiões: classificação IBGE, DF no Centro-Oeste. Norte, Nordeste, Centro-Oeste, Sudeste e Sul cobrem as 27 UFs sem sobreposição.</p>
           <p>Idade: <a href="https://dadosabertos.tse.jus.br/dataset/comparecimento-e-abstencao-2026">Comparecimento e Abstenção · TSE 2026</a>.
-            Faixas oficiais preservadas, incluindo categorias desconhecidas quando presentes. Apenas contagens agregadas são publicadas neste site.</p>
+            As faixas oficiais são somadas em oito grupos na apresentação, sem estimativas nem médias de percentuais.
+            Os arquivos JSON preservam as faixas originais; categorias desconhecidas ou inválidas ficam separadas. Apenas contagens agregadas são publicadas neste site.</p>
           <p>A verificação diária só substitui dados após validação de ano, turnos, UFs e reconciliação.
             Falhas preservam o último conjunto válido, com aviso explícito. Uma comparação etária requer ambos os turnos com todas as UFs e exterior.</p>
           {ages.data?.sha256 && <p>SHA-256 do arquivo etário: <code>{ages.data.sha256}</code>.</p>}

@@ -24,7 +24,7 @@ function ageData(): AgeData {
     first: {
       status: 'available', sourceGeneratedAt: '2026-10-13T19:46:32Z',
       states: [...regions.flatMap(({ states }) => [...states]), 'zz'].map((code) => code.toUpperCase()),
-      bands: [{ code: '1617', label: '16 a 17 anos', eligible: 100, attended: 80, abstained: 20 }],
+      bands: [{ code: '1600', label: '16 anos', eligible: 100, attended: 80, abstained: 20 }],
     },
     second: { status: 'not-published', sourceGeneratedAt: null, states: [], bands: [] },
   }
@@ -93,6 +93,25 @@ describe('participation and electoral profile', () => {
     expect(row.children[9]).toHaveTextContent('+10')
     expect(row.children[10]).toHaveTextContent('+10,00 pp')
     expect(row.children[11]).toHaveTextContent('0,00 pp')
+  })
+
+  it('sums age counts before rates and shares, keeping unknown ages in the denominator and both chart and table', async () => {
+    const ages = ageData()
+    ages.first.bands.push(
+      { code: '1700', label: '17 anos', eligible: 300, attended: 150, abstained: 150 },
+      { code: '-3', label: 'Inválido', eligible: 10, attended: 2, abstained: 8 },
+    )
+    vi.mocked(loadAgeData).mockResolvedValue(ages)
+    show()
+    const section = await screen.findByRole('region', { name: 'Comparecimento por faixa etária' })
+    const row = within(section).getByRole('row', { name: /16 a 17 anos/ })
+    expect(row.children[1]).toHaveTextContent(/^400$/)
+    expect(row.children[2]).toHaveTextContent(/^230$/)
+    expect(row.children[3]).toHaveTextContent('57,50%')
+    expect(row.children[4]).toHaveTextContent('99,14%')
+    expect(within(section).getByRole('row', { name: /Idade desconhecida\/inválida/ }).children[2]).toHaveTextContent(/^2$/)
+    expect(within(section).getByRole('img')).toHaveAccessibleName(/16 a 17 anos, 230.*Idade desconhecida\/inválida, 2/)
+    expect(within(section).queryByRole('rowheader', { name: /^17 anos$/ })).not.toBeInTheDocument()
   })
 
   it('surfaces source refresh failure and stale checks while retaining last valid ages', async () => {

@@ -48,6 +48,9 @@ test('statistics is shareable, accessible, lazy-loaded and preserves result navi
   const ageSection = page.getByRole('region', { name: 'Comparecimento por faixa etária' })
   await expect(ageSection).toBeVisible()
   await expect(ageSection.getByRole('table')).toHaveCount(1)
+  await expect(ageSection.getByRole('row')).toHaveCount(11)
+  await expect(ageSection.getByRole('row', { name: /16 a 17 anos/ })).toContainText('1.426.988')
+  await expect(ageSection.getByRole('row', { name: /Idade desconhecida\/inválida/ })).toContainText('681')
   if (ages.second.status !== 'available') {
     await expect(ageSection).toContainText(/2º turno:.*ainda não publicados|2º turno:.*incompleta/)
   }
@@ -84,8 +87,8 @@ test('new complete second-round age data enables comparison without a frontend c
   updated.refresh = 'ok'
   updated.error = null
   updated.second = { ...structuredClone(updated.first), sourceGeneratedAt: '2026-10-26T12:00:00Z' }
-  updated.first.bands = [{ code: '1617', label: '16 a 17 anos', eligible: 100, attended: 80, abstained: 20 }]
-  updated.second.bands = [{ code: '1617', label: '16 a 17 anos', eligible: 100, attended: 90, abstained: 10 }]
+  updated.first.bands = [{ code: '1600', label: '16 anos', eligible: 100, attended: 80, abstained: 20 }]
+  updated.second.bands = [{ code: '1600', label: '16 anos', eligible: 100, attended: 90, abstained: 10 }]
   await page.route('**/data/2026/age-turnout.json', (route) => route.fulfill({ json: updated }))
   await page.goto('/?area=estatisticas')
   const section = page.getByRole('region', { name: 'Comparecimento por faixa etária' })

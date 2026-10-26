@@ -30,7 +30,7 @@ export function ageFixture(): AgeData {
       status: 'available', sourceGeneratedAt: '2026-10-13T19:46:32Z',
       states: [...regions.flatMap(({ states }) => [...states]), 'zz'].map((state) => state.toUpperCase()),
       bands: [
-        { code: '1617', label: '16 a 17 anos', eligible: 100, attended: 80, abstained: 20 },
+        { code: '1600', label: '16 anos', eligible: 100, attended: 80, abstained: 20 },
         { code: '7074', label: '70 a 74 anos', eligible: 200, attended: 100, abstained: 100 },
       ],
     },
@@ -74,6 +74,7 @@ describe('age-turnout data contract', () => {
       (data: AgeData) => { data.first.states.pop() },
       (data: AgeData) => { data.first.bands.push(data.first.bands[0]!) },
       (data: AgeData) => { data.first.bands[0]!.attended += 1 },
+      (data: AgeData) => { data.first.bands[0]!.code = 'unrecognized' },
       (data: AgeData) => { data.first.status = 'not-published' },
       (data: AgeData) => { data.first.sourceGeneratedAt = '2022-10-26T00:00:00Z' },
       (data: AgeData) => { data.lastSuccessAt = null },

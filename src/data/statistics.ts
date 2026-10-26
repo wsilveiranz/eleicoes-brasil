@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { ResultDataError } from '../domain/results'
 import { regions } from '../domain/regions'
+import { groupAgeBands } from '../domain/statistics'
 
 const count = z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)
 const time = z.iso.datetime({ offset: true })
@@ -94,6 +95,7 @@ export function parseAgeData(value: unknown): AgeData {
         data.sha256 !== null && data.lastSuccessAt !== null, 'Cobertura ou proveniência etária incompleta.')
       check(Date.parse(round.sourceGeneratedAt) >= Date.parse(round === data.first ? '2026-10-04' : '2026-10-25'),
         'Data do perfil etário anterior ao turno.')
+      groupAgeBands(round.bands)
     } else {
       check(round.bands.length === 0, 'Perfil etário parcial não pode ser apresentado como completo.')
       check(round.status !== 'not-published' || round.states.length === 0, 'Publicação etária inconsistente.')
