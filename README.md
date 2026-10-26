@@ -53,8 +53,9 @@ consultar brancos, nulos, seções contabilizadas e horários de cada turno.
 
 ### Mapa do segundo turno
 
-Total geral e Brasil incluem um mapa das 27 UFs depois do resumo e antes da
-tabela geográfica. Vermelho indica Lula; azul, Flávio Bolsonaro. A cor usa
+Somente Brasil inclui um mapa das 27 UFs depois do resumo e antes da
+tabela estadual. Exterior mostra apenas a tabela de países; Total geral não
+mostra mapa nem tabela geográfica. Vermelho indica Lula; azul, Flávio Bolsonaro. A cor usa
 somente a votação final do segundo turno de cada UF, não o primeiro turno ou
 a votação nacional. Empate, ausência de votos válidos ou dados inválidos/não
 finalizados ficam neutros, com motivo textual. A indicação é de candidatura

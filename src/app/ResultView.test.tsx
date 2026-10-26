@@ -12,7 +12,7 @@ vi.mock('../components', () => ({
     <div data-testid="comparison">{comparison.geography.id}</div>,
 }))
 vi.mock('../components/GeographyOverviewTable', () => ({
-  GeographyOverviewTable: () => <div data-testid="overview">Geographic comparisons</div>,
+  GeographyOverviewTable: ({ scope }: { scope: string }) => <div data-testid="overview">{scope}</div>,
 }))
 vi.mock('../components/RunoffStateMap', () => ({
   RunoffStateMap: () => <div data-testid="state-map">Runoff state map</div>,
@@ -66,7 +66,7 @@ describe('static analytical application integration', () => {
     expect(screen.queryByRole('button', { name: /Atualizar agora/ })).not.toBeInTheDocument()
     expect(screen.queryByText(/30 segundos/)).not.toBeInTheDocument()
     expect(screen.queryByTestId('overview')).not.toBeInTheDocument()
-    expect(screen.getByTestId('state-map')).toBeVisible()
+    expect(screen.queryByTestId('state-map')).not.toBeInTheDocument()
     expect(screen.getByText('Fonte, cobertura e demais votos').parentElement).not.toHaveAttribute('open')
   })
 
@@ -121,5 +121,25 @@ describe('static analytical application integration', () => {
     await screen.findByTestId('comparison')
     expect(screen.queryByTestId('state-map')).not.toBeInTheDocument()
     expect(container.querySelector('details')).not.toHaveAttribute('open')
+  })
+
+  it('never leaves a cached country or state table behind when switching views repeatedly', () => {
+    const { client, wrapper } = harness()
+    for (const scope of ['overall', 'domestic', 'overseas'] as const) {
+      client.setQueryData(['comparison', 'capture', scope], {
+        ...overall, geography: { id: scope, kind: scope, label: scope },
+      })
+    }
+    const { rerender, container } = render(
+      <ResultView dataset={dataset} selection={{ scope: 'overseas' }} />, { wrapper },
+    )
+    for (const scope of ['domestic', 'overseas', 'overall', 'domestic', 'overseas', 'domestic'] as const) {
+      rerender(<ResultView dataset={dataset} selection={{ scope }} />)
+      const tables = screen.queryAllByTestId('overview')
+      expect(tables).toHaveLength(scope === 'overall' ? 0 : 1)
+      if (scope !== 'overall') expect(tables[0]).toHaveTextContent(new RegExp(`^${scope}$`))
+      expect(container.querySelectorAll('.results-source-footer')).toHaveLength(1)
+      expect(screen.queryAllByTestId('state-map')).toHaveLength(scope === 'domestic' ? 1 : 0)
+    }
   })
 })

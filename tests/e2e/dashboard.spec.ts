@@ -227,8 +227,8 @@ test('two stacked charts retain party colors and exact midpoint on desktop and m
 })
 
 test('runoff map uses each state winner, supports keyboard navigation and keeps source details collapsed last', async ({ page }) => {
-  await page.goto('/')
-  await expectTotals(page, comparison('overall'))
+  await page.goto('/?visao=brasil')
+  await expectTotals(page, comparison('domestic'))
   const map = page.getByRole('group', { name: 'Mapa do Brasil por UF' })
   await expect(map.getByRole('link')).toHaveCount(27)
   const colors = new Set<string>()
@@ -251,6 +251,10 @@ test('runoff map uses each state winner, supports keyboard navigation and keeps 
   await page.keyboard.press('Enter')
   await expect(sources).toHaveAttribute('open', '')
   await expect(sources.getByRole('region', { name: 'Fonte e cédulas do 1º turno' })).toBeVisible()
+  await page.getByRole('navigation', { name: 'Abrangência dos resultados' })
+    .getByRole('button', { name: 'Total geral', exact: true }).click()
+  await expectTotals(page, comparison('overall'))
+  await expect(map).toHaveCount(0)
   await page.getByRole('button', { name: 'Brasil', exact: true }).click()
   await expectTotals(page, comparison('domestic'))
   await expect(sources).not.toHaveAttribute('open', '')
@@ -271,10 +275,29 @@ test('runoff map uses each state winner, supports keyboard navigation and keeps 
   await page.goto('/?visao=exterior')
   await expectTotals(page, comparison('overseas'))
   await expect(map).toHaveCount(0)
-  await page.goto('/')
+  await page.goto('/?visao=brasil')
   await expect(map).toBeVisible()
   await map.locator('[data-state="sp"]').focus()
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL(/visao=brasil&uf=sp/)
   await expectTotals(page, comparison('state:sp'))
+})
+
+test('cached scope switches never leave country/state tables or maps in the wrong view', async ({ page }) => {
+  await page.goto('/?visao=exterior')
+  await expectTotals(page, comparison('overseas'))
+  for (const [label, id] of [
+    ['Brasil', 'domestic'], ['Exterior', 'overseas'], ['Total geral', 'overall'],
+    ['Brasil', 'domestic'], ['Exterior', 'overseas'], ['Brasil', 'domestic'],
+    ['Total geral', 'overall'],
+  ] as const) {
+    await page.getByRole('navigation', { name: 'Abrangência dos resultados' })
+      .getByRole('button', { name: label, exact: true }).click()
+    await expectTotals(page, comparison(id))
+    await expect(page.getByRole('table', { name: 'Resultados por país de votação' })).toHaveCount(id === 'overseas' ? 1 : 0)
+    await expect(page.getByRole('table', { name: 'Resultados por estado' })).toHaveCount(id === 'domestic' ? 1 : 0)
+    await expect(page.locator('.geography-results-table')).toHaveCount(id === 'overall' ? 0 : 1)
+    await expect(page.locator('.state-map-card')).toHaveCount(id === 'domestic' ? 1 : 0)
+    await expect(page.locator('.results-source-footer')).toHaveCount(1)
+  }
 })

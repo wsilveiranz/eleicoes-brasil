@@ -96,7 +96,7 @@ export function ResultView({
             finalists={summary.finalists}
             elections={summary.elections}
           />
-          {(selection.scope === 'overall' || overviewScope === 'domestic') && (
+          {overviewScope === 'domestic' && (
             <RunoffStateMap
               metadata={metadata}
               comparisons={summary.comparisons}
@@ -105,7 +105,7 @@ export function ResultView({
           )}
           {overviewScope && (
             <GeographyOverviewTable
-              key={overviewScope}
+              key={`overview:${overviewScope}`}
               metadata={metadata}
               scope={overviewScope}
               comparisons={summary.comparisons}
@@ -113,7 +113,7 @@ export function ResultView({
             />
           )}
           <MunicipalityNavigation metadata={metadata} selection={selection} onSelect={navigate} />
-          <ResultsProvenance key={selectionId(selection)} comparison={query.data} />
+          <ResultsProvenance key={`provenance:${selectionId(selection)}`} comparison={query.data} />
         </>
       )}
     </section>
