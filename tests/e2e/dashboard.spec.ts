@@ -70,7 +70,19 @@ test('country tables show totals and both finalists together while sorting stays
   await page.goto('/?visao=exterior')
   await expectTotals(page, comparison('overseas'))
   const countries = page.getByRole('table', { name: 'Resultados por país de votação' })
-  await expect(countries.getByRole('row')).toHaveCount(summary.metadata.countries.length * 4 + 1)
+  const noVotes = summary.comparisons.filter((item) =>
+    item.geography.kind === 'country' && item.first.totalVotes === 0 && item.second.totalVotes === 0,
+  )
+  const visibleCount = summary.metadata.countries.length - noVotes.length
+  await expect(countries.getByRole('row')).toHaveCount(visibleCount * 4 + 1)
+  const filter = page.getByLabel('País de votação', { exact: true })
+  await expect(filter.getByRole('option')).toHaveCount(visibleCount + 1)
+  for (const item of noVotes) {
+    await expect(countries.getByRole('rowgroup', { name: `Comparação: ${item.geography.label}`, exact: true })).toHaveCount(0)
+    await expect(filter.locator(`option[value="${item.geography.id.slice('country:'.length)}"]`)).toHaveCount(0)
+  }
+  await expect(countries.getByRole('rowgroup', { name: 'Comparação: Líbia', exact: true })).toBeVisible()
+  await expect(page.getByRole('status')).toContainText(`${visibleCount} de ${visibleCount} países`)
   await page.getByLabel('País de votação', { exact: true }).selectOption('portugal')
   await expect(countries.getByRole('row')).toHaveCount(5)
   const lula = summary.finalists.find((candidate) => candidate.number === '13')
@@ -95,6 +107,8 @@ test('country tables show totals and both finalists together while sorting stays
   await countries.getByRole('link', { name: 'Portugal', exact: true }).click()
   await expect(page).toHaveURL(/visao=exterior&pais=portugal/)
   await expectTotals(page, portugal)
+  await page.goto('/?visao=exterior&pais=albania')
+  await expectTotals(page, comparison('country:albania'))
 })
 
 test('initial views do not fetch city shards, live feeds or poll; cities share one state shard', async ({ page }) => {

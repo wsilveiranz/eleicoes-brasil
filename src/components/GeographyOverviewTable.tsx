@@ -60,12 +60,19 @@ export function GeographyOverviewTable({
   const title = domestic ? 'Resultados por estado' : 'Resultados por país de votação'
   const finalist = finalists.find(({ id }) => id === sortMetric)
   const candidates = [...finalists].sort((a, b) => collator.compare(a.number, b.number))
-  const locations = [...(domestic ? metadata.states : metadata.countries)]
-    .sort((a, b) => collator.compare(a.name, b.name))
   const byGeography = useMemo(
     () => new Map(comparisons.map((comparison) => [comparison.geography.id, comparison])),
     [comparisons],
   )
+  const locations = [...(domestic ? metadata.states : metadata.countries)]
+    .filter((location) => {
+      if (domestic) return true
+      const comparison = byGeography.get(`country:${location.code}`)
+      if (!comparison || comparison.first.totalVotes !== 0 || comparison.second.totalVotes !== 0) return true
+      validVoteComparison(comparison)
+      return false
+    })
+    .sort((a, b) => collator.compare(a.name, b.name))
   const term = normalizeGeographySearch(search.trim())
   const rows = locations
     .filter((location) => (!filter || location.code === filter) &&
@@ -162,6 +169,7 @@ export function GeographyOverviewTable({
       </div>
       <p role="status">
         {rows.length} de {locations.length} {domestic ? 'estados/DF' : 'países de votação'}.
+        {!domestic && ' Países sem votos nos dois turnos não são exibidos.'}
         Os filtros e a ordenação alteram apenas a tabela, não o resultado geral.
       </p>
       <p className="geography-sort-note">

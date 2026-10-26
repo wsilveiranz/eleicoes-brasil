@@ -197,6 +197,51 @@ describe('geographic round comparison table', () => {
     expect(window.location.search).toBe('?visao=brasil&uf=sp')
   })
 
+  it('omits countries with no ballots in both rounds from rows and options, retaining either-round votes and missing data', () => {
+    const zero = { ...round('6257', 0, 0), totalVotes: 0, blankVotes: 0, nullVotes: 0 }
+    const inventory = {
+      ...metadata,
+      countries: [
+        ...metadata.countries,
+        { code: 'firstonly', name: 'Primeiro turno', municipalities: [] },
+        { code: 'secondonly', name: 'Segundo turno', municipalities: [] },
+        { code: 'blankonly', name: 'Só brancos e nulos', municipalities: [] },
+        { code: 'missing', name: 'Sem dados', municipalities: [] },
+      ],
+    }
+    show('overseas', [
+      comparison('country:portugal'),
+      comparison('country:albania', zero, { ...zero, electionId: '6258' }),
+      comparison('country:firstonly', round('6257', 100, 50), { ...zero, electionId: '6258' }),
+      comparison('country:secondonly', zero, round('6258', 100, 50)),
+      comparison('country:blankonly', round('6257', 0, 0), round('6258', 0, 0)),
+    ], inventory)
+    expect(screen.queryByRole('rowgroup', { name: 'Comparação: Albânia' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('option', { name: 'Albânia' })).not.toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('5 de 5 países de votação')
+    for (const name of ['Portugal', 'Primeiro turno', 'Segundo turno', 'Só brancos e nulos', 'Sem dados']) {
+      expect(group(name)).toBeVisible()
+      expect(screen.getByRole('option', { name })).toBeInTheDocument()
+    }
+    expect(totalRow('Sem dados')).toHaveTextContent('Comparação indisponível')
+    fireEvent.change(screen.getByLabelText('Buscar país de votação'), { target: { value: 'albania' } })
+    expect(screen.getByText(/Nenhuma localidade encontrada/)).toBeVisible()
+    fireEvent.click(screen.getByRole('button', { name: 'Limpar filtros' }))
+    expect(screen.queryByRole('rowgroup', { name: 'Comparação: Albânia' })).not.toBeInTheDocument()
+  })
+
+  it('retains zero-vote domestic states and rejects malformed zero-ballot country data', () => {
+    const zero = { ...round('6257', 0, 0), totalVotes: 0, blankVotes: 0, nullVotes: 0 }
+    const { unmount } = show('domestic', [
+      comparison('state:sp', zero, { ...zero, electionId: '6258' }),
+    ])
+    expect(group('SÃO PAULO')).toBeVisible()
+    unmount()
+    expect(() => show('overseas', [
+      comparison('country:albania', { ...zero, validVotes: 1 }, { ...zero, electionId: '6258' }),
+    ])).toThrow(/reconciliam/)
+  })
+
   it('sorts whole locality groups using totals or a selected finalist without hiding any line', () => {
     show('domestic', [
       comparison('state:sp', round('6257', 2000, 100), round('6258', 1000, 900)),

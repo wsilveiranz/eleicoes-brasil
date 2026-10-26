@@ -43,6 +43,10 @@ simultaneamente. Os filtros e a referência de ordenação afetam apenas a tabel
 nunca o resultado geral ou o endereço. A ordenação numérica usa inicialmente o
 total válido e pode usar qualquer finalista sem ocultar as demais linhas.
 Os nomes das localidades abrem os detalhes, incluindo os horários das fontes.
+Na lista e no filtro de países, locais sem nenhum voto nos dois turnos são
+omitidos. Países com votos em pelo menos um turno permanecem; brancos/nulos
+também contam para essa regra. A omissão é apenas visual: não muda os totais,
+os dados preservados ou os links diretos.
 **Fonte, cobertura e demais votos** fica sempre no fim da localidade, depois de
 mapa, tabelas e navegação municipal, recolhido por padrão. Abra a seção para
 consultar brancos, nulos, seções contabilizadas e horários de cada turno.
