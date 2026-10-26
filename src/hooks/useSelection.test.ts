@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { navigate, useSelection } from './useSelection'
+import { navigate, navigateArea, useSelection } from './useSelection'
 
 afterEach(() => {
   window.history.replaceState(null, '', '/')
@@ -33,5 +33,29 @@ describe('useSelection', () => {
     expect(result.current.error?.message).toMatch(/endereço/)
     act(() => result.current.navigate({ scope: 'overall' }))
     expect(result.current.error).toBeNull()
+  })
+
+  it('shares the statistics area while retaining geography and handles history without server routing', () => {
+    window.history.replaceState(null, '', '/elections/?visao=brasil&uf=sp')
+    const { result } = renderHook(useSelection)
+    act(() => navigateArea('statistics'))
+    expect(window.location.pathname).toBe('/elections/')
+    expect(window.location.search).toBe('?visao=brasil&uf=sp&area=estatisticas')
+    expect(result.current.area).toBe('statistics')
+    expect(result.current.selection).toEqual({ scope: 'domestic', state: 'sp' })
+    act(() => navigateArea('results'))
+    expect(window.location.search).toBe('?visao=brasil&uf=sp')
+    expect(result.current.area).toBe('results')
+    act(() => {
+      window.history.replaceState(null, '', '/elections/?area=estatisticas')
+      window.dispatchEvent(new PopStateEvent('popstate'))
+    })
+    expect(result.current.area).toBe('statistics')
+  })
+
+  it.each(['?area=wrong', '?area=estatisticas&area=estatisticas'])('rejects an invalid area: %s', (search) => {
+    window.history.replaceState(null, '', `/${search}`)
+    const { result } = renderHook(useSelection)
+    expect(result.current.error).not.toBeNull()
   })
 })

@@ -1,0 +1,37 @@
+.statistics { display: grid; gap: 20px; min-width: 0; line-height: 1.6; }
+.statistics-card { min-width: 0; background: #fff; border: 1px solid #dce3e8; border-radius: 16px; padding: clamp(18px, 3vw, 32px); overflow-wrap: anywhere; }
+.statistics h3, .statistics h4 { margin: 0 0 8px; }
+.statistics h3 { font-size: 1.2rem; }
+.statistics h4 { font-size: 1rem; }
+.statistics p { color: #4d6071; font-size: .9rem; }
+.statistics-turnout { margin: 20px 0; }
+.statistics-turnout figcaption { font-size: .9rem; margin-bottom: 8px; }
+.statistics-turnout-track { display: flex; height: 32px; overflow: hidden; border-radius: 6px; background: #e9edef; }
+.statistics-turnout-track span { flex-shrink: 0; }
+.statistics-values { display: flex; flex-wrap: wrap; gap: 4px 20px; padding: 0; list-style: none; font-size: .85rem; }
+.statistics-swatch { display: inline-block; width: .8rem; height: .8rem; border-radius: 3px; margin-right: 6px; }
+.statistics-region { border-top: 1px solid #e2e7eb; padding-top: 20px; margin-top: 20px; }
+.statistics-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 24px 0; }
+.statistics-pair > div { min-width: 0; }
+.statistics-pie { margin: 16px 0 0; text-align: center; }
+.statistics-pie svg { width: 100%; max-width: 280px; display: block; margin: 0 auto; }
+.statistics-pie figcaption p { margin: 0; }
+.statistics-table-scroll { overflow: auto; min-width: 0; width: 100%; max-width: 100%; border: 1px solid #dce3e8; border-radius: 8px; }
+.statistics-table { width: 100%; border-collapse: collapse; font-size: .875rem; font-variant-numeric: tabular-nums; }
+.statistics-table :is(th, td) { padding: 12px; border-bottom: 1px solid #e2e7eb; white-space: nowrap; text-align: right; }
+.statistics-table tbody th, .statistics-table thead th:first-child { text-align: left; }
+.statistics-table thead th, .statistics-table caption { background: #f6f8f9; }
+.statistics-table caption { text-align: left; padding: 12px; }
+.statistics-table tbody tr:nth-child(even) { background: #fafbf9; }
+.statistics-age-table tbody th { position: sticky; left: 0; background: #fff; }
+.statistics-age-table tbody tr:nth-child(even) th { background: #fafbf9; }
+.statistics-round-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: .9rem; }
+.statistics-round-picker select { min-height: 44px; border: 1px solid #b9cbbf; border-radius: 6px; padding: 8px; font: inherit; }
+.statistics-warning { border-left: 3px solid #a66317; background: #fff7ed; padding: 12px; }
+.statistics-pending { background: #f4f6f7; padding: 20px; border-radius: 8px; }
+.statistics-source-date { text-align: center; }
+.statistics-sources { background: #f8f9fa; }
+.statistics-sources summary { min-height: 44px; align-content: center; font-weight: 700; cursor: pointer; }
+.statistics :focus-visible { outline: 3px solid #155eab; outline-offset: 3px; }
+.statistics-sources code { overflow-wrap: anywhere; }
+@media (max-width: 600px) { .statistics-pair { grid-template-columns: minmax(0, 1fr); } }

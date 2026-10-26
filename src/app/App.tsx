@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { loadDataset } from '../data/comparison'
-import { useSelection } from '../hooks/useSelection'
+import { navigateArea, useSelection } from '../hooks/useSelection'
 import { GeographyNavigation } from './GeographyNavigation'
 import { ResultView } from './ResultView'
+import { StatisticsView } from './StatisticsView'
 import '../styles/app.css'
 
 export default function App() {
@@ -41,6 +42,10 @@ export default function App() {
       </header>
 
       <main id="conteudo" tabIndex={-1}>
+        <nav className="app-area-navigation" aria-label="Áreas do painel">
+          <button type="button" aria-current={navigation.area === 'results' ? 'page' : undefined} onClick={() => navigateArea('results')}>Resultados</button>
+          <button type="button" aria-current={navigation.area === 'statistics' ? 'page' : undefined} onClick={() => navigateArea('statistics')}>Participação e perfil eleitoral</button>
+        </nav>
         {navigation.error && (
           <div className="app-status app-status-error" role="alert">
             <h2>Localidade inválida</h2>
@@ -70,7 +75,7 @@ export default function App() {
             </button>
           </div>
         )}
-        {dataset.data && navigation.selection && (
+        {dataset.data && navigation.selection && navigation.area === 'results' && (
           <>
             <GeographyNavigation
               metadata={dataset.data.summary.metadata}
@@ -82,6 +87,9 @@ export default function App() {
               selection={navigation.selection}
             />
           </>
+        )}
+        {dataset.data && navigation.selection && navigation.area === 'statistics' && (
+          <StatisticsView summary={dataset.data.summary} />
         )}
       </main>
 

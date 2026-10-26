@@ -159,6 +159,11 @@ button:disabled { cursor: wait; opacity: .65; }
   padding: 28px 0 18px;
 }
 
+.app-area-navigation { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+.app-area-navigation button { min-height: 44px; padding: 10px 16px; border: 1px solid #b9cbbf; border-radius: 8px; background: #fff; color: #244e3d; font: inherit; font-weight: 650; }
+.app-area-navigation button[aria-current="page"] { background: #194b3b; color: #fff; border-color: #194b3b; }
+.app-area-navigation button:focus-visible { outline: 3px solid #155eab; outline-offset: 3px; }
+
 .app-geography-heading h2 {
   margin: 0;
   font-size: 1.5rem;

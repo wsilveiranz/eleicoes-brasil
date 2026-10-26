@@ -11,3 +11,4 @@ blob-report/
 .env.*
 !.env.example
 .tse-import-cache/
+__pycache__/

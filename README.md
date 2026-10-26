@@ -77,6 +77,77 @@ python scripts\generate-state-map.py C:\caminho\BR_UF_2024.zip
 O gerador usa somente a biblioteca padrão do Python, confere o SHA-256 fixado
 da fonte, exige todas as 27 UFs e preserva separadamente códigos IBGE e siglas TSE.
 
+## Participação e perfil eleitoral
+
+A área **Participação e perfil eleitoral** fica separada dos resultados e tem
+endereço compartilhável: `?area=estatisticas`. A navegação de volta aos resultados
+preserva a última localidade selecionada.
+
+As barras de participação comparam comparecimento e abstenção nos dois turnos,
+no total Brasil + exterior e nas cinco regiões brasileiras. O denominador é o
+eleitorado apto publicado na fonte, não votos válidos. Quem votou em branco ou
+nulo compareceu. Eleitores em seções não instaladas ficam em um segmento separado
+de participação sem informação, sem virar abstenção por suposição.
+O TSE documenta 39 registros duplicados por transferência temporária no total
+apto dos arquivos de resultados; preservamos as contagens publicadas, sem uma
+correção regional inventada.
+
+As duas pizzas regionais mostram a **origem dos votos de cada candidato**:
+quanto dos votos de Lula ou Flávio veio de cada região, excluindo o exterior.
+O seletor alterna entre turnos; cores regionais e uma tabela de votos/percentuais
+permitem comparação lado a lado. Não são percentuais de preferência em cada região.
+
+O perfil etário mede **comparecimento por idade**, não votos por candidato.
+Mostra a distribuição das pessoas que compareceram, aptos, taxa de comparecimento,
+participação nos presentes e, quando ambos os turnos estão completos, diferenças
+absolutas e em pontos percentuais. As faixas oficiais são preservadas, incluindo
+categorias desconhecidas quando presentes. Comparecimento por idade não revela
+preferências individuais nem prova que uma faixa etária causou um resultado.
+
+### Atualização automática do perfil etário
+
+O workflow de Pages verifica diariamente, às **09:23 UTC** (agendamento
+best-effort do GitHub), o
+[arquivo oficial de Comparecimento e Abstenção 2026](https://dadosabertos.tse.jus.br/dataset/comparecimento-e-abstencao-2026).
+Também é possível iniciar o workflow manualmente com `refresh_age` habilitado.
+ETag e Last-Modified evitam transferir novamente um arquivo sem alterações.
+Quando necessário, o importador baixa o ZIP com até quatro transferências de
+intervalos simultâneas, verificando ETag/intervalos para não misturar versões.
+
+O arquivo bruto é grande e não integra o site: Python agrega apenas totais por
+faixa/turno, sem publicar os demais cruzamentos demográficos. O CSV BRASIL repete
+as UFs e não é somado novamente. Ano, turnos, códigos das 27 UFs + exterior,
+contagens e reconciliação são verificados; contagens parciais não viram comparação.
+A geração etária usa um sistema/data de fonte diferente dos resultados assinados;
+eventuais diferenças de totais entre fontes não são normalizadas artificialmente.
+
+O job persiste `public\data\2026\age-turnout.json` em um commit automático e publica
+o mesmo commit na mesma execução. Não depende de um novo workflow acionado pelo
+commit do GITHUB_TOKEN nem de PR manual. Quando o TSE disponibilizar o segundo
+turno completo, a comparação aparece automaticamente. Enquanto isso, a interface
+indica publicação ausente ou cobertura incompleta, sem zeros substitutos.
+
+Falhas preservam os últimos dados válidos e publicam o estado de erro; última
+tentativa, última verificação bem-sucedida e data de geração da fonte são separadas.
+A interface avisa após 72 horas sem verificação bem-sucedida. O GitHub pode atrasar
+ou desativar schedules de repositórios públicos inativos; esses casos também
+ficam evidentes pela data/aviso de verificação atrasada. Falhas de push ou build
+aparecem no Actions e impedem publicação. O navegador nunca baixa ZIPs do TSE.
+
+```powershell
+npm run statistics:export
+npm run statistics:refresh
+npm run statistics:check
+python -m unittest discover -s scripts -p "test_*.py"
+```
+
+`statistics:export` exige o cache assinado original e confere todos os hashes com
+a captura publicada; gera `participation.json`, sem alterar o conjunto de votos.
+`statistics:refresh` consulta a fonte etária HTTPS e atualiza dados/status
+atomicamente; retorna erro quando a consulta/importação falha.
+`statistics:check` valida os dois pequenos recursos locais, sem acesso à rede.
+Não se faz consulta automática nem importação de milhares de resultados por visitante.
+
 ## Executar e verificar
 
 Requer Node.js compatível com `engines.node` em `package.json` e npm. O navegador

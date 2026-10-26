@@ -4,6 +4,13 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      refresh_age:
+        description: Check TSE for updated age-turnout data before publishing
+        type: boolean
+        default: true
+  schedule:
+    - cron: '23 9 * * *'
 
 permissions:
   contents: read
@@ -13,7 +20,44 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    outputs:
+      revision: ${{ steps.revision.outputs.sha }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Refresh official age-turnout data
+        id: age
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.refresh_age)
+        continue-on-error: true
+        run: python scripts/refresh-age-turnout.py
+      - name: Persist refresh status and last valid age data
+        if: steps.age.outcome == 'success' || steps.age.outcome == 'failure'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/2026/age-turnout.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: refresh official age-turnout data and check status" \
+              -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" \
+              -m "Copilot-Session: 8c332af5-b51d-4bfe-8ff5-a27aeb21019b"
+            git push origin HEAD:main
+          fi
+      - name: Record refresh failure
+        if: steps.age.outcome == 'failure'
+        run: |
+          echo "::warning::TSE age refresh failed. Publishing last valid data with an explicit failure/staleness notice."
+          echo "Age-turnout refresh failed. Last valid counts were preserved; see the refresh step and the site's status notice." >> "$GITHUB_STEP_SUMMARY"
+      - name: Record deployment revision
+        id: revision
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: refresh
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,6 +65,8 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.refresh.outputs.revision }}
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -36,6 +82,10 @@ jobs:
         run: python scripts/generate-country-map.py --check
       - name: Verify frozen two-round dataset
         run: npm run data:check
+      - name: Verify statistics and age importer
+        run: |
+          npm run statistics:check
+          python -m unittest discover -s scripts -p "test_*.py"
       - name: Configure Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Build static site
