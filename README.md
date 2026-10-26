@@ -169,6 +169,28 @@ atomicamente; retorna erro quando a consulta/importação falha.
 `statistics:check` valida os dois pequenos recursos locais, sem acesso à rede.
 Não se faz consulta automática nem importação de milhares de resultados por visitante.
 
+## Agente local de perguntas
+
+O perfil `.github\agents\election-analyst.agent.md` permite consultar os dados
+publicados pelo Copilot, sem adicionar chat, backend ou credenciais ao site.
+No Copilot CLI, selecione `/agent election-analyst` neste repositório.
+O agente lê o manifesto atual, valida os dados locais e calcula comparações com
+Node.js ou Python, citando os arquivos e a versão usados. Requer as dependências
+locais instaladas para executar as verificações existentes.
+
+Exemplos de perguntas:
+
+- Quanto mudou a votação de cada finalista em São Paulo entre os dois turnos?
+- Quais UFs tiveram o maior aumento em pontos percentuais para cada finalista?
+- Como variaram comparecimento, abstenção, brancos e nulos por região?
+- O perfil etário do segundo turno já está disponível nesta captura?
+
+O perfil não habilita ferramentas de edição; permite execução para cálculos e
+validação, o que não constitui uma sandbox somente leitura. Suas instruções
+proíbem alterar ou atualizar arquivos. As respostas usam a captura local, não
+resultados ao vivo, e não inferem transferências individuais de votos ou
+preferências por idade. Não é necessário configurar serviços de IA adicionais.
+
 ## Executar e verificar
 
 Requer Node.js compatível com `engines.node` em `package.json` e npm. O navegador
