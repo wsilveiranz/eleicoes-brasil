@@ -34,10 +34,12 @@ Denominadores iguais a zero produzem `—`, não percentuais inventados.
 O painel não atribui os votos de Outros a nenhum finalista.
 Brancos e nulos permanecem separados dos votos válidos.
 
-Nas páginas Brasil/Exterior, os filtros e o seletor de métrica afetam apenas a
-tabela de estados/países, nunca o resultado geral ou o endereço. A métrica inicial
-é o total de votos válidos; também é possível comparar cada finalista e ordenar
-as variações. Os nomes das localidades abrem os detalhes.
+Nas páginas Brasil/Exterior, cada estado/país mostra três linhas: total de votos
+válidos, Lula e Flávio Bolsonaro, com votos, percentuais e variações visíveis
+simultaneamente. Os filtros e a referência de ordenação afetam apenas a tabela,
+nunca o resultado geral ou o endereço. A ordenação numérica usa inicialmente o
+total válido e pode usar qualquer finalista sem ocultar as demais linhas.
+Os nomes das localidades abrem os detalhes, incluindo os horários das fontes.
 
 ## Executar e verificar
 

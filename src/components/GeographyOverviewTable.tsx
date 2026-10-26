@@ -15,11 +15,7 @@ const signedDecimal = new Intl.NumberFormat('pt-BR', {
   minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: 'exceptZero',
 })
 const collator = new Intl.Collator('pt-BR', { sensitivity: 'base', numeric: true })
-const timestamp = new Intl.DateTimeFormat('pt-BR', {
-  timeZone: 'America/Sao_Paulo', dateStyle: 'short', timeStyle: 'medium',
-})
-
-type SortKey = 'name' | 'firstVotes' | 'secondVotes' | 'firstShare' | 'secondShare' | 'voteChange' | 'trend'
+type SortKey = 'name' | 'firstVotes' | 'secondVotes' | 'voteChange' | 'trend'
 type Metrics = {
   firstVotes: number
   secondVotes: number
@@ -45,15 +41,6 @@ function formatSignedDecimal(value: number) {
   return signedDecimal.format(Math.abs(value) < 0.005 ? 0 : value)
 }
 
-function sourceRange(times: RoundComparison['first']['sourceTimes']) {
-  const oldest = Date.parse(times.oldest)
-  const latest = Date.parse(times.latest)
-  if (!Number.isFinite(oldest) || !Number.isFinite(latest)) return 'fonte indisponível'
-  return oldest === latest
-    ? timestamp.format(latest)
-    : `${timestamp.format(oldest)} a ${timestamp.format(latest)}`
-}
-
 export function GeographyOverviewTable({
   metadata, scope, comparisons, finalists,
 }: {
@@ -67,11 +54,11 @@ export function GeographyOverviewTable({
   const tableId = useId()
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('')
-  const [metric, setMetric] = useState('total')
+  const [sortMetric, setSortMetric] = useState('total')
   const [sort, setSort] = useState<{ key: SortKey; descending: boolean }>({ key: 'name', descending: false })
   const domestic = scope === 'domestic'
   const title = domestic ? 'Resultados por estado' : 'Resultados por país de votação'
-  const finalist = finalists.find(({ id }) => id === metric)
+  const finalist = finalists.find(({ id }) => id === sortMetric)
   const candidates = [...finalists].sort((a, b) => collator.compare(a.number, b.number))
   const locations = [...(domestic ? metadata.states : metadata.countries)]
     .sort((a, b) => collator.compare(a.name, b.name))
@@ -121,20 +108,16 @@ export function GeographyOverviewTable({
       <h2 id={headingId}>{title}</h2>
       <p id={hintId}>
         Compare os dois turnos. As variações são calculadas como 2º turno menos 1º turno.
-        Selecione um nome para detalhar.
+        Cada localidade mostra o total válido, seguido das duas candidaturas.
+        Selecione o nome da localidade para detalhar.
       </p>
       <div className="geography-table-filters">
         <div className="geography-field">
-          <label htmlFor={`${tableId}-metric`}>Métrica de comparação</label>
+          <label htmlFor={`${tableId}-metric`}>Ordenar valores de</label>
           <select
             id={`${tableId}-metric`}
-            value={metric}
-            onChange={(event) => {
-              setMetric(event.target.value)
-              if (sort.key === 'firstShare' || sort.key === 'secondShare') {
-                setSort({ key: 'name', descending: false })
-              }
-            }}
+            value={sortMetric}
+            onChange={(event) => setSortMetric(event.target.value)}
             aria-controls={tableId}
           >
             <option value="total">Total de votos válidos</option>
@@ -179,14 +162,12 @@ export function GeographyOverviewTable({
       </div>
       <p role="status">
         {rows.length} de {locations.length} {domestic ? 'estados/DF' : 'países de votação'}.
-        Os filtros, a métrica e a ordenação alteram apenas a tabela, não o resultado geral.
+        Os filtros e a ordenação alteram apenas a tabela, não o resultado geral.
       </p>
-      {finalist && (
-        <p className="geography-metric-label">
-          <span className="geography-candidate-key" style={{ backgroundColor: candidateColor(finalist) }} aria-hidden="true" />
-          {finalist.number} · {finalist.name} · {finalist.party}
-        </p>
-      )}
+      <p className="geography-sort-note">
+        A ordenação numérica usa {finalist?.name ?? 'o total de votos válidos'}.
+        As duas candidaturas permanecem sempre visíveis.
+      </p>
       <div
         className="geography-table-scroll"
         role="region"
@@ -200,63 +181,72 @@ export function GeographyOverviewTable({
             <tr>
               {sortHeader('name', domestic ? 'Estado / DF' : 'País de votação')}
               {sortHeader('firstVotes', '1º turno · votos')}
-              {finalist && sortHeader('firstShare', '1º turno · % dos válidos')}
               {sortHeader('secondVotes', '2º turno · votos')}
-              {finalist && sortHeader('secondShare', '2º turno · % dos válidos')}
               {sortHeader('voteChange', 'Variação de votos')}
-              {sortHeader('trend', finalist ? 'Variação em p.p.' : 'Variação relativa')}
+              {sortHeader('trend', 'Variação relativa / p.p.')}
             </tr>
           </thead>
-          <tbody>
-            {rows.map((row) => {
-              const selection: Selection = domestic
-                ? { scope: 'domestic', state: row.code }
-                : { scope: 'overseas', country: row.code }
-              const value = row.metrics
-              return (
-                <tr key={row.code}>
-                  <th scope="row">
-                    <a
-                      href={selectionSearch(selection)}
-                      onClick={(event) => {
-                        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
-                        event.preventDefault()
-                        navigate(selection)
-                      }}
-                    >
-                      {row.name}
-                    </a>
-                    {value && row.comparison ? (
-                      <small className="geography-provenance">
-                        Fonte 1º turno: {sourceRange(row.comparison.first.sourceTimes)}.
-                        <br />
-                        Fonte 2º turno: {sourceRange(row.comparison.second.sourceTimes)}.
-                      </small>
-                    ) : <small>Comparação indisponível: dados dos dois turnos ou da candidatura não disponíveis.</small>}
-                  </th>
-                  <td className="geography-number">{value ? integer.format(value.firstVotes) : '—'}</td>
-                  {finalist && (
-                    <td className="geography-number">{value?.firstShare == null ? '—' : `${decimal.format(value.firstShare)}%`}</td>
-                  )}
-                  <td className="geography-number">{value ? integer.format(value.secondVotes) : '—'}</td>
-                  {finalist && (
-                    <td className="geography-number">{value?.secondShare == null ? '—' : `${decimal.format(value.secondShare)}%`}</td>
-                  )}
-                  <td className="geography-number">{value ? signedInteger.format(value.voteChange) : '—'}</td>
-                  <td className="geography-number">
-                    {value?.trend == null ? '—' : `${formatSignedDecimal(value.trend)}${finalist ? ' p.p.' : '%'}`}
-                  </td>
-                </tr>
-              )
-            })}
-            {rows.length === 0 && (
-              <tr><td colSpan={finalist ? 7 : 5}>Nenhuma localidade encontrada. Limpe ou altere os filtros.</td></tr>
-            )}
-          </tbody>
+          {rows.map((row) => {
+            const selection: Selection = domestic
+              ? { scope: 'domestic', state: row.code }
+              : { scope: 'overseas', country: row.code }
+            const lines = [
+              { candidate: undefined, value: metricsFor(row.comparison, undefined) },
+              ...candidates.map((candidate) => ({
+                candidate, value: metricsFor(row.comparison, candidate),
+              })),
+            ]
+            return (
+              <tbody key={row.code} aria-label={`Comparação: ${row.name}`}>
+                {lines.map(({ candidate, value }) => (
+                  <tr key={candidate?.id ?? 'total'} className={candidate ? 'geography-candidate-row' : 'geography-total-row'}>
+                    <th scope="row">
+                      {candidate ? (
+                        <span className="geography-candidate-label">
+                          <span className="geography-candidate-key" style={{ backgroundColor: candidateColor(candidate) }} aria-hidden="true" />
+                          {candidate.number} · {candidate.name} · {candidate.party}
+                        </span>
+                      ) : (
+                        <>
+                          <a
+                            href={selectionSearch(selection)}
+                            onClick={(event) => {
+                              if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
+                              event.preventDefault()
+                              navigate(selection)
+                            }}
+                          >
+                            {row.name}
+                          </a>
+                          <small>Total de votos válidos</small>
+                        </>
+                      )}
+                      {!value && <small>Comparação indisponível: dados dos dois turnos ou da candidatura não disponíveis.</small>}
+                    </th>
+                    <td className="geography-number">
+                      {value ? integer.format(value.firstVotes) : '—'}
+                      {candidate && <small>{value?.firstShare == null ? '—' : `${decimal.format(value.firstShare)}% dos válidos`}</small>}
+                    </td>
+                    <td className="geography-number">
+                      {value ? integer.format(value.secondVotes) : '—'}
+                      {candidate && <small>{value?.secondShare == null ? '—' : `${decimal.format(value.secondShare)}% dos válidos`}</small>}
+                    </td>
+                    <td className="geography-number">{value ? signedInteger.format(value.voteChange) : '—'}</td>
+                    <td className="geography-number">
+                      {value?.trend == null ? '—' : `${formatSignedDecimal(value.trend)}${candidate ? ' p.p.' : '%'}`}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )
+          })}
+          {rows.length === 0 && (
+            <tbody><tr><td colSpan={5}>Nenhuma localidade encontrada. Limpe ou altere os filtros.</td></tr></tbody>
+          )}
         </table>
       </div>
       <p className="geography-table-note">
-        Fontes preservadas por turno; horários em Brasília (America/Sao_Paulo).
+        Horários e fontes de cada turno estão disponíveis no detalhamento da localidade.
         Cada percentual usa os votos válidos do respectivo turno e localidade.
         A variação relativa usa o total do 1º turno como base; p.p. significa pontos percentuais.
         Sem denominador ou sem um par válido, indicamos —. Em telas pequenas, deslize a tabela horizontalmente.

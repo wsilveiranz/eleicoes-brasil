@@ -6,8 +6,8 @@ import type { ElectionMetadata } from '../domain/geography'
 import { GeographyOverviewTable } from './GeographyOverviewTable'
 
 const finalists: Finalist[] = [
-  { id: '13', number: '13', name: 'Ana', party: 'PT' },
-  { id: '22', number: '22', name: 'Beatriz', party: 'PL' },
+  { id: '13', number: '13', name: 'Lula', party: 'PT' },
+  { id: '22', number: '22', name: 'Flávio Bolsonaro', party: 'PL' },
 ]
 const metadata: ElectionMetadata = {
   election: { id: '6258', cycle: 'ele2026', name: 'Presidente', date: '2026-10-25', year: 2026, round: '2' },
@@ -22,10 +22,10 @@ const metadata: ElectionMetadata = {
   overseasMunicipalities: [],
 }
 
-function round(electionId: string, validVotes: number, ana: number, others = 0): ComparisonRound {
+function round(electionId: string, validVotes: number, lula: number, others = 0): ComparisonRound {
   return {
     electionId, validVotes, totalVotes: validVotes + 50, blankVotes: 20, nullVotes: 30,
-    votes: { '13': ana, '22': validVotes - ana - others }, otherVotes: others,
+    votes: { '13': lula, '22': validVotes - lula - others }, otherVotes: others,
     sections: { counted: 100, total: 100 }, countingComplete: true,
     sourceTimes: { oldest: '2026-10-25T21:00:00Z', latest: '2026-10-25T21:00:00Z' },
     coverage: { received: 1, expected: 1 },
@@ -43,23 +43,31 @@ function show(
   scope: 'domestic' | 'overseas' = 'domestic',
   comparisons = [comparison('state:sp'), comparison('state:df')],
   inventory = metadata,
+  candidates = finalists,
 ) {
   return render(
-    <GeographyOverviewTable metadata={inventory} scope={scope} comparisons={comparisons} finalists={finalists} />,
+    <GeographyOverviewTable metadata={inventory} scope={scope} comparisons={comparisons} finalists={candidates} />,
   )
 }
 
-function chooseMetric(value: string) {
-  fireEvent.change(screen.getByLabelText('Métrica de comparação'), { target: { value } })
+function chooseSortMetric(value: string) {
+  fireEvent.change(screen.getByLabelText('Ordenar valores de'), { target: { value } })
 }
 
-function row(name: string) {
-  return screen.getByRole('row', { name: new RegExp(name) })
+function group(name: string) {
+  return screen.getByRole('rowgroup', { name: `Comparação: ${name}` })
+}
+
+function totalRow(name: string) {
+  return within(group(name)).getAllByRole('row')[0]!
+}
+
+function candidateRow(name: string, candidate: string) {
+  return within(group(name)).getByRole('row', { name: new RegExp(candidate) })
 }
 
 function rowNames() {
-  return within(screen.getByRole('table')).getAllByRole('row').slice(1)
-    .map((item) => within(item).getByRole('link').textContent)
+  return within(screen.getByRole('table')).getAllByRole('link').map((item) => item.textContent)
 }
 
 afterEach(() => {
@@ -68,61 +76,58 @@ afterEach(() => {
 })
 
 describe('geographic round comparison table', () => {
-  it('defaults to valid-vote totals and switches to each finalist without navigation', () => {
-    show()
-    const sp = row('SÃO PAULO')
-    expect(screen.getByLabelText('Métrica de comparação')).toHaveValue('total')
-    expect(within(sp).getByText('1.000')).toBeVisible()
-    expect(within(sp).getByText('1.200')).toBeVisible()
-    expect(within(sp).getByText('+200')).toBeVisible()
-    expect(within(sp).getByText('+20,00%')).toBeVisible()
-    expect(within(sp).getByText(/Fonte 1º turno/)).toBeVisible()
-    expect(within(sp).getByText(/Fonte 2º turno/)).toBeVisible()
-    expect(screen.queryByRole('columnheader', { name: /Apuração/ })).not.toBeInTheDocument()
-    expect(screen.queryByRole('option', { name: 'Outros' })).not.toBeInTheDocument()
-    chooseMetric('13')
-    expect(within(sp).getByText('400')).toBeVisible()
-    expect(within(sp).getByText('600')).toBeVisible()
-    expect(within(sp).getByText('40,00%')).toBeVisible()
-    expect(within(sp).getByText('50,00%')).toBeVisible()
-    expect(within(sp).getByText('+10,00 p.p.')).toBeVisible()
-    expect(screen.getByText('13 · Ana · PT')).toBeVisible()
-    chooseMetric('22')
-    expect(within(sp).getByText('500')).toBeVisible()
-    expect(within(sp).getByText('+100')).toBeVisible()
-    expect(within(sp).getByText('0,00 p.p.')).toBeVisible()
-    expect(window.location.search).toBe('')
+  it('keeps total valid votes first, followed by both finalists without a display selector or source timestamps', () => {
+    show('domestic', undefined, undefined, [...finalists].reverse())
+    const rows = within(group('SÃO PAULO')).getAllByRole('row')
+    expect(rows).toHaveLength(3)
+    expect(rows[0]).toHaveTextContent('Total de votos válidos')
+    expect(rows[1]).toHaveTextContent('13 · Lula · PT')
+    expect(rows[2]).toHaveTextContent('22 · Flávio Bolsonaro · PL')
+    expect(within(rows[0]!).getByText('1.000')).toBeVisible()
+    expect(within(rows[0]!).getByText('1.200')).toBeVisible()
+    expect(within(rows[0]!).getByText('+200')).toBeVisible()
+    expect(within(rows[0]!).getByText('+20,00%')).toBeVisible()
+    expect(within(rows[1]!).getByText('400')).toBeVisible()
+    expect(within(rows[1]!).getByText('600')).toBeVisible()
+    expect(within(rows[1]!).getByText('40,00% dos válidos')).toBeVisible()
+    expect(within(rows[1]!).getByText('50,00% dos válidos')).toBeVisible()
+    expect(within(rows[1]!).getByText('+10,00 p.p.')).toBeVisible()
+    expect(within(rows[2]!).getByText('500')).toBeVisible()
+    expect(within(rows[2]!).getByText('+100')).toBeVisible()
+    expect(within(rows[2]!).getByText('0,00 p.p.')).toBeVisible()
+    expect(screen.queryByLabelText('Métrica de comparação')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Fonte 1º turno/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Fonte 2º turno/)).not.toBeInTheDocument()
+    expect(screen.getByText(/fontes de cada turno estão disponíveis no detalhamento/)).toBeVisible()
   })
 
-  it('uses round-specific denominators and displays signed negative or zero changes', () => {
+  it('uses round-specific denominators and displays negative or zero changes on the correct lines', () => {
     show('domestic', [
       comparison('state:sp', round('6257', 1000, 500), round('6258', 800, 300)),
       comparison('state:df', round('6257', 1000, 500), round('6258', 1000, 500)),
     ])
-    expect(within(row('SÃO PAULO')).getByText('-200')).toBeVisible()
-    expect(within(row('SÃO PAULO')).getByText('-20,00%')).toBeVisible()
-    expect(within(row('DISTRITO FEDERAL')).getByText('0')).toBeVisible()
-    chooseMetric('13')
-    const sp = row('SÃO PAULO')
-    expect(within(sp).getByText('50,00%')).toBeVisible()
-    expect(within(sp).getByText('37,50%')).toBeVisible()
-    expect(within(sp).getByText('-200')).toBeVisible()
-    expect(within(sp).getByText('-12,50 p.p.')).toBeVisible()
-    expect(within(row('DISTRITO FEDERAL')).getByText('0,00 p.p.')).toBeVisible()
+    expect(within(totalRow('SÃO PAULO')).getByText('-200')).toBeVisible()
+    expect(within(totalRow('SÃO PAULO')).getByText('-20,00%')).toBeVisible()
+    expect(within(totalRow('DISTRITO FEDERAL')).getByText('0')).toBeVisible()
+    const lula = candidateRow('SÃO PAULO', 'Lula')
+    expect(within(lula).getByText('50,00% dos válidos')).toBeVisible()
+    expect(within(lula).getByText('37,50% dos válidos')).toBeVisible()
+    expect(within(lula).getByText('-200')).toBeVisible()
+    expect(within(lula).getByText('-12,50 p.p.')).toBeVisible()
+    expect(within(candidateRow('DISTRITO FEDERAL', 'Lula')).getByText('0,00 p.p.')).toBeVisible()
   })
 
-  it('keeps zero denominators unavailable but preserves actual zero counts and count changes', () => {
+  it('keeps zero denominators unavailable without replacing actual zero counts', () => {
     show('domestic', [
       comparison('state:sp', round('6257', 0, 0), round('6258', 100, 0)),
       comparison('state:df', round('6257', 0, 0), round('6258', 0, 0)),
     ])
-    expect(within(row('SÃO PAULO')).getByText('+100')).toBeVisible()
-    expect(within(row('SÃO PAULO')).getByText('—')).toBeVisible()
-    chooseMetric('13')
-    expect(within(row('SÃO PAULO')).getByText('0,00%')).toBeVisible()
-    expect(within(row('SÃO PAULO')).getAllByText('—')).toHaveLength(2)
-    expect(within(row('DISTRITO FEDERAL')).getAllByText('—')).toHaveLength(3)
-    expect(within(row('DISTRITO FEDERAL')).getAllByText('0')).toHaveLength(3)
+    expect(within(totalRow('SÃO PAULO')).getByText('+100')).toBeVisible()
+    expect(within(totalRow('SÃO PAULO')).getByText('—')).toBeVisible()
+    expect(within(candidateRow('SÃO PAULO', 'Lula')).getByText('0,00% dos válidos')).toBeVisible()
+    expect(within(candidateRow('SÃO PAULO', 'Lula')).getAllByText('—')).toHaveLength(2)
+    expect(within(candidateRow('DISTRITO FEDERAL', 'Lula')).getAllByText('—')).toHaveLength(3)
+    expect(within(candidateRow('DISTRITO FEDERAL', 'Lula')).getAllByText('0')).toHaveLength(3)
   })
 
   it('does not display signed zero when a small change rounds to zero', () => {
@@ -130,56 +135,53 @@ describe('geographic round comparison table', () => {
       comparison('state:sp', round('6257', 100000, 50000), round('6258', 99999, 49999)),
       comparison('state:df', round('6257', 100000, 50000), round('6258', 100001, 50001)),
     ])
-    expect(within(row('SÃO PAULO')).getByText('-1')).toBeVisible()
-    expect(within(row('DISTRITO FEDERAL')).getByText('+1')).toBeVisible()
-    expect(within(row('SÃO PAULO')).getByText('0,00%')).toBeVisible()
-    expect(within(row('DISTRITO FEDERAL')).getByText('0,00%')).toBeVisible()
-    chooseMetric('13')
-    expect(within(row('SÃO PAULO')).getByText('0,00 p.p.')).toBeVisible()
-    expect(within(row('DISTRITO FEDERAL')).getByText('0,00 p.p.')).toBeVisible()
+    expect(within(totalRow('SÃO PAULO')).getByText('-1')).toBeVisible()
+    expect(within(totalRow('DISTRITO FEDERAL')).getByText('+1')).toBeVisible()
+    expect(within(totalRow('SÃO PAULO')).getByText('0,00%')).toBeVisible()
+    expect(within(totalRow('DISTRITO FEDERAL')).getByText('0,00%')).toBeVisible()
+    expect(within(candidateRow('SÃO PAULO', 'Lula')).getByText('0,00 p.p.')).toBeVisible()
+    expect(within(candidateRow('DISTRITO FEDERAL', 'Lula')).getByText('0,00 p.p.')).toBeVisible()
     expect(screen.queryByText(/[-+]0,00/)).not.toBeInTheDocument()
   })
 
-  it('filters accent-insensitive names/codes and dropdowns only within the table', () => {
+  it('filters whole locality groups by accent-insensitive names/codes and dropdowns', () => {
     const comparisons = [comparison('state:sp'), comparison('state:df')]
     const original = structuredClone(comparisons)
     show('domestic', comparisons)
     fireEvent.change(screen.getByLabelText('Buscar estado'), { target: { value: 'sao' } })
-    expect(row('SÃO PAULO')).toBeVisible()
-    expect(screen.queryByRole('row', { name: /DISTRITO FEDERAL/ })).not.toBeInTheDocument()
+    expect(within(group('SÃO PAULO')).getAllByRole('row')).toHaveLength(3)
+    expect(screen.queryByRole('rowgroup', { name: 'Comparação: DISTRITO FEDERAL' })).not.toBeInTheDocument()
     expect(screen.getByRole('status')).toHaveTextContent('1 de 2')
     fireEvent.change(screen.getByLabelText('Estado'), { target: { value: 'df' } })
     expect(screen.getByText(/Nenhuma localidade encontrada/)).toBeVisible()
     fireEvent.click(screen.getByRole('button', { name: 'Limpar filtros' }))
-    expect(screen.getAllByRole('row')).toHaveLength(3)
+    expect(screen.getAllByRole('row')).toHaveLength(7)
     fireEvent.change(screen.getByLabelText('Buscar estado'), { target: { value: 'DF' } })
-    expect(row('DISTRITO FEDERAL')).toBeVisible()
-    expect(screen.queryByRole('row', { name: /SÃO PAULO/ })).not.toBeInTheDocument()
+    expect(group('DISTRITO FEDERAL')).toBeVisible()
+    expect(screen.queryByRole('rowgroup', { name: 'Comparação: SÃO PAULO' })).not.toBeInTheDocument()
     expect(window.location.search).toBe('')
     expect(comparisons).toEqual(original)
   })
 
-  it('filters country accents/codes, clears empty matches, and navigates via the row link', () => {
+  it('filters countries and preserves row-name navigation', () => {
     show('overseas', [comparison('country:portugal'), comparison('country:albania')])
     fireEvent.change(screen.getByLabelText('Buscar país de votação'), { target: { value: 'albania' } })
-    expect(row('Albânia')).toBeVisible()
+    expect(group('Albânia')).toBeVisible()
     fireEvent.change(screen.getByLabelText('País de votação'), { target: { value: 'portugal' } })
     expect(screen.getByText(/Nenhuma localidade encontrada/)).toBeVisible()
     fireEvent.click(screen.getByRole('button', { name: 'Limpar filtros' }))
-    const link = within(row('Portugal')).getByRole('link')
+    const link = within(group('Portugal')).getByRole('link')
     expect(link).toHaveAttribute('href', '?visao=exterior&pais=portugal')
-    expect(window.location.search).toBe('')
     fireEvent.click(link)
     expect(window.location.search).toBe('?visao=exterior&pais=portugal')
   })
 
-  it('retains native modified links and navigates on an unmodified state link', () => {
+  it('retains native modified links and unmodified state navigation', () => {
     show()
-    const link = within(row('SÃO PAULO')).getByRole('link')
+    const link = within(group('SÃO PAULO')).getByRole('link')
     expect(link).toHaveAttribute('href', '?visao=brasil&uf=sp')
     for (const modifier of ['ctrlKey', 'metaKey', 'shiftKey', 'altKey']) {
-      const suppressNativeNavigation = (event: MouseEvent) => event.preventDefault()
-      document.addEventListener('click', suppressNativeNavigation, { once: true })
+      document.addEventListener('click', (event) => event.preventDefault(), { once: true })
       fireEvent.click(link, { [modifier]: true })
       expect(window.location.search).toBe('')
     }
@@ -187,7 +189,7 @@ describe('geographic round comparison table', () => {
     expect(window.location.search).toBe('?visao=brasil&uf=sp')
   })
 
-  it('sorts numeric columns in both directions and shares/pp with semantic keyboard-focusable buttons', () => {
+  it('sorts whole locality groups using totals or a selected finalist without hiding any line', () => {
     show('domestic', [
       comparison('state:sp', round('6257', 2000, 100), round('6258', 1000, 900)),
       comparison('state:df', round('6257', 1000, 500), round('6258', 2000, 100)),
@@ -198,88 +200,63 @@ describe('geographic round comparison table', () => {
     expect(screen.getByRole('columnheader', { name: '1º turno · votos' })).toHaveAttribute('aria-sort', 'ascending')
     sortBy('1º turno · votos')
     expect(rowNames()).toEqual(['SÃO PAULO', 'DISTRITO FEDERAL'])
-    expect(screen.getByRole('columnheader', { name: '1º turno · votos' })).toHaveAttribute('aria-sort', 'descending')
     sortBy('2º turno · votos')
     expect(rowNames()).toEqual(['SÃO PAULO', 'DISTRITO FEDERAL'])
+    chooseSortMetric('13')
+    expect(rowNames()).toEqual(['DISTRITO FEDERAL', 'SÃO PAULO'])
     sortBy('Variação de votos')
-    expect(rowNames()).toEqual(['SÃO PAULO', 'DISTRITO FEDERAL'])
-    sortBy('Variação relativa')
-    expect(rowNames()).toEqual(['SÃO PAULO', 'DISTRITO FEDERAL'])
-    chooseMetric('13')
-    sortBy('1º turno · % dos válidos')
-    expect(rowNames()).toEqual(['SÃO PAULO', 'DISTRITO FEDERAL'])
-    sortBy('2º turno · % dos válidos')
     expect(rowNames()).toEqual(['DISTRITO FEDERAL', 'SÃO PAULO'])
-    sortBy('Variação em p.p.')
+    sortBy('Variação relativa / p.p.')
     expect(rowNames()).toEqual(['DISTRITO FEDERAL', 'SÃO PAULO'])
-    const nameButton = screen.getByRole('button', { name: 'Estado / DF' })
-    nameButton.focus()
-    expect(nameButton).toHaveFocus()
-    expect(nameButton).toHaveAttribute('type', 'button')
-    fireEvent.click(nameButton, { detail: 0 })
+    chooseSortMetric('22')
+    expect(within(group('SÃO PAULO')).getAllByRole('row')).toHaveLength(3)
+    expect(candidateRow('SÃO PAULO', 'Lula')).toBeVisible()
+    expect(candidateRow('SÃO PAULO', 'Flávio')).toBeVisible()
+    const button = screen.getByRole('button', { name: 'Estado / DF' })
+    button.focus()
+    expect(button).toHaveFocus()
+    expect(button).toHaveAttribute('type', 'button')
+    fireEvent.click(button, { detail: 0 })
     expect(rowNames()).toEqual(['DISTRITO FEDERAL', 'SÃO PAULO'])
     sortBy('Estado / DF')
     expect(rowNames()).toEqual(['SÃO PAULO', 'DISTRITO FEDERAL'])
     expect(window.location.search).toBe('')
   })
 
-  it('uses stable name tie-breaks, sorts unavailable values last and resets hidden share sorting', () => {
-    const inventory = {
-      ...metadata,
-      states: [...metadata.states, { code: 'ac', name: 'ACRE', municipalities: [] }],
-    }
+  it('uses stable name tie-breaks and sorts absent comparisons last', () => {
+    const inventory = { ...metadata, states: [...metadata.states, { code: 'ac', name: 'ACRE', municipalities: [] }] }
     show('domestic', [comparison('state:sp'), comparison('state:df')], inventory)
     fireEvent.click(screen.getByRole('button', { name: 'Variação de votos' }))
     expect(rowNames()).toEqual(['DISTRITO FEDERAL', 'SÃO PAULO', 'ACRE'])
     fireEvent.click(screen.getByRole('button', { name: 'Variação de votos' }))
     expect(rowNames()).toEqual(['DISTRITO FEDERAL', 'SÃO PAULO', 'ACRE'])
-    chooseMetric('13')
-    fireEvent.click(screen.getByRole('button', { name: '1º turno · % dos válidos' }))
-    chooseMetric('total')
-    expect(screen.getByRole('columnheader', { name: 'Estado / DF' })).toHaveAttribute('aria-sort', 'ascending')
-    expect(rowNames()).toEqual(['ACRE', 'DISTRITO FEDERAL', 'SÃO PAULO'])
   })
 
-  it('keeps absent or incomplete pairs explicitly unavailable without false zeros or deltas', () => {
-    const broken = { ...comparison('state:sp'), second: undefined } as unknown as RoundComparison
-    show('domestic', [broken])
+  it('keeps all lines explicitly unavailable when a locality has no comparison', () => {
+    show('domestic', [])
     for (const name of ['SÃO PAULO', 'DISTRITO FEDERAL']) {
-      expect(row(name)).toHaveTextContent('Comparação indisponível')
-      expect(within(row(name)).getAllByText('—')).toHaveLength(4)
-      expect(within(row(name)).queryByText('0')).not.toBeInTheDocument()
+      const rows = within(group(name)).getAllByRole('row')
+      expect(rows).toHaveLength(3)
+      for (const row of rows) {
+        expect(row).toHaveTextContent('Comparação indisponível')
+        expect(within(row).queryByText('0')).not.toBeInTheDocument()
+      }
+      expect(within(rows[0]!).getAllByText('—')).toHaveLength(4)
+      expect(within(rows[1]!).getAllByText('—')).toHaveLength(6)
     }
-    chooseMetric('13')
-    expect(within(row('SÃO PAULO')).getAllByText('—')).toHaveLength(6)
   })
 
-  it('keeps a genuinely missing candidate unavailable rather than inventing its counts', () => {
-    const missingCandidate = comparison('state:sp')
-    const view = show('domestic', [missingCandidate, comparison('state:df')])
-    chooseMetric('13')
-    delete missingCandidate.second.votes['13']
-    missingCandidate.second.otherVotes = 600
-    view.rerender(
-      <GeographyOverviewTable
-        metadata={metadata}
-        scope="domestic"
-        comparisons={[missingCandidate, comparison('state:df')]}
-        finalists={finalists}
-      />,
-    )
-    expect(row('SÃO PAULO')).toHaveTextContent('Comparação indisponível')
-    expect(within(row('SÃO PAULO')).getAllByText('—')).toHaveLength(6)
-    expect(within(row('SÃO PAULO')).queryByText('0')).not.toBeInTheDocument()
-    expect(row('DISTRITO FEDERAL')).not.toHaveTextContent('Comparação indisponível')
-  })
-
-  it('propagates unexpected calculation failures rather than hiding them as unavailable data', () => {
+  it('propagates invalid or unexpected calculation failures instead of fabricating counts', () => {
+    const invalid = comparison('state:sp')
+    delete invalid.second.votes['13']
+    expect(() => show('domestic', [invalid])).toThrow(/Identidade/)
     const failure = new Error('Unexpected calculation failure')
     vi.spyOn(comparisonDomain, 'validVoteComparison').mockImplementation(() => { throw failure })
     expect(() => show()).toThrow(failure)
   })
 
   it.each([['domestic', 27], ['overseas', 133]] as const)(
-    'renders the complete %s inventory of %i rows with no mount or interaction network requests',
+    'renders all three lines for every %s locality without network requests',
     (scope, count) => {
       const fetch = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Unexpected network request'))
       const locations = Array.from({ length: count }, (_, index) => ({
@@ -289,9 +266,9 @@ describe('geographic round comparison table', () => {
       const comparisons = locations.map(({ code }) => comparison(`${scope === 'domestic' ? 'state' : 'country'}:${code}`))
       const originalOrder = comparisons.map(({ geography }) => geography.id)
       show(scope, comparisons, inventory)
-      expect(screen.getAllByRole('row')).toHaveLength(count + 1)
+      expect(screen.getAllByRole('row')).toHaveLength(count * 3 + 1)
       expect(screen.getByRole('status')).toHaveTextContent(`${count} de ${count}`)
-      chooseMetric('22')
+      chooseSortMetric('22')
       fireEvent.click(screen.getByRole('button', { name: 'Variação de votos' }))
       expect(fetch).not.toHaveBeenCalled()
       expect(comparisons.map(({ geography }) => geography.id)).toEqual(originalOrder)
