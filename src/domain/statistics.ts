@@ -1,4 +1,4 @@
-import type { DatasetSummary } from './comparison'
+import { validateRoundComparison, type ComparisonRound, type DatasetSummary } from './comparison'
 import { regions } from './regions'
 import { assertCount, ResultDataError } from './results'
 
@@ -38,14 +38,42 @@ export function groupAgeBands(
   })
 }
 
+function comparisonFor(summary: DatasetSummary, id: string) {
+  const matches = summary.comparisons.filter(({ geography }) => geography.id === id)
+  if (matches.length !== 1) throw new ResultDataError(`Cobertura da localidade incompleta ou duplicada: ${id}.`)
+  return matches[0]!
+}
+
+export type BallotCounts = Pick<ComparisonRound, 'blankVotes' | 'nullVotes' | 'totalVotes'>
+
+export function blankNullComparisons(summary: DatasetSummary) {
+  const localities = [
+    { id: 'overall', label: 'Total geral · Brasil e exterior', comparisons: [comparisonFor(summary, 'overall')] },
+    ...regions.map(({ id, name, states }) => ({
+      id, label: name, comparisons: states.map((state) => comparisonFor(summary, `state:${state}`)),
+    })),
+  ]
+  return localities.map(({ id, label, comparisons }) => {
+    for (const comparison of comparisons) validateRoundComparison(comparison, summary.finalists, summary.elections)
+    const total = (round: 'first' | 'second'): BallotCounts => {
+      const counts = { blankVotes: 0, nullVotes: 0, totalVotes: 0 }
+      for (const comparison of comparisons) {
+        for (const key of ['blankVotes', 'nullVotes', 'totalVotes'] as const) {
+          counts[key] = assertCount(counts[key] + comparison[round][key], 'soma de cédulas')
+        }
+      }
+      return counts
+    }
+    return { id, label, first: total('first'), second: total('second') }
+  })
+}
+
 export function regionalVotes(summary: DatasetSummary, round: 'first' | 'second', candidateId: string) {
   if (!summary.finalists.some(({ id }) => id === candidateId)) throw new ResultDataError('Finalista desconhecido.')
   return regions.map((region) => {
     let votes = 0
     for (const state of region.states) {
-      const matches = summary.comparisons.filter(({ geography }) => geography.id === `state:${state}`)
-      if (matches.length !== 1) throw new ResultDataError('Cobertura estadual incompleta ou duplicada.')
-      const value = matches[0]![round].votes[candidateId]
+      const value = comparisonFor(summary, `state:${state}`)[round].votes[candidateId]
       if (value === undefined) throw new ResultDataError('Votos regionais ausentes.')
       votes = assertCount(votes + assertCount(value, 'votos regionais'), 'soma regional')
     }

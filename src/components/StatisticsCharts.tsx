@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import type { Turnout } from '../data/statistics'
+import type { BallotCounts } from '../domain/statistics'
 
 export const integer = new Intl.NumberFormat('pt-BR')
 const decimal = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -14,36 +15,63 @@ export const timeText = (value: string) => new Intl.DateTimeFormat('pt-BR', {
   timeZone: 'America/Sao_Paulo', dateStyle: 'short', timeStyle: 'short',
 }).format(new Date(value))
 
-export interface PieSlice { id: string; label: string; color: string; value: number }
+interface CompositionSegment { id: string; label: string; color: string; value: number }
 
-export function PieChart({ title, slices, unit = 'votos' }: { title: string; slices: PieSlice[]; unit?: 'votos' | 'comparecimentos' }) {
-  const headingId = useId()
-  const total = slices.reduce((sum, slice) => sum + slice.value, 0)
-  let accumulated = 0
-  const paths = slices.filter(({ value }) => value > 0).map((slice) => {
-    const start = accumulated / total * Math.PI * 2 - Math.PI / 2
-    accumulated += slice.value
-    const end = accumulated / total * Math.PI * 2 - Math.PI / 2
-    const point = (angle: number) => `${60 + 50 * Math.cos(angle)},${60 + 50 * Math.sin(angle)}`
-    return {
-      ...slice,
-      path: `M60,60L${point(start)}A50,50 0 ${slice.value / total > .5 ? 1 : 0} 1 ${point(end)}Z`,
-    }
-  })
+export const invalidBallotCategories = [
+  { key: 'blankVotes', label: 'Brancos', color: '#64748b' },
+  { key: 'nullVotes', label: 'Nulos', color: '#715185' },
+] as const
+
+export function BlankNullBar({ title, value, maximum }: { title: string; value: BallotCounts; maximum: number }) {
+  const total = value.blankVotes + value.nullVotes
   return (
-    <figure className="statistics-pie" aria-labelledby={headingId}>
+    <figure className="statistics-turnout">
+      <figcaption><strong>{title}</strong> · {integer.format(total)} brancos + nulos
+        {' '}({percentage(ratio(total, value.totalVotes))} dos votos depositados)</figcaption>
+      <div className="statistics-invalid-track" role="img" aria-label={`${title}: ${invalidBallotCategories.map(({ key, label }) =>
+        `${label}, ${integer.format(value[key])}, ${percentage(ratio(value[key], value.totalVotes))}`).join('; ')}; ${integer.format(value.totalVotes)} votos depositados`}>
+        {maximum > 0 && invalidBallotCategories.map(({ key, label, color }) => (
+          <span key={key} data-ballot={key} title={`${label}: ${integer.format(value[key])}`}
+            style={{ width: `${value[key] / maximum * 100}%`, backgroundColor: color }} />
+        ))}
+      </div>
+      <ul className="statistics-values">
+        {invalidBallotCategories.map(({ key, label, color }) => (
+          <li key={key}><span className="statistics-swatch" style={{ backgroundColor: color }} aria-hidden="true" />
+            {label}: <strong>{integer.format(value[key])} ({percentage(ratio(value[key], value.totalVotes))})</strong>
+          </li>
+        ))}
+      </ul>
+    </figure>
+  )
+}
+
+export function CompositionBar({ title, segments, unit = 'votos' }: { title: string; segments: CompositionSegment[]; unit?: 'votos' | 'comparecimentos' }) {
+  const headingId = useId()
+  const total = segments.reduce((sum, segment) => sum + segment.value, 0)
+  return (
+    <figure className="statistics-composition" aria-labelledby={headingId}>
       <figcaption id={headingId}><h4>{title}</h4><p>{integer.format(total)} {unit}</p></figcaption>
-      {total === 0 ? <p>Sem votos: distribuição indisponível.</p> : (
-        <svg viewBox="0 0 120 120" role="img" aria-label={`${title}: ${slices.map((slice) =>
-          `${slice.label}, ${integer.format(slice.value)}, ${percentage(ratio(slice.value, total))}`).join('; ')}`}>
-          {paths.map((slice) => {
-            const label = `${slice.label}: ${integer.format(slice.value)} (${percentage(ratio(slice.value, total))})`
-            return slice.value === total
-              ? <circle key={slice.id} cx="60" cy="60" r="50" fill={slice.color}><title>{label}</title></circle>
-              : <path key={slice.id} d={slice.path} fill={slice.color}><title>{label}</title></path>
-          })}
-        </svg>
+      {total === 0 ? <p>Sem {unit}: distribuição indisponível.</p> : (
+        <>
+          <div className="statistics-composition-track" role="img" aria-label={`${title}: ${segments.map((segment) =>
+            `${segment.label}, ${integer.format(segment.value)}, ${percentage(ratio(segment.value, total))}`).join('; ')}`}>
+            {segments.filter(({ value }) => value > 0).map((segment) => (
+              <span key={segment.id} data-composition={segment.id}
+                title={`${segment.label}: ${integer.format(segment.value)} (${percentage(ratio(segment.value, total))})`}
+                style={{ width: `${segment.value / total * 100}%`, backgroundColor: segment.color }} />
+            ))}
+          </div>
+          <div className="statistics-composition-scale" aria-hidden="true"><span>0%</span><span>100%</span></div>
+        </>
       )}
+      <ul className="statistics-values statistics-composition-legend">
+        {segments.map((segment) => (
+          <li key={segment.id}><span className="statistics-swatch" style={{ backgroundColor: segment.color }} aria-hidden="true" />
+            {segment.label}: <strong>{percentage(ratio(segment.value, total))}</strong>
+          </li>
+        ))}
+      </ul>
     </figure>
   )
 }

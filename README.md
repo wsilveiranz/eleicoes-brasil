@@ -92,10 +92,22 @@ O TSE documenta 39 registros duplicados por transferência temporária no total
 apto dos arquivos de resultados; preservamos as contagens publicadas, sem uma
 correção regional inventada.
 
-As duas pizzas regionais mostram a **origem dos votos de cada candidato**:
+**Brancos e nulos** são comparados em barras empilhadas de contagens absolutas,
+com ambos os turnos no total geral (Brasil + exterior) e nas cinco regiões
+(exterior excluído). Brancos e nulos têm segmentos e valores separados.
+O par nacional usa escala própria; todas as regiões compartilham outra escala
+absoluta, comum aos dois turnos. O restante da barra não representa votos válidos.
+Uma tabela mostra cada categoria, sua soma, percentuais e diferenças em votos/pp.
+Os percentuais usam todos os votos depositados no turno/localidade, não apenas
+válidos nem o eleitorado apto. Os números vêm da captura assinada já publicada,
+sem novas chamadas ao TSE. Uma queda desses totais não identifica transferências
+individuais de votos para candidatos.
+
+As barras regionais de 100% mostram a **origem dos votos de cada candidato**:
 quanto dos votos de Lula ou Flávio veio de cada região, excluindo o exterior.
-O seletor alterna entre turnos; cores regionais e uma tabela de votos/percentuais
-permitem comparação lado a lado. Não são percentuais de preferência em cada região.
+Os dois turnos aparecem juntos para cada candidato, sem seletor. Cores regionais
+e uma tabela com ambos os turnos, votos, percentuais e diferenças permitem
+comparação em uma escala horizontal comum. Não são percentuais de preferência em cada região.
 
 O perfil etário mede **comparecimento por idade**, não votos por candidato.
 Mostra a distribuição das pessoas que compareceram, aptos, taxa de comparecimento,
@@ -107,6 +119,9 @@ Os grupos somam contagens antes de calcular taxas e participações; não são m
 dos percentuais originais. `age-turnout.json` preserva as faixas oficiais para
 reutilização e análises com outros recortes. Novos códigos de faixa não mapeados
 geram erro explícito de validação, nunca descarte silencioso.
+As barras etárias somam 100% dos presentes em cada turno, com cores estáveis por
+grupo. As taxas de comparecimento dentro de cada faixa ficam na tabela, não são
+empilhadas como se compartilhassem um denominador.
 Comparecimento por idade não revela
 preferências individuais nem prova que uma faixa etária causou um resultado.
 

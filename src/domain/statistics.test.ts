@@ -2,11 +2,43 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import type { DatasetManifest, DatasetSummary } from './comparison'
 import type { AgeData } from '../data/statistics'
-import { ageGroups, groupAgeBands, regionalVotes } from './statistics'
+import { ageGroups, blankNullComparisons, groupAgeBands, regionalVotes } from './statistics'
 import { regions } from './regions'
 
 const manifest: DatasetManifest = JSON.parse(readFileSync('public/data/2026/manifest.json', 'utf8'))
 const summary: DatasetSummary = JSON.parse(readFileSync(`public/data/2026/${manifest.summary.path}`, 'utf8'))
+
+describe('blank and null ballot comparisons', () => {
+  it('preserves national counts and reconciles all regional integer sums plus overseas for both rounds', () => {
+    const comparisons = blankNullComparisons(summary)
+    expect(comparisons).toHaveLength(6)
+    const overall = comparisons[0]!
+    expect(overall.first).toEqual({ blankVotes: 2300798, nullVotes: 3674249, totalVotes: 125275835 })
+    expect(overall.second).toEqual({ blankVotes: 1430496, nullVotes: 2723305, totalVotes: 128236074 })
+    for (const round of ['first', 'second'] as const) {
+      for (const key of ['blankVotes', 'nullVotes', 'totalVotes'] as const) {
+        for (const region of regions) {
+          expect(comparisons.find(({ id }) => id === region.id)![round][key]).toBe(
+            region.states.reduce((sum, state) => sum +
+              summary.comparisons.find(({ geography }) => geography.id === `state:${state}`)![round][key], 0),
+          )
+        }
+        expect(comparisons.slice(1).reduce((sum, comparison) => sum + comparison[round][key], 0) +
+          summary.comparisons.find(({ geography }) => geography.id === 'overseas')![round][key]).toBe(overall[round][key])
+      }
+    }
+  })
+
+  it('rejects missing/duplicate national or UF results and inconsistent categories rather than returning a partial chart', () => {
+    for (const id of ['overall', 'state:sp']) {
+      expect(() => blankNullComparisons({ ...summary, comparisons: summary.comparisons.filter(({ geography }) => geography.id !== id) })).toThrow(/Cobertura/)
+      expect(() => blankNullComparisons({ ...summary, comparisons: [...summary.comparisons, summary.comparisons.find(({ geography }) => geography.id === id)!] })).toThrow(/duplicada/)
+    }
+    const broken = structuredClone(summary)
+    broken.comparisons.find(({ geography }) => geography.id === 'state:sp')!.first.blankVotes += 1
+    expect(() => blankNullComparisons(broken)).toThrow(/reconciliam/)
+  })
+})
 
 describe('regional candidate distributions', () => {
   it('partitions exactly the 27 Brazilian UFs without overseas and reconciles each candidate/round', () => {
