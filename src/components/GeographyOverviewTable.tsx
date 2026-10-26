@@ -108,7 +108,7 @@ export function GeographyOverviewTable({
       <h2 id={headingId}>{title}</h2>
       <p id={hintId}>
         Compare os dois turnos. As variações são calculadas como 2º turno menos 1º turno.
-        Cada localidade mostra o total válido, seguido das duas candidaturas.
+        Cada localidade mostra o total válido, seguido das duas candidaturas e de Outros no 1º turno.
         Selecione o nome da localidade para detalhar.
       </p>
       <div className="geography-table-filters">
@@ -237,6 +237,23 @@ export function GeographyOverviewTable({
                     </td>
                   </tr>
                 ))}
+                <tr className="geography-candidate-row">
+                  <th scope="row">
+                    <span className="geography-candidate-label">
+                      <span className="geography-candidate-key" style={{ backgroundColor: '#65717c' }} aria-hidden="true" />
+                      Outros
+                    </span>
+                    {!row.comparison && <small>Comparação indisponível: dados do primeiro turno não disponíveis.</small>}
+                  </th>
+                  <td className="geography-number">
+                    {row.comparison ? integer.format(row.comparison.first.otherVotes) : '—'}
+                    <small>{!row.comparison || row.comparison.first.validVotes === 0
+                      ? '—' : `${decimal.format(row.comparison.first.otherVotes / row.comparison.first.validVotes * 100)}% dos válidos`}</small>
+                  </td>
+                  <td className="geography-number">—</td>
+                  <td className="geography-number">—</td>
+                  <td className="geography-number">—</td>
+                </tr>
               </tbody>
             )
           })}
@@ -249,6 +266,7 @@ export function GeographyOverviewTable({
         Horários e fontes de cada turno estão disponíveis no detalhamento da localidade.
         Cada percentual usa os votos válidos do respectivo turno e localidade.
         A variação relativa usa o total do 1º turno como base; p.p. significa pontos percentuais.
+        Outros reúne as demais candidaturas do 1º turno; não há votos ou variações de Outros no 2º turno.
         Sem denominador ou sem um par válido, indicamos —. Em telas pequenas, deslize a tabela horizontalmente.
       </p>
     </section>

@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { ResultsPanel } from '../components'
 import { GeographyOverviewTable } from '../components/GeographyOverviewTable'
+import { ResultsProvenance } from '../components/ResultsPanel'
+import { RunoffStateMap } from '../components/RunoffStateMap'
 import { loadComparison, type LoadedDataset } from '../data/comparison'
 import { selectionId, type Selection } from '../domain/selection'
 import { navigate } from '../hooks/useSelection'
@@ -94,6 +96,13 @@ export function ResultView({
             finalists={summary.finalists}
             elections={summary.elections}
           />
+          {(selection.scope === 'overall' || overviewScope === 'domestic') && (
+            <RunoffStateMap
+              metadata={metadata}
+              comparisons={summary.comparisons}
+              finalists={summary.finalists}
+            />
+          )}
           {overviewScope && (
             <GeographyOverviewTable
               key={overviewScope}
@@ -104,6 +113,7 @@ export function ResultView({
             />
           )}
           <MunicipalityNavigation metadata={metadata} selection={selection} onSelect={navigate} />
+          <ResultsProvenance key={selectionId(selection)} comparison={query.data} />
         </>
       )}
     </section>

@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import type { ComparisonRound, DatasetSummary, Finalist, RoundComparison } from '../domain/comparison'
 import { candidateColor } from './candidateColors'
-import { ResultsPanel } from './ResultsPanel'
+import { ResultsPanel, ResultsProvenance } from './ResultsPanel'
 
 const finalists: Finalist[] = [
   { id: '22', number: '22', name: 'Bolsonaro', party: 'PL' },
@@ -44,11 +44,11 @@ function comparison(first: Partial<ComparisonRound> = {}, second: Partial<Compar
 }
 
 function panel(value = comparison(), candidates = finalists) {
-  return <ResultsPanel comparison={value} finalists={candidates} elections={elections} />
+  return <><ResultsPanel comparison={value} finalists={candidates} elections={elections} /><ResultsProvenance comparison={value} /></>
 }
 
 function candidateRows() {
-  return within(screen.getByRole('table')).getAllByRole('row').slice(1)
+  return within(screen.getByRole('table')).getAllByRole('row').slice(1, -1)
 }
 
 function stacks() {
@@ -195,6 +195,9 @@ describe('ResultsPanel', () => {
     }
     expect(screen.queryByText('50,00%')).not.toBeInTheDocument()
     expect(screen.getAllByText(/Sem votos contabilizados/)).toHaveLength(2)
+    const others = screen.getByRole('row', { name: /^— Outros/ })
+    expect(others.children[3]).toHaveTextContent(/^0$/)
+    expect(others.children[4]).toHaveTextContent(/^—$/)
   })
 
   it('keeps absolute deltas available but relative/pp changes unavailable at a zero first-round base', () => {
@@ -223,8 +226,10 @@ describe('ResultsPanel', () => {
     render(panel(comparison({}, { otherVotes: 1, validVotes: 2401, totalVotes: 3001 })))
     expect(segments(stacks()[1]!)).toHaveLength(0)
     expect(screen.getByRole('status')).toHaveTextContent(/segundo turno contém candidatos além dos finalistas/)
-    expect(screen.getAllByText('Outros')).toHaveLength(1)
-    expect(within(screen.getByRole('table')).queryByText('Outros')).not.toBeInTheDocument()
+    expect(within(screen.getByRole('table')).getByText('Outros')).toBeInTheDocument()
+    const others = screen.getByRole('row', { name: /^— Outros/ })
+    expect(others.children[4]).toHaveTextContent(/^—$/)
+    for (const cell of [...others.children].slice(5)) expect(cell).toHaveTextContent(/^—$/)
   })
 
   it('reports missing candidate counts as unavailable instead of substituting zero', () => {
@@ -252,11 +257,15 @@ describe('ResultsPanel', () => {
     expect(within(list as HTMLElement).getAllByText('2º turno')).toHaveLength(2)
   })
 
-  it('provides only finalist rows with pt-BR votes, shares and signed vote/pp differences', () => {
+  it('provides finalist comparisons and first-round Others without inventing runoff votes or changes', () => {
     render(panel())
     const table = screen.getByRole('table', { name: 'Comparação de votos por candidatura' })
     expect(candidateRows()).toHaveLength(2)
-    expect(within(table).queryByText('Outros')).not.toBeInTheDocument()
+    expect(within(table).getAllByRole('row')).toHaveLength(4)
+    const others = within(table).getByRole('row', { name: /^— Outros/ })
+    expect(others.children[3]).toHaveTextContent(/^200$/)
+    expect(others.children[4]).toHaveTextContent(/^10,00%$/)
+    for (const cell of [...others.children].slice(5)) expect(cell).toHaveTextContent(/^—$/)
     expect(candidateRows()[0]).toHaveTextContent('Lula')
     expect(candidateRows()[0]).toHaveTextContent('800')
     expect(candidateRows()[0]).toHaveTextContent('40,00%')
@@ -289,7 +298,8 @@ describe('ResultsPanel', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Variação em pp' }))
     expect(candidateRows()[0]).toHaveTextContent('Bolsonaro')
     expect(screen.getByRole('region', { name: 'Tabela de votos por candidatura' })).toHaveAttribute('tabindex', '0')
-    expect(within(screen.getByRole('table')).getAllByRole('rowheader')).toHaveLength(2)
+    expect(within(screen.getByRole('table')).getAllByRole('rowheader')).toHaveLength(3)
+    expect(within(screen.getByRole('table')).getAllByRole('row').at(-1)).toHaveTextContent('Outros')
   })
 
   it('uses stable chart ordering and colors when votes reverse, source order changes and table is sorted', () => {
@@ -320,6 +330,9 @@ describe('ResultsPanel', () => {
 
   it('retains per-round ballot denominators, source ranges, finality, coverage and source attribution', () => {
     render(panel())
+    const summary = screen.getByText('Fonte, cobertura e demais votos')
+    expect(summary.parentElement).not.toHaveAttribute('open')
+    fireEvent.click(summary)
     const first = screen.getByRole('region', { name: 'Fonte e cédulas do 1º turno' })
     const second = screen.getByRole('region', { name: 'Fonte e cédulas do 2º turno' })
     expect(within(first).getByText('Total de votos').nextElementSibling).toHaveTextContent('2.500')
@@ -340,6 +353,7 @@ describe('ResultsPanel', () => {
     render(panel(comparison({
       countingComplete: false, sections: { total: 100, counted: 90 }, coverage: { received: 26, expected: 27 },
     })))
+    fireEvent.click(screen.getByText('Fonte, cobertura e demais votos'))
     const first = screen.getByRole('region', { name: 'Fonte e cédulas do 1º turno' })
     expect(within(first).getByText('Apuração não concluída na fonte')).toBeVisible()
     expect(within(first).getByText('Cobertura').nextElementSibling).toHaveTextContent('26 de 27 fontes recebidas. Cobertura incompleta')

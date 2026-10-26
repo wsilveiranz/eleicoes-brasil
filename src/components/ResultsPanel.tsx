@@ -315,11 +315,12 @@ export function ResultsPanel({ comparison, finalists, elections }: ResultsPanelP
         </ul>
       </section>
 
-      <section className="results-card" aria-label="Comparação numérica dos finalistas">
-        <h3>Comparação dos finalistas</h3>
+      <section className="results-card" aria-label="Comparação numérica das candidaturas">
+        <h3>Comparação das candidaturas</h3>
         <p className="results-muted" id={tableHintId}>
           Use os botões dos cabeçalhos para ordenar. Percentuais usam os votos válidos de cada turno.
           A diferença de participações é expressa em pontos percentuais (pp), não em variação relativa (%).
+          Outros reúne as demais candidaturas do 1º turno e permanece na última linha, sem comparação com o 2º turno.
           Em telas pequenas, deslize a tabela horizontalmente.
         </p>
         <div className="results-table-scroll" role="region" aria-label="Tabela de votos por candidatura" aria-describedby={tableHintId} tabIndex={0}>
@@ -355,14 +356,32 @@ export function ResultsPanel({ comparison, finalists, elections }: ResultsPanelP
                   </tr>
                 )
               })}
+              <tr>
+                <td>—</td>
+                <th scope="row">Outros</th>
+                <td>—</td>
+                <td className="results-number">{numberFormat.format(comparison.first.otherVotes)}</td>
+                <td className="results-number">{validationError === null ? shareText(comparison.first.otherVotes, comparison.first.validVotes) : '—'}</td>
+                <td className="results-number">—</td>
+                <td className="results-number">—</td>
+                <td className="results-number">—</td>
+                <td className="results-number">—</td>
+              </tr>
             </tbody>
           </table>
         </div>
         <p className="results-disclaimer">Variações agregadas entre turnos não permitem estabelecer transferências de votos de eleitores individuais ou a origem dos ganhos de cada finalista.</p>
       </section>
 
-      <footer className="results-card results-provenance">
-        <h3>Fonte, cobertura e demais votos</h3>
+    </section>
+  )
+}
+
+export function ResultsProvenance({ comparison }: { comparison: RoundComparison }) {
+  return (
+    <footer className="results-source-footer">
+      <details className="results-card results-provenance">
+        <summary>Fonte, cobertura e demais votos</summary>
         <p>Fonte: <a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noreferrer">Tribunal Superior Eleitoral (TSE)<span className="results-sr-only"> (abre em nova aba)</span></a>.</p>
         <p className="results-muted">Brancos e nulos usam o total de votos, incluindo válidos, brancos e nulos. Horários em America/Sao_Paulo (Brasília).</p>
         <div className="results-round-grid">
@@ -370,7 +389,7 @@ export function ResultsPanel({ comparison, finalists, elections }: ResultsPanelP
           <RoundDetails round={comparison.second} label="2º turno" />
         </div>
         <p className="results-muted">Localidades podem ter horários de atualização diferentes: os totais agregados não formam um retrato simultâneo. Cobertura de fontes e conclusão da apuração são metadados distintos.</p>
-      </footer>
-    </section>
+      </details>
+    </footer>
   )
 }

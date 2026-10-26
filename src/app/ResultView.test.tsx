@@ -14,6 +14,9 @@ vi.mock('../components', () => ({
 vi.mock('../components/GeographyOverviewTable', () => ({
   GeographyOverviewTable: () => <div data-testid="overview">Geographic comparisons</div>,
 }))
+vi.mock('../components/RunoffStateMap', () => ({
+  RunoffStateMap: () => <div data-testid="state-map">Runoff state map</div>,
+}))
 
 const secondElection: ElectionMetadata['election'] = {
   id: '6258', cycle: 'ele2026', name: 'Segundo turno', date: '2026-10-25', year: 2026, round: '2',
@@ -63,6 +66,8 @@ describe('static analytical application integration', () => {
     expect(screen.queryByRole('button', { name: /Atualizar agora/ })).not.toBeInTheDocument()
     expect(screen.queryByText(/30 segundos/)).not.toBeInTheDocument()
     expect(screen.queryByTestId('overview')).not.toBeInTheDocument()
+    expect(screen.getByTestId('state-map')).toBeVisible()
+    expect(screen.getByText('Fonte, cobertura e demais votos').parentElement).not.toHaveAttribute('open')
   })
 
   it('does not reuse a parent result while a municipality fails to load', async () => {
@@ -78,6 +83,7 @@ describe('static analytical application integration', () => {
       <ResultView dataset={dataset} selection={{ scope: 'domestic', state: 'sp' }} />, { wrapper },
     )
     expect(await screen.findByTestId('comparison')).toHaveTextContent('state:sp')
+    expect(screen.queryByTestId('state-map')).not.toBeInTheDocument()
     rerender(<ResultView dataset={dataset} selection={{ scope: 'domestic', state: 'sp', municipality: '71072' }} />)
     expect(screen.queryByTestId('comparison')).not.toBeInTheDocument()
     await waitFor(() => expect(loadComparison).toHaveBeenCalledTimes(2))
@@ -94,5 +100,26 @@ describe('static analytical application integration', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Tentar novamente' }))
     expect(await screen.findByTestId('comparison')).toHaveTextContent('overall')
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  })
+
+  it('places the map before the domestic table and source details last, resetting collapse on navigation', async () => {
+    vi.mocked(loadComparison).mockResolvedValue(overall)
+    const { wrapper } = harness()
+    const { container, rerender } = render(
+      <ResultView dataset={dataset} selection={{ scope: 'domestic' }} />, { wrapper },
+    )
+    await screen.findByTestId('comparison')
+    const map = screen.getByTestId('state-map')
+    const table = screen.getByTestId('overview')
+    expect(map.compareDocumentPosition(table) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    const details = container.querySelector('details')!
+    expect(container.querySelector('footer')).toBe(container.firstElementChild!.lastElementChild)
+    expect(details).not.toHaveAttribute('open')
+    fireEvent.click(screen.getByText('Fonte, cobertura e demais votos'))
+    expect(details).toHaveAttribute('open')
+    rerender(<ResultView dataset={dataset} selection={{ scope: 'overseas' }} />)
+    await screen.findByTestId('comparison')
+    expect(screen.queryByTestId('state-map')).not.toBeInTheDocument()
+    expect(container.querySelector('details')).not.toHaveAttribute('open')
   })
 })

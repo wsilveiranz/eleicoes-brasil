@@ -16,9 +16,12 @@ As mesmas localidades estão disponíveis nos dois turnos:
 
 Cada página mostra primeiro a comparação da localidade: votos válidos dos dois
 turnos e sua variação, duas barras de participação percentual, barras de votos
-absolutos em escala comum e tabela dos finalistas. Lula/PT usa vermelho;
-Flávio Bolsonaro/PL, azul. Os demais candidatos aparecem apenas no bloco neutro
-**Outros** da barra do primeiro turno, não como uma candidatura do segundo turno.
+absolutos em escala comum e tabela das candidaturas. Lula/PT usa vermelho;
+Flávio Bolsonaro/PL, azul. Os demais candidatos aparecem no bloco neutro
+**Outros** da barra do primeiro turno e nas tabelas, com votos e percentual do
+primeiro turno. Votos do segundo turno e variações de Outros são `—`, não uma
+perda fictícia de votos. Na tabela principal, Outros permanece na última linha;
+os cabeçalhos ordenam os finalistas.
 
 As barras percentuais usam **os votos válidos da própria localidade e do próprio
 turno**. A linha de 50% é uma referência de participação, não progresso de apuração.
@@ -34,12 +37,40 @@ Denominadores iguais a zero produzem `—`, não percentuais inventados.
 O painel não atribui os votos de Outros a nenhum finalista.
 Brancos e nulos permanecem separados dos votos válidos.
 
-Nas páginas Brasil/Exterior, cada estado/país mostra três linhas: total de votos
-válidos, Lula e Flávio Bolsonaro, com votos, percentuais e variações visíveis
+Nas páginas Brasil/Exterior, cada estado/país mostra quatro linhas: total de votos
+válidos, Lula, Flávio Bolsonaro e Outros, com votos, percentuais e variações visíveis
 simultaneamente. Os filtros e a referência de ordenação afetam apenas a tabela,
 nunca o resultado geral ou o endereço. A ordenação numérica usa inicialmente o
 total válido e pode usar qualquer finalista sem ocultar as demais linhas.
 Os nomes das localidades abrem os detalhes, incluindo os horários das fontes.
+**Fonte, cobertura e demais votos** fica sempre no fim da localidade, depois de
+mapa, tabelas e navegação municipal, recolhido por padrão. Abra a seção para
+consultar brancos, nulos, seções contabilizadas e horários de cada turno.
+
+### Mapa do segundo turno
+
+Total geral e Brasil incluem um mapa das 27 UFs depois do resumo e antes da
+tabela geográfica. Vermelho indica Lula; azul, Flávio Bolsonaro. A cor usa
+somente a votação final do segundo turno de cada UF, não o primeiro turno ou
+a votação nacional. Empate, ausência de votos válidos ou dados inválidos/não
+finalizados ficam neutros, com motivo textual. A indicação é de candidatura
+mais votada na UF, não de uma eleição estadual para presidente.
+
+Os estados e os links alternativos de siglas abrem o detalhamento existente.
+Os links alternativos têm alvos de toque maiores, inclusive para o DF.
+A malha oficial [IBGE, UFs 2024](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2024/Brasil/BR_UF_2024.zip)
+foi simplificada para exibição, não para precisão cartográfica. Geometria,
+códigos IBGE/siglas e proveniência estão em `src\data\geography\brazil-states.json`.
+O mapa é incluído no site; o navegador não consulta um serviço de mapas.
+
+Para reproduzir a geometria, baixe o ZIP oficial acima e execute:
+
+```powershell
+python scripts\generate-state-map.py C:\caminho\BR_UF_2024.zip
+```
+
+O gerador usa somente a biblioteca padrão do Python, confere o SHA-256 fixado
+da fonte, exige todas as 27 UFs e preserva separadamente códigos IBGE e siglas TSE.
 
 ## Executar e verificar
 
